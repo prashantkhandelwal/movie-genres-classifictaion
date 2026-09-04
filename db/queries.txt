@@ -1,0 +1,80 @@
+Query to get the genre id and genre names
+
+([
+  {
+    $match: {
+      genres: { $exists: true, $ne: [] }
+    }
+  },
+  {
+    $unwind: "$genres"
+  },
+  {
+    $group: {
+      _id: {
+        id: "$genres.id",
+        name: "$genres.name"
+      }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      genre_id: "$_id.id",
+      genre_name: "$_id.name"
+    }
+  }
+])
+
+
+----------------------------------
+
+Query to collect the data from movies collection
+
+([
+  {
+    $match: {
+      overview: { $exists: true, $ne: "" }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      original_title: 1,
+      title: 1,
+      overview: 1,
+      genres_id: {
+        $reduce: {
+          input: { $map: { input: "$genres", in: { $toString: "$$this.id" } } },
+          initialValue: "",
+          in: {
+            $concat: [
+              "$$value",
+              { $cond: [{ $eq: ["$$value", ""] }, "", ", "] },
+              "$$this"
+            ]
+          }
+        }
+      },
+      genres_name: {
+        $reduce: {
+          input: { $map: { input: "$genres", in: "$$this.name" } },
+          initialValue: "",
+          in: {
+            $concat: [
+              "$$value",
+              { $cond: [{ $eq: ["$$value", ""] }, "", ", "] },
+              "$$this"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    $match: {
+      genres_id: { $ne: "" },
+      genres_name: { $ne: "" }
+    }
+  }
+])
