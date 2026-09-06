@@ -11,7 +11,7 @@ For each input movie, the model produces an independent score for every genre. A
 - **Base model:** [`google-bert/bert-base-uncased`](https://huggingface.co/google-bert/bert-base-uncased)
 - **Number of labels:** 19
 - **Maximum input length during training:** 256 tokens
-- **Classification threshold used by the training script:** 0.5
+- **Classification thresholds:** tuned independently per genre on validation data
 - **Framework:** Hugging Face Transformers 5.5.0 and PyTorch
 
 ## Intended Use
@@ -26,7 +26,7 @@ The model predicts the following genres:
 
 ## Input Format
 
-Provide plain text containing a movie title, overview, or both. The training pipeline uses the `title_overview` field. Inputs are lowercased by the uncased BERT tokenizer and truncated to 256 tokens during training and inference.
+Provide plain text containing a movie title, overview, or both. The training pipeline uses the `plot` field, which combines the title and overview. Inputs are lowercased by the uncased BERT tokenizer and truncated to 256 tokens during training and inference.
 
 ## Usage
 
@@ -77,19 +77,31 @@ The threshold is a decision rule, not a calibrated probability guarantee. Applic
 
 The model was fine-tuned with the following configuration:
 
-- Dataset split: 95% training and 5% validation
-- Split seed: `3407`
+- Dataset split: 80% training, 10% validation, and 10% held-out testing
+- Split assignment: stable overview hash, keeping duplicate overview groups together
 - Epochs: `3`
 - Learning rate: `2e-5`
 - Training batch size per device: `16`
 - Evaluation batch size per device: `32`
 - Weight decay: `0.01`
 - Warmup ratio: `0.1`
-- Evaluation and checkpoint saving: after each epoch
-- Best checkpoint metric: validation micro F1
+- Evaluation and checkpoint saving: every 2,500 steps
+- Best checkpoint metric: validation macro F1
+- Early stopping patience: 3 evaluations
 - Mixed precision: FP16 when supported by the training hardware
+- Loss: positive-class-weighted BCE, with weights capped at `10.0`
+- Oversampling: adds `50%` train-only samples, biased toward rarer genres
 
-Genre names are converted to multi-hot vectors. The training objective treats each genre as an independent binary decision. Evaluation reports micro F1 and macro F1 at a threshold of 0.5.
+Genre names are converted to multi-hot vectors. The training objective treats each genre as an independent binary decision. Set `LOSS_TYPE` in `train.py` to `weighted_bce` or `focal`; `FOCAL_GAMMA`, `MAX_POS_WEIGHT`, `OVERSAMPLE_RATIO`, and `OVERSAMPLE_POWER` control imbalance handling. Set `OVERSAMPLE_RATIO` to `0` to disable oversampling.
+
+Evaluation reports micro F1, macro F1, and per-genre precision, recall, F1, and average precision. Thresholds are optimized independently for every genre on the validation split and saved to `thresholds.json`. Final metrics are then calculated once on the held-out test split using that threshold vector and saved to `test_metrics.json`.
+
+Training saves the following visualizations in the model output directory:
+
+- `training_metrics.png`: training loss, validation loss, micro F1, and macro F1
+- `per_label_metrics.png`: precision, recall, F1, and average precision for each genre at the best checkpoint
+- `per_label_metric_history.png`: per-genre F1 and average-precision heatmaps across evaluation steps
+- `threshold_tuning.png`: global threshold search and tuned threshold for each genre
 
 ## Evaluation
 
@@ -105,14 +117,14 @@ Final evaluation scores are not included because they were not recorded as part 
 - Predictions depend on the quality, language, completeness, and style of the movie title and overview.
 - The model was trained on movie metadata and may reproduce genre-labeling patterns or omissions in that data.
 - Rare genres may receive less reliable predictions than common genres; inspect macro F1 and per-genre results.
-- A fixed 0.5 threshold may not be optimal for every genre.
+- Genre-specific thresholds can drift when the training data distribution changes and should be retuned after training.
 - Text longer than 256 tokens is truncated, which can remove useful plot information.
 - The model is based on English BERT and should not be assumed to perform reliably on other languages.
 - This model has not been validated for safety-critical, legal, or high-impact decision-making.
 
 ## Dataset and Provenance
 
-The training pipeline uses the project's `cleaned_movies.csv`, containing movie title/overview text and comma-separated genre names. The repository includes database queries that extract movie metadata and genres, but the exact upstream dataset version, filtering history, and license are not recorded in the training script. Users should verify the source data's terms of use before redistributing or deploying the model.
+The training pipeline uses the project's `cleaned_movies.csv`. Its model input combines the title and overview, while genres remain comma-separated multi-label targets. The cleaner normalizes whitespace, removes missing, placeholder, and undersized overviews, merges duplicate title/overview records, rejects records with more than six genres, and assigns leakage-resistant train, validation, and test splits by overview hash. The repository includes database queries that extract movie metadata and genres, but the exact upstream dataset version and license are not recorded in the training script. Users should verify the source data's terms of use before redistributing or deploying the model.
 
 ## Files
 
