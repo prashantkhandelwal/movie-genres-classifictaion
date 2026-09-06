@@ -107,6 +107,8 @@ Each training attempt is assigned a UTC run ID under `outputs/bert-movie-genres/
 
 After at least two runs complete, generate a comparison with `python comparison/compare_runs.py`. See [`comparison/README.md`](comparison/README.md) for explicit run selection and output details.
 
+Successful training can also publish a versioned model to Hugging Face and create a matching GitHub Release through GitHub Actions. See [`release/README.md`](release/README.md) for runner requirements, repository secrets, and usage.
+
 ## Evaluation
 
 The training script computes:

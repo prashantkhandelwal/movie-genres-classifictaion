@@ -1,0 +1,83 @@
+name: Train and release model
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: model-training-release
+  cancel-in-progress: false
+
+jobs:
+  train-and-release:
+    runs-on: [self-hosted, windows, gpu]
+    timeout-minutes: 1440
+    env:
+      HF_REPO_ID: ${{ vars.HF_REPO_ID }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Validate release configuration
+        shell: pwsh
+        run: |
+          if (-not $env:HF_REPO_ID) { throw "Repository variable HF_REPO_ID is required." }
+          if (-not $env:HF_TOKEN) { throw "Repository secret HF_TOKEN is required." }
+          uv run python -c "import torch; assert torch.cuda.is_available(), 'CUDA GPU is required'; print(torch.cuda.get_device_name(0))"
+
+      - name: Restore previous training history
+        run: uv run python release/release_tools.py restore-history "$env:HF_REPO_ID" --token "$env:HF_TOKEN"
+
+      - name: Train model
+        run: uv run python train.py
+
+      - name: Prepare release metadata
+        run: uv run python release/release_tools.py prepare
+
+      - name: Read release metadata
+        id: release
+        shell: pwsh
+        run: |
+          $metadata = Get-Content release/dist/release.json | ConvertFrom-Json
+          "tag=$($metadata.tag)" >> $env:GITHUB_OUTPUT
+          "run_id=$($metadata.run_id)" >> $env:GITHUB_OUTPUT
+
+      - name: Publish model to Hugging Face
+        run: uv run python hf/hf_upload.py outputs/bert-movie-genres "$env:HF_REPO_ID" --token "$env:HF_TOKEN" --commit-message "Training release ${{ steps.release.outputs.tag }}"
+
+      - name: Tag Hugging Face release
+        run: uv run python release/release_tools.py tag-hugging-face "$env:HF_REPO_ID" "${{ steps.release.outputs.tag }}" --token "$env:HF_TOKEN"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release.outputs.tag }}
+          name: Model ${{ steps.release.outputs.run_id }}
+          body_path: release/dist/RELEASE_NOTES.md
+          target_commitish: ${{ github.sha }}
+          files: release/dist/*
+
+      - name: Upload recovery artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-${{ github.run_id }}
+          path: |
+            outputs/bert-movie-genres/latest_run.json
+            outputs/bert-movie-genres/training_history.jsonl
+            outputs/bert-movie-genres/runs/
+            release/dist/
+          if-no-files-found: warn
+          retention-days: 30

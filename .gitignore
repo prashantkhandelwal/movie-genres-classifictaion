@@ -14,4 +14,5 @@ wheels/
 
 unsloth_compiled_cache/
 outputs/
+release/dist/
 train.ipynb
