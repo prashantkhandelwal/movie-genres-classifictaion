@@ -1,4 +1,6 @@
 import json
+import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -18,7 +20,9 @@ from transformers import (
 MODEL_NAME = "google-bert/bert-base-uncased"
 DATASET_PATH = Path(__file__).parent / "data" / "cleaned_movies.csv"
 OUTPUT_DIR = Path(__file__).parent / "outputs" / "bert-movie-genres"
-MAX_LENGTH = 256
+RUNS_DIR = OUTPUT_DIR / "runs"
+HISTORY_PATH = OUTPUT_DIR / "training_history.jsonl"
+MAX_LENGTH = 384
 LABEL_THRESHOLD = 0.5
 EVAL_STEPS = 2500
 THRESHOLD_CANDIDATES = np.arange(0.1, 0.91, 0.05)
@@ -52,6 +56,30 @@ CLASS_LABELS = [
 ]
 LABEL_TO_ID = {label: index for index, label in enumerate(CLASS_LABELS)}
 ID_TO_LABEL = {index: label for label, index in LABEL_TO_ID.items()}
+
+
+def json_default(value):
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, Path):
+        return str(value)
+    raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
+
+
+def write_json(path: Path, data, *, indent=2) -> None:
+    path.write_text(
+        json.dumps(data, indent=indent, default=json_default),
+        encoding="utf-8",
+    )
+
+
+def archive_run_summary(run_dir: Path, summary: dict) -> None:
+    write_json(run_dir / "run_summary.json", summary)
+    with HISTORY_PATH.open("a", encoding="utf-8") as history_file:
+        history_file.write(json.dumps(summary, default=json_default) + "\n")
+    shutil.copy2(run_dir / "run_summary.json", OUTPUT_DIR / "latest_run.json")
 
 
 def label_metric_name(label: str) -> str:
@@ -392,7 +420,7 @@ def plot_per_label_history(log_history, output_dir: Path) -> None:
     print(f"Per-label metric history saved to: {graph_path}")
 
 
-def main() -> None:
+def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     model = AutoModelForSequenceClassification.from_pretrained(
         MODEL_NAME,
@@ -434,6 +462,26 @@ def main() -> None:
         )
     )
 
+    training_args = TrainingArguments(
+        output_dir=str(OUTPUT_DIR),
+        num_train_epochs=3,
+        learning_rate=2e-5,
+        per_device_train_batch_size=16,
+        per_device_eval_batch_size=32,
+        weight_decay=0.01,
+        warmup_ratio=0.1,
+        eval_strategy="steps",
+        eval_steps=EVAL_STEPS,
+        save_strategy="steps",
+        save_steps=EVAL_STEPS,
+        load_best_model_at_end=True,
+        metric_for_best_model="macro_f1",
+        greater_is_better=True,
+        fp16=True,
+        logging_steps=100,
+        save_total_limit=2,
+        report_to="none",
+    )
     trainer = ImbalanceAwareTrainer(
         model=model,
         pos_weights=pos_weights,
@@ -443,45 +491,108 @@ def main() -> None:
         eval_dataset=dataset["validation"],
         compute_metrics=compute_metrics,
         callbacks=[EarlyStoppingCallback(early_stopping_patience=3)],
-        args=TrainingArguments(
-            output_dir=str(OUTPUT_DIR),
-            num_train_epochs=3,
-            learning_rate=2e-5,
-            per_device_train_batch_size=16,
-            per_device_eval_batch_size=32,
-            weight_decay=0.01,
-            warmup_ratio=0.1,
-            eval_strategy="steps",
-            eval_steps=EVAL_STEPS,
-            save_strategy="steps",
-            save_steps=EVAL_STEPS,
-            load_best_model_at_end=True,
-            metric_for_best_model="macro_f1",
-            greater_is_better=True,
-            fp16=True,
-            logging_steps=100,
-            save_total_limit=2,
-            report_to="none",
-        ),
+        args=training_args,
     )
-    trainer.train()
-    validation_predictions = trainer.predict(dataset["validation"])
-    thresholds = tune_thresholds(validation_predictions, OUTPUT_DIR)
+    train_result = trainer.train()
+    validation_predictions = trainer.predict(
+        dataset["validation"], metric_key_prefix="validation"
+    )
+    thresholds = tune_thresholds(validation_predictions, run_dir)
     test_predictions = trainer.predict(dataset["test"])
     test_metrics = compute_metrics(
         (test_predictions.predictions, test_predictions.label_ids),
         thresholds=thresholds,
     )
-    (OUTPUT_DIR / "test_metrics.json").write_text(
-        json.dumps(test_metrics, indent=2),
-        encoding="utf-8",
-    )
-    plot_training_metrics(trainer.state.log_history, OUTPUT_DIR)
-    plot_per_label_metrics(test_metrics, OUTPUT_DIR)
-    plot_per_label_history(trainer.state.log_history, OUTPUT_DIR)
+    write_json(run_dir / "test_metrics.json", test_metrics)
+    write_json(run_dir / "trainer_log_history.json", trainer.state.log_history)
+    plot_training_metrics(trainer.state.log_history, run_dir)
+    plot_per_label_metrics(test_metrics, run_dir)
+    plot_per_label_history(trainer.state.log_history, run_dir)
 
     trainer.save_model(OUTPUT_DIR)
     tokenizer.save_pretrained(OUTPUT_DIR)
+
+    latest_artifacts = [
+        "thresholds.json",
+        "test_metrics.json",
+        "training_metrics.png",
+        "per_label_metrics.png",
+        "per_label_metric_history.png",
+        "threshold_tuning.png",
+    ]
+    for artifact_name in latest_artifacts:
+        artifact_path = run_dir / artifact_name
+        if artifact_path.exists():
+            shutil.copy2(artifact_path, OUTPUT_DIR / artifact_name)
+
+    threshold_metrics = json.loads(
+        (run_dir / "thresholds.json").read_text(encoding="utf-8")
+    )
+    summary = {
+        "run_id": run_id,
+        "status": "completed",
+        "started_at": started_at.isoformat(),
+        "completed_at": datetime.now(timezone.utc).isoformat(),
+        "model_name": MODEL_NAME,
+        "configuration": {
+            "max_length": MAX_LENGTH,
+            "loss_type": LOSS_TYPE,
+            "focal_gamma": FOCAL_GAMMA,
+            "max_pos_weight": MAX_POS_WEIGHT,
+            "oversample_ratio": OVERSAMPLE_RATIO,
+            "oversample_power": OVERSAMPLE_POWER,
+            "random_seed": RANDOM_SEED,
+        },
+        "training_arguments": training_args.to_dict(),
+        "dataset_sizes": {
+            "train_before_oversampling": original_train_size,
+            "train_after_oversampling": len(dataset["train"]),
+            "validation": len(dataset["validation"]),
+            "test": len(dataset["test"]),
+        },
+        "train_metrics": train_result.metrics,
+        "validation_metrics": validation_predictions.metrics,
+        "threshold_metrics": threshold_metrics,
+        "test_metrics": test_metrics,
+        "best_checkpoint": trainer.state.best_model_checkpoint,
+        "best_metric": trainer.state.best_metric,
+    }
+    archive_run_summary(run_dir, summary)
+    print(f"Training history archived to: {run_dir}")
+
+
+def main() -> None:
+    started_at = datetime.now(timezone.utc)
+    run_id = started_at.strftime("%Y%m%dT%H%M%S.%fZ")
+    run_dir = RUNS_DIR / run_id
+    run_dir.mkdir(parents=True)
+    write_json(
+        run_dir / "run_summary.json",
+        {
+            "run_id": run_id,
+            "status": "running",
+            "started_at": started_at.isoformat(),
+            "model_name": MODEL_NAME,
+        },
+    )
+
+    try:
+        train_run(run_id, started_at, run_dir)
+    except BaseException as error:
+        status = "interrupted" if isinstance(error, KeyboardInterrupt) else "failed"
+        archive_run_summary(
+            run_dir,
+            {
+                "run_id": run_id,
+                "status": status,
+                "started_at": started_at.isoformat(),
+                "completed_at": datetime.now(timezone.utc).isoformat(),
+                "model_name": MODEL_NAME,
+                "error_type": type(error).__name__,
+                "error_message": str(error),
+            },
+        )
+        raise
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 MODEL_PATH = Path(__file__).with_name("outputs") / "bert-movie-genres" / "checkpoint-45000"
 THRESHOLDS_PATH = Path(__file__).with_name("outputs") / "bert-movie-genres" / "thresholds.json"
-MAX_LENGTH = 256
+MAX_LENGTH = 384
 DEFAULT_THRESHOLD = 0.5
 
 

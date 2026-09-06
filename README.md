@@ -10,7 +10,7 @@ For each input movie, the model produces an independent score for every genre. A
 - **Task:** Multi-label text classification
 - **Base model:** [`google-bert/bert-base-uncased`](https://huggingface.co/google-bert/bert-base-uncased)
 - **Number of labels:** 19
-- **Maximum input length during training:** 256 tokens
+- **Maximum input length during training:** 384 tokens
 - **Classification thresholds:** tuned independently per genre on validation data
 - **Framework:** Hugging Face Transformers 5.5.0 and PyTorch
 
@@ -26,7 +26,7 @@ The model predicts the following genres:
 
 ## Input Format
 
-Provide plain text containing a movie title, overview, or both. The training pipeline uses the `plot` field, which combines the title and overview. Inputs are lowercased by the uncased BERT tokenizer and truncated to 256 tokens during training and inference.
+Provide plain text containing a movie title, overview, or both. The training pipeline uses the `plot` field, which combines the title and overview. Inputs are lowercased by the uncased BERT tokenizer and truncated to 384 tokens during training and inference.
 
 ## Usage
 
@@ -50,7 +50,7 @@ model.eval()
 movie_text = "A crew travels through deep space to stop an alien threat from destroying Earth."
 inputs = tokenizer(
 	movie_text,
-	max_length=256,
+	max_length=384,
 	truncation=True,
 	return_tensors="pt",
 )
@@ -103,6 +103,10 @@ Training saves the following visualizations in the model output directory:
 - `per_label_metric_history.png`: per-genre F1 and average-precision heatmaps across evaluation steps
 - `threshold_tuning.png`: global threshold search and tuned threshold for each genre
 
+Each training attempt is assigned a UTC run ID under `outputs/bert-movie-genres/runs/`. Completed runs retain their configuration, dataset sizes, Trainer log history, validation and test metrics, tuned thresholds, and plots. Failed or interrupted runs retain their status and error. `training_history.jsonl` provides one summary record per finished attempt for comparison, while `latest_run.json` and the artifacts in the model output directory reflect the latest attempt and latest successful model outputs respectively. Model weights are kept only in the main output directory to avoid duplicating large files for every run.
+
+After at least two runs complete, generate a comparison with `python comparison/compare_runs.py`. See [`comparison/README.md`](comparison/README.md) for explicit run selection and output details.
+
 ## Evaluation
 
 The training script computes:
@@ -118,7 +122,7 @@ Final evaluation scores are not included because they were not recorded as part 
 - The model was trained on movie metadata and may reproduce genre-labeling patterns or omissions in that data.
 - Rare genres may receive less reliable predictions than common genres; inspect macro F1 and per-genre results.
 - Genre-specific thresholds can drift when the training data distribution changes and should be retuned after training.
-- Text longer than 256 tokens is truncated, which can remove useful plot information.
+- Text longer than 384 tokens is truncated, which can remove useful plot information.
 - The model is based on English BERT and should not be assumed to perform reliably on other languages.
 - This model has not been validated for safety-critical, legal, or high-impact decision-making.
 
