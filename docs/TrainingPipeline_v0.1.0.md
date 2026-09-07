@@ -50,7 +50,7 @@ data/moviedb.movies.csv + data/genres.csv
   evaluate and checkpoint every 2,500 optimizer steps
                     |
                     v
-  restore the checkpoint with the best validation macro F1
+   restore the checkpoint with the best validation macro average precision
                     |
                     v
   tune one decision threshold per genre on validation data
@@ -138,7 +138,8 @@ the wrong semantic meaning to classifier outputs.
 | `LOSS_TYPE` | `weighted_bce` | Active objective; `focal` is the alternative |
 | `FOCAL_GAMMA` | `2.0` | Focal modulation exponent when focal loss is selected |
 | `MAX_POS_WEIGHT` | `10.0` | Maximum positive-class loss weight |
-| `OVERSAMPLE_RATIO` | `0.5` | Number of added samples as a fraction of original train size |
+| `USE_POS_WEIGHTS` | `True` | Enable positive-class weighting independently of oversampling |
+| `OVERSAMPLE_RATIO` | `0.0` | Disable oversampling by default; positive values add train samples |
 | `OVERSAMPLE_POWER` | `0.5` | Strength of inverse-prevalence sampling bias |
 | `RANDOM_SEED` | `42` | NumPy oversampling seed |
 | `THRESHOLD_CANDIDATES` | `0.10` through `0.90`, step `0.05` | Per-label F1 threshold grid |
@@ -153,7 +154,7 @@ in `threshold_tuning.png`.
 
 | Argument | Value | Effect |
 |---|---:|---|
-| `num_train_epochs` | `3` | Maximum passes over the oversampled training dataset |
+| `num_train_epochs` | `3` | Maximum passes over the configured training dataset |
 | `learning_rate` | `2e-5` | Peak fine-tuning learning rate |
 | `per_device_train_batch_size` | `16` | Examples per training device and forward pass |
 | `per_device_eval_batch_size` | `32` | Examples per evaluation device and forward pass |
@@ -165,8 +166,8 @@ in `threshold_tuning.png`.
 | `save_steps` | `2500` | Checkpoint interval, aligned with evaluation |
 | `logging_steps` | `100` | Trainer logging interval |
 | `load_best_model_at_end` | `True` | Restore best saved checkpoint after training |
-| `metric_for_best_model` | `macro_f1` | Validation metric used to rank checkpoints |
-| `greater_is_better` | `True` | Larger macro F1 wins |
+| `metric_for_best_model` | `macro_average_precision` | Threshold-independent validation metric used to rank checkpoints |
+| `greater_is_better` | `True` | Larger macro average precision wins |
 | `fp16` | `True` | Use FP16 mixed precision |
 | `save_total_limit` | `2` | Retain at most two Trainer checkpoints, subject to best-checkpoint retention |
 | `report_to` | `none` | Disable external experiment trackers |
@@ -193,21 +194,23 @@ exact global batching behavior.
 It writes `data/cleaned_movies.csv` with exactly these columns:
 
 ```text
-plot,genre_ids,genre_names,group_id,split
+title,overview,keywords,genre_ids,genre_names,group_id,split
 ```
 
-Training reads `plot`, `genre_names`, and `split`. It removes all original
-columns after encoding, so `genre_ids` and `group_id` are not consumed directly
-by the model pipeline.
+Training reads `title`, `overview`, `keywords`, `genre_names`, and `split`. It
+removes all original columns after encoding, so `genre_ids` and `group_id` are
+not consumed directly by the model pipeline.
 
 ### 5.2 Text normalization and rejection
 
-The cleaner casts title, original title, overview, and genre names to strings,
-collapses repeated whitespace, and trims surrounding whitespace. Empty and
+The cleaner casts title, original title, overview, genre names, and keywords to
+strings, collapses repeated whitespace, and trims surrounding whitespace.
+Surrounding double quotation marks are also removed from titles. Empty and
 placeholder-like values such as `null`, `none`, `nan`, and `n/a` become missing.
 
 The title falls back to `original_title` if `title` is unavailable. A row is
-rejected if title, overview, or genres remain missing. It is also rejected when:
+rejected if title, overview, genres, or keywords remain missing. It is also
+rejected when:
 
 - The lowercase overview exactly matches a known placeholder.
 - The overview starts with `no overview` or `.....`.
@@ -220,13 +223,13 @@ genre stops preprocessing with a `ValueError`.
 ### 5.3 Deduplication and label consolidation
 
 Rows are grouped by lowercase title and lowercase overview. Each group keeps the
-first normalized title and overview and merges its unique genre names. Groups
-with zero genres or more than six genres are removed.
+first normalized title and overview and merges its unique genre names and
+keywords. Groups with zero genres or more than six genres are removed.
 
-The final model text is constructed exactly as:
+During training, the separate text fields are combined exactly as:
 
 ```text
-Title: <normalized title> Overview: <normalized overview>
+Title: <normalized title> Keywords: <normalized keywords> Overview: <normalized overview>
 ```
 
 This explicit prefixing gives the encoder a stable boundary between title and
@@ -349,11 +352,11 @@ two worker processes.
 
 ### 8.2 Text tokenization
 
-`encode_batch()` receives batches of examples and tokenizes `examples["plot"]`
-with:
+`encode_batch()` receives batches of examples, combines their `title`,
+`keywords`, and `overview` fields, and tokenizes the resulting texts with:
 
 ```python
-tokenizer(plot_texts, max_length=256, truncation=True)
+tokenizer(model_texts, max_length=256, truncation=True)
 ```
 
 For BERT, the resulting example normally includes:
@@ -400,9 +403,9 @@ split's schema, and uses two worker processes.
 
 ## 9. Class-Imbalance Handling
 
-The pipeline combines two different techniques: positive-class loss weighting
-and train-only oversampling. They are deliberately computed/applied before the
-Trainer starts.
+The pipeline supports two independently configurable techniques: positive-class
+loss weighting and train-only oversampling. The default uses positive weighting
+without oversampling so their effects are not compounded.
 
 ### 9.1 Positive-class weights
 
@@ -428,8 +431,9 @@ does not multiply negative examples by the same value.
 
 ### 9.2 Minority-biased oversampling
 
-Oversampling modifies only the training split. Validation and test distributions
-remain untouched.
+Oversampling is disabled by default because `OVERSAMPLE_RATIO = 0.0`. When a
+positive ratio is configured, it modifies only the training split. Validation
+and test distributions remain untouched.
 
 For each genre $c$, prevalence is:
 
@@ -461,21 +465,21 @@ $$
 The number of additional examples is:
 
 $$
-N_{extra}=\operatorname{round}(0.5N)
+N_{extra}=\operatorname{round}(N\times OVERSAMPLE\_RATIO)
 $$
 
 Indices are drawn with replacement using NumPy's random generator seeded with
 42. The original $N$ indices and sampled indices are concatenated and shuffled.
-The resulting training set is approximately $1.5N$ examples. An "epoch" in the
-Trainer therefore means one pass over this enlarged dataset, not the original
-unique set.
+When enabled, an "epoch" means one pass over this enlarged dataset, not the
+original unique set.
 
-Setting `OVERSAMPLE_RATIO <= 0` disables this stage. Positive weighting remains
-active unless the Trainer implementation is changed.
+Setting `OVERSAMPLE_RATIO <= 0` disables this stage. `USE_POS_WEIGHTS` controls
+positive weighting separately, allowing weighted-only, oversampling-only,
+combined, and unweighted ablation runs.
 
 ### 9.3 Combined effect
 
-Rare labels influence training twice:
+When both mechanisms are enabled, rare labels influence training twice:
 
 1. Examples containing rare genres are more likely to be duplicated.
 2. Positive errors for rare genres receive larger loss weights.
@@ -484,7 +488,8 @@ This can improve minority recall and macro F1, but it can also overemphasize
 rare labels, increase false positives, or destabilize optimization. The cap of
 10 limits only the loss-weighting side, not the combined effect. Per-label
 precision, recall, F1, and average precision should therefore be inspected after
-every run.
+every combined-strategy run. The default weighted-only configuration avoids this
+interaction and provides a clean comparison with the previous combined run.
 
 ## 10. Loss Computation
 
@@ -571,7 +576,8 @@ starts a fresh fine-tune from the base model.
 Every 100 optimizer steps, Trainer records logs. Every 2,500 steps, it evaluates
 on validation data and saves a checkpoint to `OUTPUT_DIR`. Because evaluation
 and saving intervals match, each candidate metric has a corresponding saved
-checkpoint.
+checkpoint. Checkpoints are ranked by macro average precision, which does not
+depend on a decision threshold.
 
 ## 12. Evaluation During Training
 
@@ -665,15 +671,15 @@ AP_c=\frac{1}{P_c}\sum_{k:y_{(k),c}=1}
 $$
 
 If an evaluated split has no positive example for a genre, its average precision
-is defined as zero. This implementation does not calculate a single mean average
-precision field; it emits one AP value per label.
+is defined as zero. The implementation emits one AP value per label and their
+arithmetic mean as `macro_average_precision`.
 
 ### 12.5 Best-checkpoint selection and early stopping
 
-Trainer prefixes returned fields with `eval_`, so `macro_f1` becomes
-`eval_macro_f1`. The checkpoint with the highest threshold-optimized validation
-macro F1 is considered best. `load_best_model_at_end=True` restores that
-checkpoint after training ends.
+Trainer prefixes returned fields with `eval_`, so `macro_average_precision`
+becomes `eval_macro_average_precision`. The checkpoint with the highest
+threshold-independent validation macro average precision is considered best.
+`load_best_model_at_end=True` restores that checkpoint after training ends.
 
 Early stopping allows three consecutive evaluation events without improvement.
 At 2,500 steps per event, its nominal patience is 7,500 optimizer steps, but it
@@ -720,31 +726,28 @@ threshold search occurs in this final metric calculation.
 
 The reported fields are:
 
-- Overall `micro_f1` and `macro_f1`.
+- Overall `micro_f1`, `macro_f1`, and `macro_average_precision`.
 - Precision, recall, F1, and average precision for each of 19 genres.
 
-That produces 78 values: 2 aggregate metrics plus $19\times4$ per-label metrics.
+That produces 79 values: 3 aggregate metrics plus $19\times4$ per-label metrics.
 They are written to the run's `test_metrics.json` and included in its summary.
 
-There is one implementation subtlety: `trainer.predict(dataset["test"])` also
-invokes the registered `compute_metrics` callback internally with no explicit
-threshold vector. It consequently computes a test-optimized metric dictionary
-inside `test_predictions.metrics`. The pipeline discards that dictionary and
-recomputes the saved metrics with validation thresholds, so it does not affect
-checkpoint selection, thresholds, or reported test scores. It is nevertheless
-unnecessary work and means test labels are inspected by a transient metric
-calculation before the proper final calculation.
+`predict_without_metrics()` temporarily disables the Trainer metric callback
+while obtaining raw test logits and restores it in a `finally` block. Test labels
+therefore cannot influence a transient threshold search. The pipeline performs
+exactly one test metric calculation, using validation-derived thresholds.
 
 ## 15. Plots and Diagnostic Outputs
 
 ### 15.1 Training overview
 
-`training_metrics.png` is a 2-by-2 figure containing:
+`training_metrics.png` is a 3-by-2 figure with one unused panel, containing:
 
 - Training loss.
 - Validation loss.
 - Validation micro F1.
 - Validation macro F1.
+- Validation macro average precision.
 
 The horizontal value is `epoch` when Trainer supplied it, otherwise `step`.
 Panels with no matching records display "No data collected".
@@ -927,7 +930,7 @@ The pipeline observes each split as follows:
 |---|---:|---:|---:|---:|
 | Train | Yes | No | No | Train metrics only |
 | Validation | No | Yes | Yes | Validation metrics |
-| Test | No | No | No for saved results | Final test metrics |
+| Test | No | No | No | Final test metrics |
 
 Threshold tuning on validation is valid model selection, but repeatedly tuning
 19 thresholds can overfit a small validation set. Test metrics are the main
@@ -941,25 +944,23 @@ other semantic near-duplicates.
 
 ## 21. Known Design Caveats
 
-1. Positive weighting and oversampling can compound minority emphasis.
-2. Best-checkpoint macro F1 is threshold-optimized separately at every
-   validation event, not measured under one fixed deployment threshold vector.
+1. Enabling oversampling while positive weights remain enabled can compound
+   minority emphasis; ablation runs should change one mechanism at a time.
+2. Macro average precision ranks predictions but does not directly optimize the
+   final thresholded macro F1 objective.
 3. Final thresholds are selected after checkpoint selection; jointly selecting
    a checkpoint and stable threshold vector could choose a different result.
-4. The transient metrics generated by `trainer.predict(test)` optimize on test
-   labels but are discarded; only recomputed validation-threshold metrics are
-   saved.
-5. `fp16=True` is unconditional and limits hardware portability.
-6. No base-model revision or cleaned-dataset checksum is recorded.
-7. No explicit training resume behavior is implemented.
-8. Shared checkpoint paths make concurrent runs unsafe and do not preserve each
+4. `fp16=True` is unconditional and limits hardware portability.
+5. No base-model revision or cleaned-dataset checksum is recorded.
+6. No explicit training resume behavior is implemented.
+7. Shared checkpoint paths make concurrent runs unsafe and do not preserve each
    run's checkpoint weights.
-9. Average precision is implemented locally rather than through a standard
+8. Average precision is implemented locally rather than through a standard
    metrics library; behavior for tied scores follows NumPy's sort ordering.
-10. Threshold candidates are restricted to 0.10 through 0.90, so an optimum
+9. Threshold candidates are restricted to 0.10 through 0.90, so an optimum
     outside that grid cannot be selected.
-11. `training_history.jsonl` is append-only and has no file lock.
-12. The model predicts labels independently and does not explicitly enforce
+10. `training_history.jsonl` is append-only and has no file lock.
+11. The model predicts labels independently and does not explicitly enforce
     valid genre combinations.
 
 ## 22. Comparing and Releasing Runs
@@ -993,7 +994,7 @@ Before training:
 After training:
 
 - Confirm `latest_run.json` has status `completed`.
-- Inspect best checkpoint and best validation macro F1.
+- Inspect the best checkpoint and best validation macro average precision.
 - Compare train and validation loss for instability or overfitting.
 - Compare macro F1 with micro F1; a large gap often signals rare-label weakness.
 - Inspect every genre's precision, recall, F1, and average precision.
@@ -1016,6 +1017,7 @@ After training:
 | `find_per_label_thresholds` | Grid-search the best F1 threshold per genre |
 | `compute_metrics` | Produce aggregate and per-label evaluation metrics |
 | `calculate_pos_weights` | Derive capped positive BCE weights from original train data |
+| `predict_without_metrics` | Obtain raw predictions without invoking metric callbacks |
 | `oversample_minority_examples` | Add reproducible rare-label-biased train examples |
 | `ImbalanceAwareTrainer` | Replace Trainer's loss with weighted BCE/focal loss |
 | `tune_thresholds` | Save final validation thresholds and threshold plot |
@@ -1028,11 +1030,11 @@ After training:
 ## 25. Summary
 
 Version 0.1.0 trains an unfrozen BERT Base encoder and 19-output classification
-head on 256-token movie title/overview sequences. It addresses imbalance through
-both capped positive BCE weights and deterministic minority oversampling. Model
-selection uses validation macro F1 with per-label grid-searched thresholds,
-final thresholds are persisted from the restored best checkpoint's validation
-predictions, and held-out test results are saved using those validation-derived
-thresholds. Every attempt receives a durable status record; successful runs add
-metrics and plots while the shared output root holds the latest successful model
-and Trainer checkpoints.
+head on 256-token movie title/overview sequences. The default addresses imbalance
+with capped positive BCE weights while leaving minority oversampling disabled for
+a clean weighted-only experiment. Model selection uses threshold-independent
+validation macro average precision; final thresholds are persisted from the
+restored best checkpoint's validation predictions, and held-out test results are
+computed once using those validation-derived thresholds. Every attempt receives
+a durable status record; successful runs add metrics and plots while the shared
+output root holds the latest successful model and Trainer checkpoints.

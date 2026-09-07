@@ -6,8 +6,24 @@ from dotenv import load_dotenv
 from huggingface_hub import HfApi
 
 
+ROOT_DIR = Path(__file__).resolve().parents[1]
+REQUIRED_MODEL_FILES = (
+	"config.json",
+	"model.safetensors",
+	"tokenizer.json",
+	"tokenizer_config.json",
+)
+
+
+def repository_path(value: str | Path) -> Path:
+	path = Path(value).expanduser()
+	if not path.is_absolute():
+		path = ROOT_DIR / path
+	return path.resolve()
+
+
 def main() -> None:
-	load_dotenv(Path(__file__).with_name(".env"))
+	load_dotenv(ROOT_DIR / ".env")
 
 	parser = argparse.ArgumentParser(
 		description="Upload a model directory to the Hugging Face Hub."
@@ -15,9 +31,11 @@ def main() -> None:
 	parser.add_argument(
 		"directory",
 		nargs="?",
-		type=Path,
-		default=os.getenv("HF_UPLOAD_DIR", "outputs/bert-movie-genres"),
-		help="Local model directory to upload",
+		type=repository_path,
+		default=repository_path(
+			os.getenv("HF_UPLOAD_DIR", "outputs/bert-movie-genres")
+		),
+		help="Model directory to upload; relative paths use the repository root",
 	)
 	parser.add_argument("repo_id", nargs="?", default=os.getenv("HF_REPO_ID"))
 	parser.add_argument(
@@ -36,14 +54,20 @@ def main() -> None:
 		parser.error("Repository ID is required (argument or HF_REPO_ID in .env)")
 	if not args.directory.is_dir():
 		parser.error(f"Directory not found: {args.directory}")
+	missing_files = [
+		filename
+		for filename in REQUIRED_MODEL_FILES
+		if not (args.directory / filename).is_file()
+	]
+	if missing_files:
+		parser.error("Missing required model files: " + ", ".join(missing_files))
 
 	result = HfApi(token=args.token).upload_folder(
 		folder_path=str(args.directory),
 		repo_id=args.repo_id,
 		repo_type=args.repo_type,
 		commit_message=args.commit_message,
-		# Checkpoints contain optimizer state and are not needed for inference.
-		ignore_patterns=["checkpoint-*", "checkpoint-*/*"],
+		allow_patterns=list(REQUIRED_MODEL_FILES),
 	)
 	print(result)
 

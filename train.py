@@ -29,7 +29,8 @@ THRESHOLD_CANDIDATES = np.arange(0.1, 0.91, 0.05)
 LOSS_TYPE = "weighted_bce"  # Use "focal" for weighted focal loss.
 FOCAL_GAMMA = 2.0
 MAX_POS_WEIGHT = 10.0
-OVERSAMPLE_RATIO = 0.5
+USE_POS_WEIGHTS = True
+OVERSAMPLE_RATIO = 0.0
 OVERSAMPLE_POWER = 0.5
 RANDOM_SEED = 42
 
@@ -117,9 +118,24 @@ def average_precision(probabilities, targets) -> float:
     return float(precision_at_rank[sorted_targets].sum() / positive_count)
 
 
+def build_model_text(title: str, overview: str, keywords: str) -> str:
+    title = title.strip()
+    overview = overview.strip()
+    keywords = keywords.strip()
+    return f"Title: {title} Keywords: {keywords} Overview: {overview}"
+
+
 def encode_batch(examples, tokenizer):
+    texts = [
+        build_model_text(title, overview, keywords)
+        for title, overview, keywords in zip(
+            examples["title"],
+            examples["overview"],
+            examples["keywords"],
+        )
+    ]
     encoded = tokenizer(
-        examples["plot"],
+        texts,
         max_length=MAX_LENGTH,
         truncation=True,
     )
@@ -180,17 +196,24 @@ def compute_metrics(eval_prediction, thresholds=None):
         where=(true_positives + false_negatives) != 0,
     )
 
+    per_label_average_precision = np.asarray(
+        [
+            average_precision(probabilities[:, index], targets[:, index])
+            for index in range(len(CLASS_LABELS))
+        ]
+    )
     metrics = {
         "micro_f1": float(micro_f1),
         "macro_f1": float(per_label_f1.mean()),
+        "macro_average_precision": float(per_label_average_precision.mean()),
     }
     for index, label in ID_TO_LABEL.items():
         metric_name = label_metric_name(label)
         metrics[f"{metric_name}_precision"] = float(precision[index])
         metrics[f"{metric_name}_recall"] = float(recall[index])
         metrics[f"{metric_name}_f1"] = float(per_label_f1[index])
-        metrics[f"{metric_name}_average_precision"] = average_precision(
-            probabilities[:, index], targets[:, index]
+        metrics[f"{metric_name}_average_precision"] = float(
+            per_label_average_precision[index]
         )
     return metrics
 
@@ -205,8 +228,20 @@ def calculate_pos_weights(train_dataset) -> np.ndarray:
         ]
         raise ValueError(f"Training split has no examples for: {missing_labels}")
 
+    if not USE_POS_WEIGHTS:
+        return np.ones(len(CLASS_LABELS), dtype=np.float32)
+
     negative_counts = len(labels) - positive_counts
     return np.clip(negative_counts / positive_counts, 1.0, MAX_POS_WEIGHT)
+
+
+def predict_without_metrics(trainer, dataset):
+    compute_metrics = trainer.compute_metrics
+    trainer.compute_metrics = None
+    try:
+        return trainer.predict(dataset)
+    finally:
+        trainer.compute_metrics = compute_metrics
 
 
 def oversample_minority_examples(train_dataset):
@@ -321,9 +356,10 @@ def plot_training_metrics(log_history, output_dir: Path) -> None:
         ("eval_loss", "Validation Loss"),   
         ("eval_micro_f1", "Validation Micro F1"),
         ("eval_macro_f1", "Validation Macro F1"),
+        ("eval_macro_average_precision", "Validation Macro Average Precision"),
     ]
 
-    _, axes = plt.subplots(2, 2, figsize=(12, 8))
+    _, axes = plt.subplots(3, 2, figsize=(12, 12))
 
     for axis, (metric, title) in zip(axes.flat, metric_groups):
         records = [entry for entry in log_history if metric in entry]
@@ -339,6 +375,9 @@ def plot_training_metrics(log_history, output_dir: Path) -> None:
         axis.set_xlabel("Epoch")
         axis.set_ylabel(metric)
         axis.grid(alpha=0.3)
+
+    for axis in axes.flat[len(metric_groups):]:
+        axis.axis("off")
 
     plt.tight_layout()
     graph_path = output_dir / "training_metrics.png"
@@ -475,7 +514,7 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
         save_strategy="steps",
         save_steps=EVAL_STEPS,
         load_best_model_at_end=True,
-        metric_for_best_model="macro_f1",
+        metric_for_best_model="macro_average_precision",
         greater_is_better=True,
         fp16=True,
         logging_steps=100,
@@ -498,7 +537,7 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
         dataset["validation"], metric_key_prefix="validation"
     )
     thresholds = tune_thresholds(validation_predictions, run_dir)
-    test_predictions = trainer.predict(dataset["test"])
+    test_predictions = predict_without_metrics(trainer, dataset["test"])
     test_metrics = compute_metrics(
         (test_predictions.predictions, test_predictions.label_ids),
         thresholds=thresholds,
@@ -539,6 +578,7 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
             "loss_type": LOSS_TYPE,
             "focal_gamma": FOCAL_GAMMA,
             "max_pos_weight": MAX_POS_WEIGHT,
+            "use_pos_weights": USE_POS_WEIGHTS,
             "oversample_ratio": OVERSAMPLE_RATIO,
             "oversample_power": OVERSAMPLE_POWER,
             "random_seed": RANDOM_SEED,

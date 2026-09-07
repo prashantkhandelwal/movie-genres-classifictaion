@@ -1,0 +1,127 @@
+db.createView(
+  "movies_export_view",
+  "movies",
+  [
+    {
+      $match: {
+        overview: {
+          $exists: true,
+          $ne: null
+        }
+      }
+    },
+    {
+      $lookup: {
+        from: "keywords",
+        localField: "id",
+        foreignField: "id",
+        as: "kw"
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        title: 1,
+        overview: { $trim: {
+            input: "$overview",
+            chars: "\""
+        },},
+        genres_id: {
+          $reduce: {
+            input: {
+              $map: {
+                input: { $ifNull: ["$genres", []] },
+                as: "g",
+                in: { $toString: "$$g.id" }
+              }
+            },
+            initialValue: "",
+            in: {
+              $concat: [
+                "$$value",
+                { $cond: [{ $eq: ["$$value", ""] }, "", ","] },
+                "$$this"
+              ]
+            }
+          }
+        },
+
+        genres_name: {
+          $reduce: {
+            input: {
+              $map: {
+                input: { $ifNull: ["$genres", []] },
+                as: "g",
+                in: "$$g.name"
+              }
+            },
+            initialValue: "",
+            in: {
+              $concat: [
+                "$$value",
+                { $cond: [{ $eq: ["$$value", ""] }, "", ","] },
+                "$$this"
+              ]
+            }
+          }
+        },
+
+        keywords: {
+          $reduce: {
+            input: {
+              $map: {
+                input: {
+                  $ifNull: [
+                    {
+                      $arrayElemAt: ["$kw.keywords", 0]
+                    },
+                    []
+                  ]
+                },
+                as: "k",
+                in: "$$k.name"
+              }
+            },
+            initialValue: "",
+            in: {
+              $concat: [
+                "$$value",
+                { $cond: [{ $eq: ["$$value", ""] }, "", ","] },
+                "$$this"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      $match: {
+        $expr: {
+          $and: [
+            {
+              $gt: [
+                {
+                  $strLenCP: {
+                    $trim: {
+                      input: "$overview"
+                    }
+                  }
+                },
+                0
+              ]
+            },
+            {
+              $gt: [{ $strLenCP: "$genres_id" }, 0]
+            },
+            {
+              $gt: [{ $strLenCP: "$genres_name" }, 0]
+            },
+            {
+              $gt: [{ $strLenCP: "$keywords" }, 0]
+            }
+          ]
+        }
+      }
+    }
+  ]
+);

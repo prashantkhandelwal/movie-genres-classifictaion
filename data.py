@@ -8,7 +8,15 @@ DATA_DIR = Path(__file__).parent / "data"
 INPUT_FILE = DATA_DIR / "moviedb.movies.csv"
 OUTPUT_FILE = DATA_DIR / "cleaned_movies.csv"
 GENRES_FILE = DATA_DIR / "genres.csv"
-OUTPUT_COLUMNS = ["plot", "genre_ids", "genre_names", "group_id", "split"]
+OUTPUT_COLUMNS = [
+    "title",
+    "overview",
+    "keywords",
+    "genre_ids",
+    "genre_names",
+    "group_id",
+    "split",
+]
 MISSING_VALUES = ["", "null", "none", "nan", "n/a", "na"]
 PLACEHOLDER_PLOTS = [
     "add the plot.",
@@ -31,6 +39,10 @@ def normalized_text(column: str) -> pl.Expr:
     )
 
 
+def normalized_title(column: str) -> pl.Expr:
+    return normalized_text(column).str.strip_chars('"').str.strip_chars()
+
+
 def stable_group_id(text: str) -> int:
     digest = hashlib.blake2b(text.encode("utf-8"), digest_size=8).digest()
     return int.from_bytes(digest, byteorder="big")
@@ -48,13 +60,16 @@ def clean_movies(
         genre_reference.select("genre_name", "genre_id").iter_rows()
     )
     raw = pl.read_csv(input_file, infer_schema_length=10_000)
+    title = normalized_title("title")
+    if "original_title" in raw.columns:
+        title = pl.coalesce(title, normalized_title("original_title"))
 
     normalized = (
         raw.select(
-            normalized_text("title").alias("title"),
-            normalized_text("original_title").alias("original_title"),
+            title.alias("title"),
             normalized_text("overview").alias("overview"),
             normalized_text("genres_name").alias("genre_names"),
+            normalized_text("keywords").alias("keywords"),
         )
         .with_columns(
             pl.when(
@@ -64,10 +79,9 @@ def clean_movies(
             .then(None)
             .otherwise(pl.col(column))
             .alias(column)
-            for column in ["title", "original_title", "overview", "genre_names"]
+            for column in ["title", "overview", "genre_names", "keywords"]
         )
         .with_columns(
-            pl.coalesce("title", "original_title").alias("title"),
             pl.col("overview").str.to_lowercase().alias("overview_key"),
         )
     )
@@ -76,6 +90,7 @@ def clean_movies(
         pl.col("title").is_not_null()
         & pl.col("overview").is_not_null()
         & pl.col("genre_names").is_not_null()
+        & pl.col("keywords").is_not_null()
         & ~pl.col("overview_key").is_in(PLACEHOLDER_PLOTS)
         & ~pl.col("overview_key").str.starts_with("no overview")
         & ~pl.col("overview_key").str.starts_with(".....")
@@ -87,6 +102,11 @@ def clean_movies(
         valid_text.with_columns(
             pl.col("title").str.to_lowercase().alias("title_key"),
             pl.col("genre_names").str.split(",").alias("genre_name"),
+            pl.col("keywords")
+            .str.split(",")
+            .list.eval(pl.element().str.strip_chars())
+            .list.filter(pl.element() != "")
+            .alias("keyword_names"),
         )
         .explode("genre_name", empty_as_null=True)
         .with_columns(pl.col("genre_name").str.strip_chars())
@@ -101,6 +121,11 @@ def clean_movies(
             pl.col("title").first(),
             pl.col("overview").first(),
             pl.col("genre_name").unique().sort().alias("genre_names_list"),
+            pl.col("keyword_names")
+            .explode()
+            .unique()
+            .sort()
+            .alias("keywords_list"),
         )
         .filter(
             pl.col("genre_names_list").list.len().is_between(1, MAX_GENRES)
@@ -120,12 +145,7 @@ def clean_movies(
             .then(pl.lit("validation"))
             .otherwise(pl.lit("train"))
             .alias("split"),
-            pl.concat_str(
-                pl.lit("Title: "),
-                pl.col("title"),
-                pl.lit(" Overview: "),
-                pl.col("overview"),
-            ).alias("plot"),
+            pl.col("keywords_list").list.join(",").alias("keywords"),
             pl.col("genre_names_list").list.join(",").alias("genre_names"),
             pl.col("genre_ids_list")
             .list.eval(pl.element().cast(pl.String))
@@ -138,7 +158,7 @@ def clean_movies(
 
     cleaned.write_csv(output_file)
     print(f"Rows: {raw.height:,} raw -> {cleaned.height:,} cleaned")
-    print(cleaned.group_by("split").len().sort("split"))
+    print(cleaned.group_by("split").len().sort("split").to_dicts())
 
 
 def main() -> None:

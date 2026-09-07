@@ -10,7 +10,7 @@ For each input movie, the model produces an independent score for every genre. A
 - **Task:** Multi-label text classification
 - **Base model:** [`google-bert/bert-base-uncased`](https://huggingface.co/google-bert/bert-base-uncased)
 - **Number of labels:** 19
-- **Maximum input length during training:** 384 tokens
+- **Maximum input length during training:** 256 tokens
 - **Classification thresholds:** tuned independently per genre on validation data
 - **Framework:** Hugging Face Transformers 5.5.0 and PyTorch
 
@@ -26,7 +26,7 @@ The model predicts the following genres:
 
 ## Input Format
 
-Provide plain text containing a movie title, overview, or both. The training pipeline uses the `plot` field, which combines the title and overview. Inputs are lowercased by the uncased BERT tokenizer and truncated to 384 tokens during training and inference.
+Provide movie title, keyword, and overview text. The cleaned dataset stores these fields separately, and the training pipeline combines them into one labeled sequence. Inputs are lowercased by the uncased BERT tokenizer and truncated to 256 tokens during training and inference.
 
 ## Usage
 
@@ -50,7 +50,7 @@ model.eval()
 movie_text = "A crew travels through deep space to stop an alien threat from destroying Earth."
 inputs = tokenizer(
 	movie_text,
-	max_length=384,
+	max_length=256,
 	truncation=True,
 	return_tensors="pt",
 )
@@ -86,19 +86,19 @@ The model was fine-tuned with the following configuration:
 - Weight decay: `0.01`
 - Warmup ratio: `0.1`
 - Evaluation and checkpoint saving: every 2,500 steps
-- Best checkpoint metric: validation macro F1
+- Best checkpoint metric: validation macro average precision
 - Early stopping patience: 3 evaluations
 - Mixed precision: FP16 when supported by the training hardware
 - Loss: positive-class-weighted BCE, with weights capped at `10.0`
-- Oversampling: adds `50%` train-only samples, biased toward rarer genres
+- Oversampling: disabled by default; set `OVERSAMPLE_RATIO` above `0` to enable it
 
-Genre names are converted to multi-hot vectors. The training objective treats each genre as an independent binary decision. Set `LOSS_TYPE` in `train.py` to `weighted_bce` or `focal`; `FOCAL_GAMMA`, `MAX_POS_WEIGHT`, `OVERSAMPLE_RATIO`, and `OVERSAMPLE_POWER` control imbalance handling. Set `OVERSAMPLE_RATIO` to `0` to disable oversampling.
+Genre names are converted to multi-hot vectors. The training objective treats each genre as an independent binary decision. Positive-class weighting is enabled independently with `USE_POS_WEIGHTS`; oversampling is controlled by `OVERSAMPLE_RATIO`, which defaults to `0` so the two imbalance treatments are not compounded. Set `LOSS_TYPE` to `weighted_bce` or `focal`; `FOCAL_GAMMA`, `MAX_POS_WEIGHT`, and `OVERSAMPLE_POWER` provide the remaining controls.
 
-Evaluation reports micro F1, macro F1, and per-genre precision, recall, F1, and average precision. Thresholds are optimized independently for every genre on the validation split and saved to `thresholds.json`. Final metrics are then calculated once on the held-out test split using that threshold vector and saved to `test_metrics.json`.
+Evaluation reports micro F1, macro F1, macro average precision, and per-genre precision, recall, F1, and average precision. Threshold-independent macro average precision selects the best checkpoint. Thresholds are then optimized independently for every genre on the validation split and saved to `thresholds.json`. Raw held-out test predictions are generated without running the Trainer metric callback, then evaluated once using the validation threshold vector and saved to `test_metrics.json`.
 
 Training saves the following visualizations in the model output directory:
 
-- `training_metrics.png`: training loss, validation loss, micro F1, and macro F1
+- `training_metrics.png`: training loss, validation loss, micro F1, macro F1, and macro average precision
 - `per_label_metrics.png`: precision, recall, F1, and average precision for each genre at the best checkpoint
 - `per_label_metric_history.png`: per-genre F1 and average-precision heatmaps across evaluation steps
 - `threshold_tuning.png`: global threshold search and tuned threshold for each genre
@@ -124,7 +124,7 @@ Final evaluation scores are not included because they were not recorded as part 
 - The model was trained on movie metadata and may reproduce genre-labeling patterns or omissions in that data.
 - Rare genres may receive less reliable predictions than common genres; inspect macro F1 and per-genre results.
 - Genre-specific thresholds can drift when the training data distribution changes and should be retuned after training.
-- Text longer than 384 tokens is truncated, which can remove useful plot information.
+- Text longer than 256 tokens is truncated, which can remove useful plot information.
 - The model is based on English BERT and should not be assumed to perform reliably on other languages.
 - This model has not been validated for safety-critical, legal, or high-impact decision-making.
 

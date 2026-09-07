@@ -38,43 +38,29 @@ Query to collect the data from movies collection
     }
   },
   {
+    $lookup: {
+      from: "keywords",
+      localField: "id",        // movie id
+      foreignField: "id", // keywords collection field
+      as: "keywords"
+    }
+  },
+  {
     $project: {
       _id: 0,
       original_title: 1,
       title: 1,
       overview: 1,
-      genres_id: {
-        $reduce: {
-          input: { $map: { input: "$genres", in: { $toString: "$$this.id" } } },
-          initialValue: "",
-          in: {
-            $concat: [
-              "$$value",
-              { $cond: [{ $eq: ["$$value", ""] }, "", ", "] },
-              "$$this"
-            ]
-          }
-        }
-      },
-      genres_name: {
-        $reduce: {
-          input: { $map: { input: "$genres", in: "$$this.name" } },
-          initialValue: "",
-          in: {
-            $concat: [
-              "$$value",
-              { $cond: [{ $eq: ["$$value", ""] }, "", ", "] },
-              "$$this"
-            ]
-          }
-        }
-      }
+      genres_id: { $map: { input: "$genres", in: { $toString: "$$this.id" } } },
+      genres_name: { $map: { input: "$genres", in: "$$this.name" } },
+      keywords: { $map: { input: "$keywords", in: "$$this.name" } }
     }
   },
   {
     $match: {
-      genres_id: { $ne: "" },
-      genres_name: { $ne: "" }
+      genres_id: { $ne: [] },
+      genres_name: { $ne: [] },
+      keywords: { $ne: [] }
     }
   }
 ])

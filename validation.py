@@ -5,15 +5,25 @@ import polars as pl
 path = Path(r"f:\Github\movie-genres-classifictaion\data\cleaned_movies.csv")
 df = pl.read_csv(path)
 labels = df.with_columns(pl.col("genre_names").str.split(",").alias("label")).explode("label")
-plot_lower = pl.col("plot").str.to_lowercase()
+overview_lower = pl.col("overview").str.to_lowercase()
 
-assert df.columns == ["plot", "genre_ids", "genre_names", "group_id", "split"]
-assert df["plot"].n_unique() == df.height
+assert df.columns == [
+    "title",
+    "overview",
+    "keywords",
+    "genre_ids",
+    "genre_names",
+    "group_id",
+    "split",
+]
+assert df.select(pl.struct("title", "overview").n_unique()).item() == df.height
 assert df.group_by("group_id").agg(pl.col("split").n_unique().alias("splits"))["splits"].max() == 1
 assert df["split"].null_count() == 0
+assert df["keywords"].null_count() == 0
+assert not df.select(pl.col("title").str.contains(r'^"+|"+$').any()).item()
 assert set(df["split"].unique()) == {"train", "validation", "test"}
-assert int(df.select(plot_lower.str.contains("overview: no overview").sum()).item()) == 0
-assert int(df.select(plot_lower.str.contains("overview: coming soon").sum()).item()) == 0
+assert int(df.select(overview_lower.str.starts_with("no overview").sum()).item()) == 0
+assert int(df.select(overview_lower.str.starts_with("coming soon").sum()).item()) == 0
 assert int(df.select(pl.col("genre_names").str.split(",").list.len().max()).item()) <= 6
 assert set(labels["label"].unique()) == set(pl.read_csv(path.with_name("genres.csv"))["genre_name"])
 
@@ -29,7 +39,7 @@ max_gap = wide.select(
 print("rows", df.height)
 print("file_mb", round(path.stat().st_size / 1024**2, 2))
 print("splits", df.group_by("split").len().sort("split").to_dicts())
-print("duplicate_plots", df.height - df["plot"].n_unique())
+print("duplicate_title_overviews", df.height - df.select(pl.struct("title", "overview").n_unique()).item())
 print("cross_split_groups", 0)
 print("labels", labels["label"].n_unique())
 print("max_genres", df.select(pl.col("genre_names").str.split(",").list.len().max()).item())
