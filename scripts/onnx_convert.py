@@ -12,7 +12,7 @@ tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 dummy_input = tokenizer("This is a sample input.", 
                         return_tensors="pt", 
                         padding="max_length", 
-                        max_length=128)
+                        max_length=256)
 
 # 3. Export to ONNX
 torch.onnx.export(

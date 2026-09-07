@@ -16,13 +16,14 @@ from transformers import (
     TrainingArguments,
 )
 
+from model_input import MAX_LENGTH, build_model_text
+
 
 MODEL_NAME = "google-bert/bert-base-uncased"
 DATASET_PATH = Path(__file__).parent / "data" / "cleaned_movies.csv"
 OUTPUT_DIR = Path(__file__).parent / "outputs" / "bert-movie-genres"
 RUNS_DIR = OUTPUT_DIR / "runs"
 HISTORY_PATH = OUTPUT_DIR / "training_history.jsonl"
-MAX_LENGTH = 256
 LABEL_THRESHOLD = 0.5
 EVAL_STEPS = 2500
 THRESHOLD_CANDIDATES = np.arange(0.1, 0.91, 0.05)
@@ -116,13 +117,6 @@ def average_precision(probabilities, targets) -> float:
         1, len(sorted_targets) + 1
     )
     return float(precision_at_rank[sorted_targets].sum() / positive_count)
-
-
-def build_model_text(title: str, overview: str, keywords: str) -> str:
-    title = title.strip()
-    overview = overview.strip()
-    keywords = keywords.strip()
-    return f"Title: {title} Keywords: {keywords} Overview: {overview}"
 
 
 def encode_batch(examples, tokenizer):

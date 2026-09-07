@@ -47,7 +47,12 @@ tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForSequenceClassification.from_pretrained(model_id)
 model.eval()
 
-movie_text = "A crew travels through deep space to stop an alien threat from destroying Earth."
+movie_text = (
+	"Title: Example Movie "
+	"Keywords: alien,space travel,earth "
+	"Overview: A crew travels through deep space to stop an alien threat "
+	"from destroying Earth."
+)
 inputs = tokenizer(
 	movie_text,
 	max_length=256,
