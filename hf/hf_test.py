@@ -7,7 +7,6 @@ classifier = pipeline(
 )
 
 result = classifier(
-    "Title: Wish You Were Here Keywords: romance,dark wish "
     "Overview: After breaking the mysterious 'One Wish Willow' to win his "
     "crush's heart, a hopeless romantic finds himself getting exactly what "
     "he asked for but soon discovers that some desires come at a dark, "

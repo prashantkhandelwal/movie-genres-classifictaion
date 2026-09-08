@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn.functional as F
-from datasets import DatasetDict, load_dataset
+from datasets import DatasetDict, concatenate_datasets, load_dataset
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
@@ -16,7 +16,13 @@ from transformers import (
     TrainingArguments,
 )
 
-from model_input import MAX_LENGTH, build_model_text
+from metrics import (
+    find_per_label_thresholds,
+    label_metric_name,
+    make_multilabel_compute_metrics,
+    multilabel_f1,
+)
+from model_input import MAX_LENGTH, build_inference_text, build_training_text
 
 
 MODEL_NAME = "google-bert/bert-base-uncased"
@@ -33,6 +39,7 @@ MAX_POS_WEIGHT = 10.0
 USE_POS_WEIGHTS = True
 OVERSAMPLE_RATIO = 0.0
 OVERSAMPLE_POWER = 0.5
+OVERVIEW_ONLY_AUGMENTATION_RATIO = 1
 RANDOM_SEED = 42
 
 CLASS_LABELS = [
@@ -84,50 +91,18 @@ def archive_run_summary(run_dir: Path, summary: dict) -> None:
     shutil.copy2(run_dir / "run_summary.json", OUTPUT_DIR / "latest_run.json")
 
 
-def label_metric_name(label: str) -> str:
-    return label.lower().replace(" ", "_")
-
-
-def multilabel_f1(predictions, targets):
-    true_positives = np.logical_and(predictions, targets).sum(axis=0)
-    false_positives = np.logical_and(predictions, ~targets).sum(axis=0)
-    false_negatives = np.logical_and(~predictions, targets).sum(axis=0)
-
-    per_label_denominator = 2 * true_positives + false_positives + false_negatives
-    per_label_f1 = np.divide(
-        2 * true_positives,
-        per_label_denominator,
-        out=np.zeros_like(true_positives, dtype=float),
-        where=per_label_denominator != 0,
-    )
-    micro_denominator = (
-        2 * true_positives.sum() + false_positives.sum() + false_negatives.sum()
-    )
-    micro_f1 = 2 * true_positives.sum() / max(micro_denominator, 1)
-    return true_positives, false_positives, false_negatives, per_label_f1, micro_f1
-
-
-def average_precision(probabilities, targets) -> float:
-    positive_count = targets.sum()
-    if positive_count == 0:
-        return 0.0
-
-    sorted_targets = targets[np.argsort(-probabilities)]
-    precision_at_rank = np.cumsum(sorted_targets) / np.arange(
-        1, len(sorted_targets) + 1
-    )
-    return float(precision_at_rank[sorted_targets].sum() / positive_count)
-
-
-def encode_batch(examples, tokenizer):
-    texts = [
-        build_model_text(title, overview, keywords)
-        for title, overview, keywords in zip(
-            examples["title"],
-            examples["overview"],
-            examples["keywords"],
-        )
-    ]
+def encode_batch(examples, tokenizer, *, include_metadata):
+    if include_metadata:
+        texts = [
+            build_training_text(title, overview, keywords)
+            for title, overview, keywords in zip(
+                examples["title"],
+                examples["overview"],
+                examples["keywords"],
+            )
+        ]
+    else:
+        texts = [build_inference_text(overview) for overview in examples["overview"]]
     encoded = tokenizer(
         texts,
         max_length=MAX_LENGTH,
@@ -146,70 +121,10 @@ def encode_batch(examples, tokenizer):
     return encoded
 
 
-def find_per_label_thresholds(probabilities, targets) -> np.ndarray:
-    per_label_thresholds = []
-    for index in range(len(CLASS_LABELS)):
-        label_scores = []
-        for threshold in THRESHOLD_CANDIDATES:
-            *_, per_label_f1, _ = multilabel_f1(
-                probabilities[:, [index]] >= threshold,
-                targets[:, [index]],
-            )
-            label_scores.append(per_label_f1[0])
-        per_label_thresholds.append(
-            float(THRESHOLD_CANDIDATES[np.argmax(label_scores)])
-        )
-    return np.asarray(per_label_thresholds)
-
-
-def compute_metrics(eval_prediction, thresholds=None):
-    logits, labels = eval_prediction
-    probabilities = 1.0 / (1.0 + np.exp(-logits))
-    targets = labels >= 0.5
-    if thresholds is None:
-        thresholds = find_per_label_thresholds(probabilities, targets)
-    predictions = probabilities >= thresholds
-
-    (
-        true_positives,
-        false_positives,
-        false_negatives,
-        per_label_f1,
-        micro_f1,
-    ) = multilabel_f1(predictions, targets)
-    precision = np.divide(
-        true_positives,
-        true_positives + false_positives,
-        out=np.zeros_like(true_positives, dtype=float),
-        where=(true_positives + false_positives) != 0,
-    )
-    recall = np.divide(
-        true_positives,
-        true_positives + false_negatives,
-        out=np.zeros_like(true_positives, dtype=float),
-        where=(true_positives + false_negatives) != 0,
-    )
-
-    per_label_average_precision = np.asarray(
-        [
-            average_precision(probabilities[:, index], targets[:, index])
-            for index in range(len(CLASS_LABELS))
-        ]
-    )
-    metrics = {
-        "micro_f1": float(micro_f1),
-        "macro_f1": float(per_label_f1.mean()),
-        "macro_average_precision": float(per_label_average_precision.mean()),
-    }
-    for index, label in ID_TO_LABEL.items():
-        metric_name = label_metric_name(label)
-        metrics[f"{metric_name}_precision"] = float(precision[index])
-        metrics[f"{metric_name}_recall"] = float(recall[index])
-        metrics[f"{metric_name}_f1"] = float(per_label_f1[index])
-        metrics[f"{metric_name}_average_precision"] = float(
-            per_label_average_precision[index]
-        )
-    return metrics
+compute_metrics = make_multilabel_compute_metrics(
+    CLASS_LABELS,
+    threshold_candidates=THRESHOLD_CANDIDATES,
+)
 
 
 def calculate_pos_weights(train_dataset) -> np.ndarray:
@@ -302,7 +217,11 @@ class ImbalanceAwareTrainer(Trainer):
 def tune_thresholds(prediction_output, output_dir: Path) -> np.ndarray:
     probabilities = 1.0 / (1.0 + np.exp(-prediction_output.predictions))
     targets = prediction_output.label_ids >= 0.5
-    per_label_thresholds = find_per_label_thresholds(probabilities, targets)
+    per_label_thresholds = find_per_label_thresholds(
+        probabilities,
+        targets,
+        THRESHOLD_CANDIDATES,
+    )
 
     optimized_predictions = probabilities >= per_label_thresholds
     *_, optimized_per_label_f1, optimized_micro_f1 = multilabel_f1(
@@ -464,6 +383,19 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
     )
 
     full_dataset = load_dataset("csv", data_files=str(DATASET_PATH), split="train")
+    missing_training_keywords = sum(
+        example["split"] == "train"
+        and (
+            not isinstance(example["keywords"], str)
+            or not example["keywords"].strip()
+        )
+        for example in full_dataset
+    )
+    if missing_training_keywords:
+        raise ValueError(
+            f"Training split contains {missing_training_keywords} rows "
+            "with missing keywords"
+        )
     dataset = DatasetDict(
         {
             split: full_dataset.filter(
@@ -473,13 +405,40 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
             for split in ["train", "validation", "test"]
         }
     )
-    dataset = dataset.map(
+    raw_train_dataset = dataset["train"]
+    dataset["train"] = raw_train_dataset.map(
         encode_batch,
         batched=True,
-        fn_kwargs={"tokenizer": tokenizer},
+        fn_kwargs={"tokenizer": tokenizer, "include_metadata": True},
         remove_columns=dataset["train"].column_names,
         num_proc=2,
     )
+    overview_only_count = round(
+        len(raw_train_dataset) * OVERVIEW_ONLY_AUGMENTATION_RATIO
+    )
+    if overview_only_count:
+        overview_only_train = (
+            raw_train_dataset.shuffle(seed=RANDOM_SEED)
+            .select(range(overview_only_count))
+            .map(
+                encode_batch,
+                batched=True,
+                fn_kwargs={"tokenizer": tokenizer, "include_metadata": False},
+                remove_columns=raw_train_dataset.column_names,
+                num_proc=2,
+            )
+        )
+        dataset["train"] = concatenate_datasets(
+            [dataset["train"], overview_only_train]
+        ).shuffle(seed=RANDOM_SEED)
+    for split in ["validation", "test"]:
+        dataset[split] = dataset[split].map(
+            encode_batch,
+            batched=True,
+            fn_kwargs={"tokenizer": tokenizer, "include_metadata": False},
+            remove_columns=dataset[split].column_names,
+            num_proc=2,
+        )
     pos_weights = calculate_pos_weights(dataset["train"])
     original_train_size = len(dataset["train"])
     dataset["train"] = oversample_minority_examples(dataset["train"])
@@ -575,10 +534,13 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
             "use_pos_weights": USE_POS_WEIGHTS,
             "oversample_ratio": OVERSAMPLE_RATIO,
             "oversample_power": OVERSAMPLE_POWER,
+            "overview_only_augmentation_ratio": OVERVIEW_ONLY_AUGMENTATION_RATIO,
             "random_seed": RANDOM_SEED,
         },
         "training_arguments": training_args.to_dict(),
         "dataset_sizes": {
+            "train_source": len(raw_train_dataset),
+            "train_overview_only_augmentation": overview_only_count,
             "train_before_oversampling": original_train_size,
             "train_after_oversampling": len(dataset["train"]),
             "validation": len(dataset["validation"]),

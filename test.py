@@ -5,10 +5,10 @@ from pathlib import Path
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
-from model_input import MAX_LENGTH, build_model_text
+from model_input import MAX_LENGTH, build_inference_text
 
 
-MODEL_PATH = Path(__file__).with_name("outputs") / "bert-movie-genres" / "checkpoint-26202"
+MODEL_PATH = Path(__file__).with_name("outputs") / "bert-movie-genres"
 THRESHOLDS_PATH = Path(__file__).with_name("outputs") / "bert-movie-genres" / "thresholds.json"
 DEFAULT_THRESHOLD = 0.5
 
@@ -24,11 +24,8 @@ def load_genre_thresholds() -> dict[str, float]:
 
 
 def predict_genres(
-	title: str,
 	overview: str,
 	threshold: float | None = None,
-	*,
-	keywords: str = "",
 ) -> list[tuple[str, float]]:
 	if not MODEL_PATH.is_dir():
 		raise FileNotFoundError(
@@ -43,7 +40,7 @@ def predict_genres(
 	model.to(device)
 	model.eval()
 
-	text = build_model_text(title, overview, keywords)
+	text = build_inference_text(overview)
 	inputs = tokenizer(
 		text,
 		return_tensors="pt",
@@ -74,13 +71,7 @@ def parse_args() -> argparse.Namespace:
 	parser = argparse.ArgumentParser(
 		description="Predict one or more genres for a movie."
 	)
-	parser.add_argument("title", nargs="?", help="Movie title")
 	parser.add_argument("overview", nargs="?", help="Movie overview or plot summary")
-	parser.add_argument(
-		"--keywords",
-		default="",
-		help="Comma-separated movie keywords",
-	)
 	parser.add_argument(
 		"--threshold",
 		type=float,
@@ -92,14 +83,11 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
 	args = parse_args()
-	title = args.title or input("Movie title: ").strip()
 	overview = args.overview or input("Movie overview: ").strip()
 
 	predictions = predict_genres(
-		title,
 		overview,
 		args.threshold,
-		keywords=args.keywords,
 	)
 	if not predictions:
 		if args.threshold is None:
