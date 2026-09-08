@@ -1,0 +1,2893 @@
+[
+  {
+    "loss": 1.0527503967285157,
+    "grad_norm": 1.720536470413208,
+    "learning_rate": 6.043956043956044e-07,
+    "epoch": 0.009160025648071815,
+    "step": 100
+  },
+  {
+    "loss": 1.046988525390625,
+    "grad_norm": 1.4652857780456543,
+    "learning_rate": 1.2148962148962149e-06,
+    "epoch": 0.01832005129614363,
+    "step": 200
+  },
+  {
+    "loss": 1.033902359008789,
+    "grad_norm": 1.6366342306137085,
+    "learning_rate": 1.8253968253968254e-06,
+    "epoch": 0.027480076944215445,
+    "step": 300
+  },
+  {
+    "loss": 0.9928363800048828,
+    "grad_norm": 1.884888768196106,
+    "learning_rate": 2.435897435897436e-06,
+    "epoch": 0.03664010259228726,
+    "step": 400
+  },
+  {
+    "loss": 0.9673384857177735,
+    "grad_norm": 1.8798896074295044,
+    "learning_rate": 3.0463980463980463e-06,
+    "epoch": 0.045800128240359075,
+    "step": 500
+  },
+  {
+    "loss": 0.9112844848632813,
+    "grad_norm": 2.594240188598633,
+    "learning_rate": 3.656898656898657e-06,
+    "epoch": 0.05496015388843089,
+    "step": 600
+  },
+  {
+    "loss": 0.8960498046875,
+    "grad_norm": 2.184140682220459,
+    "learning_rate": 4.267399267399268e-06,
+    "epoch": 0.0641201795365027,
+    "step": 700
+  },
+  {
+    "loss": 0.8518513488769531,
+    "grad_norm": 2.872744560241699,
+    "learning_rate": 4.877899877899878e-06,
+    "epoch": 0.07328020518457452,
+    "step": 800
+  },
+  {
+    "loss": 0.7893161773681641,
+    "grad_norm": 2.5608670711517334,
+    "learning_rate": 5.488400488400489e-06,
+    "epoch": 0.08244023083264633,
+    "step": 900
+  },
+  {
+    "loss": 0.7651969146728516,
+    "grad_norm": 3.4558207988739014,
+    "learning_rate": 6.0989010989011e-06,
+    "epoch": 0.09160025648071815,
+    "step": 1000
+  },
+  {
+    "loss": 0.720195541381836,
+    "grad_norm": 4.2701873779296875,
+    "learning_rate": 6.7094017094017094e-06,
+    "epoch": 0.10076028212878996,
+    "step": 1100
+  },
+  {
+    "loss": 0.7276869201660157,
+    "grad_norm": 2.0891926288604736,
+    "learning_rate": 7.31990231990232e-06,
+    "epoch": 0.10992030777686178,
+    "step": 1200
+  },
+  {
+    "loss": 0.6811441802978515,
+    "grad_norm": 2.2554194927215576,
+    "learning_rate": 7.93040293040293e-06,
+    "epoch": 0.11908033342493358,
+    "step": 1300
+  },
+  {
+    "loss": 0.6542950439453125,
+    "grad_norm": 2.6877877712249756,
+    "learning_rate": 8.54090354090354e-06,
+    "epoch": 0.1282403590730054,
+    "step": 1400
+  },
+  {
+    "loss": 0.6506967163085937,
+    "grad_norm": 1.618376612663269,
+    "learning_rate": 9.151404151404152e-06,
+    "epoch": 0.1374003847210772,
+    "step": 1500
+  },
+  {
+    "loss": 0.6448593139648438,
+    "grad_norm": 3.1948258876800537,
+    "learning_rate": 9.761904761904762e-06,
+    "epoch": 0.14656041036914905,
+    "step": 1600
+  },
+  {
+    "loss": 0.6195237350463867,
+    "grad_norm": 2.80790638923645,
+    "learning_rate": 1.0372405372405373e-05,
+    "epoch": 0.15572043601722085,
+    "step": 1700
+  },
+  {
+    "loss": 0.6101568222045899,
+    "grad_norm": 2.347412586212158,
+    "learning_rate": 1.0982905982905985e-05,
+    "epoch": 0.16488046166529266,
+    "step": 1800
+  },
+  {
+    "loss": 0.6070124816894531,
+    "grad_norm": 5.42909574508667,
+    "learning_rate": 1.1593406593406595e-05,
+    "epoch": 0.17404048731336447,
+    "step": 1900
+  },
+  {
+    "loss": 0.587450180053711,
+    "grad_norm": 2.4677515029907227,
+    "learning_rate": 1.2203907203907206e-05,
+    "epoch": 0.1832005129614363,
+    "step": 2000
+  },
+  {
+    "loss": 0.5881098937988282,
+    "grad_norm": 4.140256404876709,
+    "learning_rate": 1.2814407814407816e-05,
+    "epoch": 0.1923605386095081,
+    "step": 2100
+  },
+  {
+    "loss": 0.5778365707397461,
+    "grad_norm": 5.548190116882324,
+    "learning_rate": 1.3424908424908424e-05,
+    "epoch": 0.20152056425757991,
+    "step": 2200
+  },
+  {
+    "loss": 0.5763134002685547,
+    "grad_norm": 4.633430480957031,
+    "learning_rate": 1.4035409035409036e-05,
+    "epoch": 0.21068058990565175,
+    "step": 2300
+  },
+  {
+    "loss": 0.5674959564208985,
+    "grad_norm": 3.1971633434295654,
+    "learning_rate": 1.4645909645909646e-05,
+    "epoch": 0.21984061555372356,
+    "step": 2400
+  },
+  {
+    "loss": 0.561205825805664,
+    "grad_norm": 2.2756412029266357,
+    "learning_rate": 1.5256410256410257e-05,
+    "epoch": 0.22900064120179536,
+    "step": 2500
+  },
+  {
+    "eval_loss": 0.5748463869094849,
+    "eval_micro_f1": 0.5907291420467975,
+    "eval_macro_f1": 0.5414962058621924,
+    "eval_macro_average_precision": 0.5405142594529941,
+    "eval_adventure_precision": 0.3838731909028256,
+    "eval_adventure_recall": 0.555333998005982,
+    "eval_adventure_f1": 0.4539527302363488,
+    "eval_adventure_average_precision": 0.4100241373258575,
+    "eval_war_precision": 0.43796992481203006,
+    "eval_war_recall": 0.6526610644257703,
+    "eval_war_f1": 0.5241844769403825,
+    "eval_war_average_precision": 0.5467143527564008,
+    "eval_documentary_precision": 0.8194400754954388,
+    "eval_documentary_recall": 0.7759904676794758,
+    "eval_documentary_f1": 0.7971236230110159,
+    "eval_documentary_average_precision": 0.8773398173555724,
+    "eval_science_fiction_precision": 0.6285097192224622,
+    "eval_science_fiction_recall": 0.671280276816609,
+    "eval_science_fiction_f1": 0.649191299498048,
+    "eval_science_fiction_average_precision": 0.6699109960264543,
+    "eval_thriller_precision": 0.40948275862068967,
+    "eval_thriller_recall": 0.6205463182897862,
+    "eval_thriller_f1": 0.49338999055712934,
+    "eval_thriller_average_precision": 0.44449413659208875,
+    "eval_family_precision": 0.40350877192982454,
+    "eval_family_recall": 0.5123094958968347,
+    "eval_family_f1": 0.45144628099173556,
+    "eval_family_average_precision": 0.4219544820569358,
+    "eval_romance_precision": 0.4697392923649907,
+    "eval_romance_recall": 0.5755847119224187,
+    "eval_romance_f1": 0.5173032555754935,
+    "eval_romance_average_precision": 0.49333747401160716,
+    "eval_fantasy_precision": 0.37125129265770423,
+    "eval_fantasy_recall": 0.4421182266009852,
+    "eval_fantasy_f1": 0.4035975267003935,
+    "eval_fantasy_average_precision": 0.38061027005475745,
+    "eval_drama_precision": 0.5837972957618452,
+    "eval_drama_recall": 0.8268426134534921,
+    "eval_drama_f1": 0.6843822843822844,
+    "eval_drama_average_precision": 0.7114118003410158,
+    "eval_action_precision": 0.5782389231632081,
+    "eval_action_recall": 0.6025715955581531,
+    "eval_action_f1": 0.5901545506582713,
+    "eval_action_average_precision": 0.6302636300732308,
+    "eval_music_precision": 0.7196428571428571,
+    "eval_music_recall": 0.686541737649063,
+    "eval_music_f1": 0.7027027027027027,
+    "eval_music_average_precision": 0.7285249933097583,
+    "eval_western_precision": 0.7710843373493976,
+    "eval_western_recall": 0.7692307692307693,
+    "eval_western_f1": 0.7701564380264742,
+    "eval_western_average_precision": 0.7938081982221873,
+    "eval_animation_precision": 0.4843838727995457,
+    "eval_animation_recall": 0.6612403100775194,
+    "eval_animation_f1": 0.5591609308423467,
+    "eval_animation_average_precision": 0.5753251170556941,
+    "eval_mystery_precision": 0.26660600545950863,
+    "eval_mystery_recall": 0.4419306184012066,
+    "eval_mystery_f1": 0.3325766174801362,
+    "eval_mystery_average_precision": 0.2667509703779537,
+    "eval_tv_movie_precision": 0.1474164133738602,
+    "eval_tv_movie_recall": 0.29984544049459044,
+    "eval_tv_movie_f1": 0.19765664798777383,
+    "eval_tv_movie_average_precision": 0.16438574160224662,
+    "eval_horror_precision": 0.656763590391909,
+    "eval_horror_recall": 0.6370324954015941,
+    "eval_horror_f1": 0.6467475879240585,
+    "eval_horror_average_precision": 0.6780102827445031,
+    "eval_comedy_precision": 0.5108652706440142,
+    "eval_comedy_recall": 0.6725617685305592,
+    "eval_comedy_f1": 0.5806668912091614,
+    "eval_comedy_average_precision": 0.6030539938297187,
+    "eval_crime_precision": 0.4953998584571833,
+    "eval_crime_recall": 0.6008583690987125,
+    "eval_crime_f1": 0.5430566330488751,
+    "eval_crime_average_precision": 0.5177005723323945,
+    "eval_history_precision": 0.4015444015444015,
+    "eval_history_recall": 0.38095238095238093,
+    "eval_history_f1": 0.39097744360902253,
+    "eval_history_average_precision": 0.35614996353851314,
+    "eval_runtime": 33.169,
+    "eval_samples_per_second": 516.175,
+    "eval_steps_per_second": 16.16,
+    "epoch": 0.22900064120179536,
+    "step": 2500
+  },
+  {
+    "loss": 0.5568670654296874,
+    "grad_norm": 4.198522567749023,
+    "learning_rate": 1.586691086691087e-05,
+    "epoch": 0.23816066684986717,
+    "step": 2600
+  },
+  {
+    "loss": 0.5359152603149414,
+    "grad_norm": 2.202515125274658,
+    "learning_rate": 1.647741147741148e-05,
+    "epoch": 0.247320692497939,
+    "step": 2700
+  },
+  {
+    "loss": 0.5536182785034179,
+    "grad_norm": 4.434048652648926,
+    "learning_rate": 1.7087912087912088e-05,
+    "epoch": 0.2564807181460108,
+    "step": 2800
+  },
+  {
+    "loss": 0.5376912689208985,
+    "grad_norm": 2.226884365081787,
+    "learning_rate": 1.7698412698412698e-05,
+    "epoch": 0.26564074379408265,
+    "step": 2900
+  },
+  {
+    "loss": 0.5212830352783203,
+    "grad_norm": 1.9926756620407104,
+    "learning_rate": 1.830891330891331e-05,
+    "epoch": 0.2748007694421544,
+    "step": 3000
+  },
+  {
+    "loss": 0.5244712448120117,
+    "grad_norm": 4.076613426208496,
+    "learning_rate": 1.891941391941392e-05,
+    "epoch": 0.28396079509022626,
+    "step": 3100
+  },
+  {
+    "loss": 0.5096511840820312,
+    "grad_norm": 3.1349306106567383,
+    "learning_rate": 1.952991452991453e-05,
+    "epoch": 0.2931208207382981,
+    "step": 3200
+  },
+  {
+    "loss": 0.5244271850585938,
+    "grad_norm": 2.4555671215057373,
+    "learning_rate": 1.9984393553859203e-05,
+    "epoch": 0.3022808463863699,
+    "step": 3300
+  },
+  {
+    "loss": 0.5066157913208008,
+    "grad_norm": 2.7325358390808105,
+    "learning_rate": 1.9916539440203563e-05,
+    "epoch": 0.3114408720344417,
+    "step": 3400
+  },
+  {
+    "loss": 0.5336538696289063,
+    "grad_norm": 4.699588298797607,
+    "learning_rate": 1.9848685326547922e-05,
+    "epoch": 0.3206008976825135,
+    "step": 3500
+  },
+  {
+    "loss": 0.5182091522216797,
+    "grad_norm": 2.4867489337921143,
+    "learning_rate": 1.9780831212892285e-05,
+    "epoch": 0.3297609233305853,
+    "step": 3600
+  },
+  {
+    "loss": 0.4939141845703125,
+    "grad_norm": 2.0043368339538574,
+    "learning_rate": 1.971297709923664e-05,
+    "epoch": 0.33892094897865715,
+    "step": 3700
+  },
+  {
+    "loss": 0.5103927993774414,
+    "grad_norm": 3.874957799911499,
+    "learning_rate": 1.9645122985581e-05,
+    "epoch": 0.34808097462672893,
+    "step": 3800
+  },
+  {
+    "loss": 0.5033631134033203,
+    "grad_norm": 2.692222833633423,
+    "learning_rate": 1.957726887192536e-05,
+    "epoch": 0.35724100027480077,
+    "step": 3900
+  },
+  {
+    "loss": 0.5124538803100586,
+    "grad_norm": 3.85017991065979,
+    "learning_rate": 1.9509414758269724e-05,
+    "epoch": 0.3664010259228726,
+    "step": 4000
+  },
+  {
+    "loss": 0.511659927368164,
+    "grad_norm": 2.6966793537139893,
+    "learning_rate": 1.9441560644614083e-05,
+    "epoch": 0.3755610515709444,
+    "step": 4100
+  },
+  {
+    "loss": 0.4934663772583008,
+    "grad_norm": 4.487313270568848,
+    "learning_rate": 1.937370653095844e-05,
+    "epoch": 0.3847210772190162,
+    "step": 4200
+  },
+  {
+    "loss": 0.4894453811645508,
+    "grad_norm": 4.212541103363037,
+    "learning_rate": 1.93058524173028e-05,
+    "epoch": 0.39388110286708805,
+    "step": 4300
+  },
+  {
+    "loss": 0.4881902313232422,
+    "grad_norm": 2.6950933933258057,
+    "learning_rate": 1.9237998303647162e-05,
+    "epoch": 0.40304112851515983,
+    "step": 4400
+  },
+  {
+    "loss": 0.5097404861450195,
+    "grad_norm": 5.04686975479126,
+    "learning_rate": 1.917014418999152e-05,
+    "epoch": 0.41220115416323166,
+    "step": 4500
+  },
+  {
+    "loss": 0.47663639068603514,
+    "grad_norm": 2.523627996444702,
+    "learning_rate": 1.9102290076335877e-05,
+    "epoch": 0.4213611798113035,
+    "step": 4600
+  },
+  {
+    "loss": 0.4803287506103516,
+    "grad_norm": 2.979881525039673,
+    "learning_rate": 1.903443596268024e-05,
+    "epoch": 0.4305212054593753,
+    "step": 4700
+  },
+  {
+    "loss": 0.5038539886474609,
+    "grad_norm": 3.925595760345459,
+    "learning_rate": 1.89665818490246e-05,
+    "epoch": 0.4396812311074471,
+    "step": 4800
+  },
+  {
+    "loss": 0.49815982818603516,
+    "grad_norm": 2.5577855110168457,
+    "learning_rate": 1.889872773536896e-05,
+    "epoch": 0.4488412567555189,
+    "step": 4900
+  },
+  {
+    "loss": 0.4932236099243164,
+    "grad_norm": 2.307461738586426,
+    "learning_rate": 1.8830873621713316e-05,
+    "epoch": 0.4580012824035907,
+    "step": 5000
+  },
+  {
+    "eval_loss": 0.5316317677497864,
+    "eval_micro_f1": 0.6211189647506171,
+    "eval_macro_f1": 0.5658122051895985,
+    "eval_macro_average_precision": 0.575613578137719,
+    "eval_adventure_precision": 0.4470391993327773,
+    "eval_adventure_recall": 0.5343968095712861,
+    "eval_adventure_f1": 0.4868301544050863,
+    "eval_adventure_average_precision": 0.4676248497698309,
+    "eval_war_precision": 0.4965197215777262,
+    "eval_war_recall": 0.5994397759103641,
+    "eval_war_f1": 0.5431472081218274,
+    "eval_war_average_precision": 0.5650308234217571,
+    "eval_documentary_precision": 0.8365758754863813,
+    "eval_documentary_recall": 0.8325886207923742,
+    "eval_documentary_f1": 0.8345774858166617,
+    "eval_documentary_average_precision": 0.9076694229121464,
+    "eval_science_fiction_precision": 0.6195876288659794,
+    "eval_science_fiction_recall": 0.6931949250288351,
+    "eval_science_fiction_f1": 0.6543277082199238,
+    "eval_science_fiction_average_precision": 0.6832414807713729,
+    "eval_thriller_precision": 0.4124203821656051,
+    "eval_thriller_recall": 0.6152019002375297,
+    "eval_thriller_f1": 0.4938036224976168,
+    "eval_thriller_average_precision": 0.4586436431917812,
+    "eval_family_precision": 0.41733690795352996,
+    "eval_family_recall": 0.5474794841735052,
+    "eval_family_f1": 0.473630831643002,
+    "eval_family_average_precision": 0.448167913507404,
+    "eval_romance_precision": 0.4708994708994709,
+    "eval_romance_recall": 0.6092413006274957,
+    "eval_romance_f1": 0.5312111415070878,
+    "eval_romance_average_precision": 0.5187803014508425,
+    "eval_fantasy_precision": 0.3978174603174603,
+    "eval_fantasy_recall": 0.4938423645320197,
+    "eval_fantasy_f1": 0.44065934065934065,
+    "eval_fantasy_average_precision": 0.4219370088086337,
+    "eval_drama_precision": 0.6235585864848109,
+    "eval_drama_recall": 0.8093015770840039,
+    "eval_drama_f1": 0.704391063799986,
+    "eval_drama_average_precision": 0.7490799962228188,
+    "eval_action_precision": 0.5563798219584569,
+    "eval_action_recall": 0.657510227936879,
+    "eval_action_f1": 0.6027323868202518,
+    "eval_action_average_precision": 0.6412372327092366,
+    "eval_music_precision": 0.7105485232067511,
+    "eval_music_recall": 0.717206132879046,
+    "eval_music_f1": 0.7138618058499364,
+    "eval_music_average_precision": 0.7320092663859417,
+    "eval_western_precision": 0.7370689655172413,
+    "eval_western_recall": 0.8221153846153846,
+    "eval_western_f1": 0.7772727272727272,
+    "eval_western_average_precision": 0.8429977322808819,
+    "eval_animation_precision": 0.6105610561056105,
+    "eval_animation_recall": 0.5736434108527132,
+    "eval_animation_f1": 0.5915267785771383,
+    "eval_animation_average_precision": 0.6412062681992649,
+    "eval_mystery_precision": 0.3401920438957476,
+    "eval_mystery_recall": 0.3740573152337858,
+    "eval_mystery_f1": 0.3563218390804598,
+    "eval_mystery_average_precision": 0.3035667615789989,
+    "eval_tv_movie_precision": 0.27285513361462727,
+    "eval_tv_movie_recall": 0.29984544049459044,
+    "eval_tv_movie_f1": 0.2857142857142857,
+    "eval_tv_movie_average_precision": 0.24917751862598916,
+    "eval_horror_precision": 0.6169334021683015,
+    "eval_horror_recall": 0.7326793378295524,
+    "eval_horror_f1": 0.6698430493273543,
+    "eval_horror_average_precision": 0.7097109849813549,
+    "eval_comedy_precision": 0.6009546539379474,
+    "eval_comedy_recall": 0.6548764629388817,
+    "eval_comedy_f1": 0.6267579340385812,
+    "eval_comedy_average_precision": 0.668958483116815,
+    "eval_crime_precision": 0.532258064516129,
+    "eval_crime_recall": 0.5665236051502146,
+    "eval_crime_f1": 0.5488565488565489,
+    "eval_crime_average_precision": 0.5380991636786567,
+    "eval_history_precision": 0.3873015873015873,
+    "eval_history_recall": 0.4468864468864469,
+    "eval_history_f1": 0.41496598639455784,
+    "eval_history_average_precision": 0.3895191330029328,
+    "eval_runtime": 32.2559,
+    "eval_samples_per_second": 530.787,
+    "eval_steps_per_second": 16.617,
+    "epoch": 0.4580012824035907,
+    "step": 5000
+  },
+  {
+    "loss": 0.4782890319824219,
+    "grad_norm": 2.5497214794158936,
+    "learning_rate": 1.876301950805768e-05,
+    "epoch": 0.46716130805166256,
+    "step": 5100
+  },
+  {
+    "loss": 0.48203197479248044,
+    "grad_norm": 2.500375270843506,
+    "learning_rate": 1.8695165394402038e-05,
+    "epoch": 0.47632133369973434,
+    "step": 5200
+  },
+  {
+    "loss": 0.47751750946044924,
+    "grad_norm": 2.471954584121704,
+    "learning_rate": 1.8627311280746398e-05,
+    "epoch": 0.4854813593478062,
+    "step": 5300
+  },
+  {
+    "loss": 0.4828006362915039,
+    "grad_norm": 2.9751853942871094,
+    "learning_rate": 1.8559457167090754e-05,
+    "epoch": 0.494641384995878,
+    "step": 5400
+  },
+  {
+    "loss": 0.4659278106689453,
+    "grad_norm": 3.7576234340667725,
+    "learning_rate": 1.8491603053435117e-05,
+    "epoch": 0.5038014106439498,
+    "step": 5500
+  },
+  {
+    "loss": 0.48506290435791016,
+    "grad_norm": 3.370046854019165,
+    "learning_rate": 1.8423748939779476e-05,
+    "epoch": 0.5129614362920216,
+    "step": 5600
+  },
+  {
+    "loss": 0.4801356506347656,
+    "grad_norm": 2.8850579261779785,
+    "learning_rate": 1.8355894826123836e-05,
+    "epoch": 0.5221214619400935,
+    "step": 5700
+  },
+  {
+    "loss": 0.4787560272216797,
+    "grad_norm": 2.941148042678833,
+    "learning_rate": 1.8288040712468195e-05,
+    "epoch": 0.5312814875881653,
+    "step": 5800
+  },
+  {
+    "loss": 0.47043853759765625,
+    "grad_norm": 4.864214897155762,
+    "learning_rate": 1.8220186598812555e-05,
+    "epoch": 0.540441513236237,
+    "step": 5900
+  },
+  {
+    "loss": 0.4712319183349609,
+    "grad_norm": 4.666351318359375,
+    "learning_rate": 1.8152332485156914e-05,
+    "epoch": 0.5496015388843088,
+    "step": 6000
+  },
+  {
+    "loss": 0.47985847473144533,
+    "grad_norm": 2.923902750015259,
+    "learning_rate": 1.8084478371501274e-05,
+    "epoch": 0.5587615645323807,
+    "step": 6100
+  },
+  {
+    "loss": 0.4575531005859375,
+    "grad_norm": 5.6741862297058105,
+    "learning_rate": 1.8016624257845633e-05,
+    "epoch": 0.5679215901804525,
+    "step": 6200
+  },
+  {
+    "loss": 0.4780099868774414,
+    "grad_norm": 3.174140691757202,
+    "learning_rate": 1.7948770144189993e-05,
+    "epoch": 0.5770816158285244,
+    "step": 6300
+  },
+  {
+    "loss": 0.47009136199951174,
+    "grad_norm": 3.92318058013916,
+    "learning_rate": 1.7880916030534353e-05,
+    "epoch": 0.5862416414765962,
+    "step": 6400
+  },
+  {
+    "loss": 0.4493964385986328,
+    "grad_norm": 2.2932677268981934,
+    "learning_rate": 1.7813061916878712e-05,
+    "epoch": 0.5954016671246679,
+    "step": 6500
+  },
+  {
+    "loss": 0.47059112548828125,
+    "grad_norm": 4.230837345123291,
+    "learning_rate": 1.774520780322307e-05,
+    "epoch": 0.6045616927727397,
+    "step": 6600
+  },
+  {
+    "loss": 0.473100471496582,
+    "grad_norm": 2.600653886795044,
+    "learning_rate": 1.767735368956743e-05,
+    "epoch": 0.6137217184208116,
+    "step": 6700
+  },
+  {
+    "loss": 0.4578633499145508,
+    "grad_norm": 3.107564687728882,
+    "learning_rate": 1.760949957591179e-05,
+    "epoch": 0.6228817440688834,
+    "step": 6800
+  },
+  {
+    "loss": 0.454365234375,
+    "grad_norm": 2.3941867351531982,
+    "learning_rate": 1.754164546225615e-05,
+    "epoch": 0.6320417697169552,
+    "step": 6900
+  },
+  {
+    "loss": 0.4454739761352539,
+    "grad_norm": 3.340256690979004,
+    "learning_rate": 1.747379134860051e-05,
+    "epoch": 0.641201795365027,
+    "step": 7000
+  },
+  {
+    "loss": 0.4761007308959961,
+    "grad_norm": 2.98032546043396,
+    "learning_rate": 1.740593723494487e-05,
+    "epoch": 0.6503618210130988,
+    "step": 7100
+  },
+  {
+    "loss": 0.4524939346313477,
+    "grad_norm": 2.9078924655914307,
+    "learning_rate": 1.733808312128923e-05,
+    "epoch": 0.6595218466611706,
+    "step": 7200
+  },
+  {
+    "loss": 0.4638243865966797,
+    "grad_norm": 3.646462917327881,
+    "learning_rate": 1.727022900763359e-05,
+    "epoch": 0.6686818723092425,
+    "step": 7300
+  },
+  {
+    "loss": 0.45899723052978514,
+    "grad_norm": 2.9546258449554443,
+    "learning_rate": 1.7202374893977948e-05,
+    "epoch": 0.6778418979573143,
+    "step": 7400
+  },
+  {
+    "loss": 0.4363288879394531,
+    "grad_norm": 7.64795446395874,
+    "learning_rate": 1.7134520780322307e-05,
+    "epoch": 0.6870019236053861,
+    "step": 7500
+  },
+  {
+    "eval_loss": 0.5133659243583679,
+    "eval_micro_f1": 0.6261381816007057,
+    "eval_macro_f1": 0.5739586050099281,
+    "eval_macro_average_precision": 0.5865768599149798,
+    "eval_adventure_precision": 0.46174377224199287,
+    "eval_adventure_recall": 0.5174476570289133,
+    "eval_adventure_f1": 0.48801128349788436,
+    "eval_adventure_average_precision": 0.483523235697022,
+    "eval_war_precision": 0.5010570824524313,
+    "eval_war_recall": 0.6638655462184874,
+    "eval_war_f1": 0.5710843373493976,
+    "eval_war_average_precision": 0.5670669041328595,
+    "eval_documentary_precision": 0.8373692077727952,
+    "eval_documentary_recall": 0.8343759308906762,
+    "eval_documentary_f1": 0.8358698895851985,
+    "eval_documentary_average_precision": 0.9121128191707301,
+    "eval_science_fiction_precision": 0.6447661469933185,
+    "eval_science_fiction_recall": 0.6678200692041523,
+    "eval_science_fiction_f1": 0.6560906515580737,
+    "eval_science_fiction_average_precision": 0.6946739009295322,
+    "eval_thriller_precision": 0.41272245361605453,
+    "eval_thriller_recall": 0.6472684085510689,
+    "eval_thriller_f1": 0.5040462427745664,
+    "eval_thriller_average_precision": 0.45741451935747435,
+    "eval_family_precision": 0.41475409836065574,
+    "eval_family_recall": 0.593200468933177,
+    "eval_family_f1": 0.48818137964302943,
+    "eval_family_average_precision": 0.4778199213915229,
+    "eval_romance_precision": 0.47147147147147145,
+    "eval_romance_recall": 0.6269252709640616,
+    "eval_romance_f1": 0.5381978452497551,
+    "eval_romance_average_precision": 0.5293775715241801,
+    "eval_fantasy_precision": 0.4423320659062104,
+    "eval_fantasy_recall": 0.42980295566502463,
+    "eval_fantasy_f1": 0.43597751405371643,
+    "eval_fantasy_average_precision": 0.41119499155816164,
+    "eval_drama_precision": 0.6047580737846224,
+    "eval_drama_recall": 0.8467975539105246,
+    "eval_drama_f1": 0.7055983908816628,
+    "eval_drama_average_precision": 0.7554975378003085,
+    "eval_action_precision": 0.6103286384976526,
+    "eval_action_recall": 0.6078316773816481,
+    "eval_action_f1": 0.6090775988286969,
+    "eval_action_average_precision": 0.649004118015194,
+    "eval_music_precision": 0.6865671641791045,
+    "eval_music_recall": 0.7444633730834753,
+    "eval_music_f1": 0.7143440948099714,
+    "eval_music_average_precision": 0.761887094089525,
+    "eval_western_precision": 0.7688787185354691,
+    "eval_western_recall": 0.8076923076923077,
+    "eval_western_f1": 0.7878077373974208,
+    "eval_western_average_precision": 0.8328222158390252,
+    "eval_animation_precision": 0.6205533596837944,
+    "eval_animation_recall": 0.6085271317829457,
+    "eval_animation_f1": 0.6144814090019569,
+    "eval_animation_average_precision": 0.6599025728667947,
+    "eval_mystery_precision": 0.28532608695652173,
+    "eval_mystery_recall": 0.4751131221719457,
+    "eval_mystery_f1": 0.3565365025466893,
+    "eval_mystery_average_precision": 0.3075109028729382,
+    "eval_tv_movie_precision": 0.3248407643312102,
+    "eval_tv_movie_recall": 0.31530139103554866,
+    "eval_tv_movie_f1": 0.32,
+    "eval_tv_movie_average_precision": 0.26956975977969816,
+    "eval_horror_precision": 0.6163428001993024,
+    "eval_horror_recall": 0.7584304107909258,
+    "eval_horror_f1": 0.680043980208906,
+    "eval_horror_average_precision": 0.7377474430491126,
+    "eval_comedy_precision": 0.5725110503051989,
+    "eval_comedy_recall": 0.7074122236671001,
+    "eval_comedy_f1": 0.6328524895300139,
+    "eval_comedy_average_precision": 0.6786310032667223,
+    "eval_crime_precision": 0.49304589707927676,
+    "eval_crime_recall": 0.6085836909871245,
+    "eval_crime_f1": 0.5447560507107184,
+    "eval_crime_average_precision": 0.5425212929451196,
+    "eval_history_precision": 0.36161879895561355,
+    "eval_history_recall": 0.5073260073260073,
+    "eval_history_f1": 0.4222560975609756,
+    "eval_history_average_precision": 0.4166825340986944,
+    "eval_runtime": 33.1244,
+    "eval_samples_per_second": 516.87,
+    "eval_steps_per_second": 16.181,
+    "epoch": 0.6870019236053861,
+    "step": 7500
+  },
+  {
+    "loss": 0.46068359375,
+    "grad_norm": 4.769875526428223,
+    "learning_rate": 1.706666666666667e-05,
+    "epoch": 0.6961619492534579,
+    "step": 7600
+  },
+  {
+    "loss": 0.45039794921875,
+    "grad_norm": 3.424268960952759,
+    "learning_rate": 1.6998812553011027e-05,
+    "epoch": 0.7053219749015297,
+    "step": 7700
+  },
+  {
+    "loss": 0.4603588104248047,
+    "grad_norm": 2.9634361267089844,
+    "learning_rate": 1.6930958439355386e-05,
+    "epoch": 0.7144820005496015,
+    "step": 7800
+  },
+  {
+    "loss": 0.4695751953125,
+    "grad_norm": 8.876276016235352,
+    "learning_rate": 1.6863104325699746e-05,
+    "epoch": 0.7236420261976734,
+    "step": 7900
+  },
+  {
+    "loss": 0.4727753448486328,
+    "grad_norm": 4.394313812255859,
+    "learning_rate": 1.679525021204411e-05,
+    "epoch": 0.7328020518457452,
+    "step": 8000
+  },
+  {
+    "loss": 0.4462986373901367,
+    "grad_norm": 4.535721302032471,
+    "learning_rate": 1.6727396098388468e-05,
+    "epoch": 0.7419620774938169,
+    "step": 8100
+  },
+  {
+    "loss": 0.4580874252319336,
+    "grad_norm": 3.5865767002105713,
+    "learning_rate": 1.6659541984732824e-05,
+    "epoch": 0.7511221031418888,
+    "step": 8200
+  },
+  {
+    "loss": 0.4609992218017578,
+    "grad_norm": 3.5715699195861816,
+    "learning_rate": 1.6591687871077184e-05,
+    "epoch": 0.7602821287899606,
+    "step": 8300
+  },
+  {
+    "loss": 0.4764773941040039,
+    "grad_norm": 3.5458831787109375,
+    "learning_rate": 1.6523833757421547e-05,
+    "epoch": 0.7694421544380324,
+    "step": 8400
+  },
+  {
+    "loss": 0.4603691101074219,
+    "grad_norm": 3.4240829944610596,
+    "learning_rate": 1.6455979643765906e-05,
+    "epoch": 0.7786021800861043,
+    "step": 8500
+  },
+  {
+    "loss": 0.443294563293457,
+    "grad_norm": 1.9989110231399536,
+    "learning_rate": 1.6388125530110262e-05,
+    "epoch": 0.7877622057341761,
+    "step": 8600
+  },
+  {
+    "loss": 0.4453268814086914,
+    "grad_norm": 3.92610239982605,
+    "learning_rate": 1.6320271416454625e-05,
+    "epoch": 0.7969222313822478,
+    "step": 8700
+  },
+  {
+    "loss": 0.45133052825927733,
+    "grad_norm": 3.3222241401672363,
+    "learning_rate": 1.6252417302798985e-05,
+    "epoch": 0.8060822570303197,
+    "step": 8800
+  },
+  {
+    "loss": 0.4590951156616211,
+    "grad_norm": 5.135293483734131,
+    "learning_rate": 1.6184563189143344e-05,
+    "epoch": 0.8152422826783915,
+    "step": 8900
+  },
+  {
+    "loss": 0.44499351501464846,
+    "grad_norm": 3.3617959022521973,
+    "learning_rate": 1.61167090754877e-05,
+    "epoch": 0.8244023083264633,
+    "step": 9000
+  },
+  {
+    "loss": 0.4711708831787109,
+    "grad_norm": 3.598404884338379,
+    "learning_rate": 1.6048854961832064e-05,
+    "epoch": 0.8335623339745352,
+    "step": 9100
+  },
+  {
+    "loss": 0.4399195098876953,
+    "grad_norm": 1.4973243474960327,
+    "learning_rate": 1.5981000848176423e-05,
+    "epoch": 0.842722359622607,
+    "step": 9200
+  },
+  {
+    "loss": 0.44620738983154296,
+    "grad_norm": 4.387820720672607,
+    "learning_rate": 1.5913146734520783e-05,
+    "epoch": 0.8518823852706787,
+    "step": 9300
+  },
+  {
+    "loss": 0.44715858459472657,
+    "grad_norm": 3.0289783477783203,
+    "learning_rate": 1.584529262086514e-05,
+    "epoch": 0.8610424109187506,
+    "step": 9400
+  },
+  {
+    "loss": 0.4475372314453125,
+    "grad_norm": 2.494218587875366,
+    "learning_rate": 1.57774385072095e-05,
+    "epoch": 0.8702024365668224,
+    "step": 9500
+  },
+  {
+    "loss": 0.4213812637329102,
+    "grad_norm": 4.333505630493164,
+    "learning_rate": 1.570958439355386e-05,
+    "epoch": 0.8793624622148942,
+    "step": 9600
+  },
+  {
+    "loss": 0.45433658599853516,
+    "grad_norm": 3.252272605895996,
+    "learning_rate": 1.564173027989822e-05,
+    "epoch": 0.8885224878629661,
+    "step": 9700
+  },
+  {
+    "loss": 0.4535699462890625,
+    "grad_norm": 2.4842710494995117,
+    "learning_rate": 1.557387616624258e-05,
+    "epoch": 0.8976825135110378,
+    "step": 9800
+  },
+  {
+    "loss": 0.4586907196044922,
+    "grad_norm": 2.584516763687134,
+    "learning_rate": 1.550602205258694e-05,
+    "epoch": 0.9068425391591096,
+    "step": 9900
+  },
+  {
+    "loss": 0.42372444152832034,
+    "grad_norm": 1.7677046060562134,
+    "learning_rate": 1.54381679389313e-05,
+    "epoch": 0.9160025648071815,
+    "step": 10000
+  },
+  {
+    "eval_loss": 0.5102301836013794,
+    "eval_micro_f1": 0.6337064960779834,
+    "eval_macro_f1": 0.5813941310329033,
+    "eval_macro_average_precision": 0.5938002077154746,
+    "eval_adventure_precision": 0.42331768388106417,
+    "eval_adventure_recall": 0.53938185443669,
+    "eval_adventure_f1": 0.4743533537921964,
+    "eval_adventure_average_precision": 0.4793160480899537,
+    "eval_war_precision": 0.46823956442831216,
+    "eval_war_recall": 0.7226890756302521,
+    "eval_war_f1": 0.5682819383259912,
+    "eval_war_average_precision": 0.5621460052038391,
+    "eval_documentary_precision": 0.8652946679139383,
+    "eval_documentary_recall": 0.8266309204647007,
+    "eval_documentary_f1": 0.8455210237659964,
+    "eval_documentary_average_precision": 0.9162280561003577,
+    "eval_science_fiction_precision": 0.6574585635359116,
+    "eval_science_fiction_recall": 0.6862745098039216,
+    "eval_science_fiction_f1": 0.6715575620767494,
+    "eval_science_fiction_average_precision": 0.6935666210367395,
+    "eval_thriller_precision": 0.4520547945205479,
+    "eval_thriller_recall": 0.5878859857482185,
+    "eval_thriller_f1": 0.5110996386164172,
+    "eval_thriller_average_precision": 0.484433534358236,
+    "eval_family_precision": 0.4876905041031653,
+    "eval_family_recall": 0.4876905041031653,
+    "eval_family_f1": 0.4876905041031653,
+    "eval_family_average_precision": 0.4784533758203926,
+    "eval_romance_precision": 0.47068538398018167,
+    "eval_romance_recall": 0.6503137478608101,
+    "eval_romance_f1": 0.5461077844311377,
+    "eval_romance_average_precision": 0.5474195395744621,
+    "eval_fantasy_precision": 0.40816326530612246,
+    "eval_fantasy_recall": 0.5172413793103449,
+    "eval_fantasy_f1": 0.45627376425855515,
+    "eval_fantasy_average_precision": 0.43509574553077196,
+    "eval_drama_precision": 0.6319495922905857,
+    "eval_drama_recall": 0.8231412938525909,
+    "eval_drama_f1": 0.7149846239865809,
+    "eval_drama_average_precision": 0.7633772424964448,
+    "eval_action_precision": 0.5515239477503628,
+    "eval_action_recall": 0.6662770309760374,
+    "eval_action_f1": 0.6034939121228163,
+    "eval_action_average_precision": 0.6445725282272413,
+    "eval_music_precision": 0.7160804020100503,
+    "eval_music_recall": 0.7282793867120954,
+    "eval_music_f1": 0.7221283783783784,
+    "eval_music_average_precision": 0.7618944039203948,
+    "eval_western_precision": 0.7934272300469484,
+    "eval_western_recall": 0.8125,
+    "eval_western_f1": 0.8028503562945368,
+    "eval_western_average_precision": 0.8470894288273088,
+    "eval_animation_precision": 0.5894808743169399,
+    "eval_animation_recall": 0.6689922480620155,
+    "eval_animation_f1": 0.6267247639796659,
+    "eval_animation_average_precision": 0.677093389977099,
+    "eval_mystery_precision": 0.3241525423728814,
+    "eval_mystery_recall": 0.46153846153846156,
+    "eval_mystery_f1": 0.3808338518979465,
+    "eval_mystery_average_precision": 0.3230563689241908,
+    "eval_tv_movie_precision": 0.35892514395393477,
+    "eval_tv_movie_recall": 0.2890262751159196,
+    "eval_tv_movie_f1": 0.3202054794520548,
+    "eval_tv_movie_average_precision": 0.2787098555341891,
+    "eval_horror_precision": 0.6904902539870054,
+    "eval_horror_recall": 0.7167381974248928,
+    "eval_horror_f1": 0.7033694344163658,
+    "eval_horror_average_precision": 0.7531122646917027,
+    "eval_comedy_precision": 0.5724066390041493,
+    "eval_comedy_recall": 0.717555266579974,
+    "eval_comedy_f1": 0.6368147720715522,
+    "eval_comedy_average_precision": 0.6931451653429516,
+    "eval_crime_precision": 0.5319672131147541,
+    "eval_crime_recall": 0.5570815450643777,
+    "eval_crime_f1": 0.5442348008385745,
+    "eval_crime_average_precision": 0.5279629562997062,
+    "eval_history_precision": 0.3637515842839037,
+    "eval_history_recall": 0.5256410256410257,
+    "eval_history_f1": 0.4299625468164794,
+    "eval_history_average_precision": 0.4155314166380378,
+    "eval_runtime": 32.9066,
+    "eval_samples_per_second": 520.29,
+    "eval_steps_per_second": 16.289,
+    "epoch": 0.9160025648071815,
+    "step": 10000
+  },
+  {
+    "loss": 0.4343290328979492,
+    "grad_norm": 5.183280944824219,
+    "learning_rate": 1.537031382527566e-05,
+    "epoch": 0.9251625904552533,
+    "step": 10100
+  },
+  {
+    "loss": 0.4370312881469727,
+    "grad_norm": 2.953514814376831,
+    "learning_rate": 1.530245971162002e-05,
+    "epoch": 0.9343226161033251,
+    "step": 10200
+  },
+  {
+    "loss": 0.4427105712890625,
+    "grad_norm": 2.7229349613189697,
+    "learning_rate": 1.5234605597964378e-05,
+    "epoch": 0.943482641751397,
+    "step": 10300
+  },
+  {
+    "loss": 0.44937217712402344,
+    "grad_norm": 2.8581676483154297,
+    "learning_rate": 1.5166751484308738e-05,
+    "epoch": 0.9526426673994687,
+    "step": 10400
+  },
+  {
+    "loss": 0.42887142181396487,
+    "grad_norm": 3.847024440765381,
+    "learning_rate": 1.5098897370653095e-05,
+    "epoch": 0.9618026930475405,
+    "step": 10500
+  },
+  {
+    "loss": 0.4338758087158203,
+    "grad_norm": 3.1510331630706787,
+    "learning_rate": 1.5031043256997457e-05,
+    "epoch": 0.9709627186956123,
+    "step": 10600
+  },
+  {
+    "loss": 0.4277107620239258,
+    "grad_norm": 2.725175380706787,
+    "learning_rate": 1.4963189143341816e-05,
+    "epoch": 0.9801227443436842,
+    "step": 10700
+  },
+  {
+    "loss": 0.4432627105712891,
+    "grad_norm": 2.4127073287963867,
+    "learning_rate": 1.4895335029686176e-05,
+    "epoch": 0.989282769991756,
+    "step": 10800
+  },
+  {
+    "loss": 0.438706169128418,
+    "grad_norm": 3.415100336074829,
+    "learning_rate": 1.4827480916030537e-05,
+    "epoch": 0.9984427956398277,
+    "step": 10900
+  },
+  {
+    "loss": 0.3861063385009766,
+    "grad_norm": 2.927136182785034,
+    "learning_rate": 1.4759626802374896e-05,
+    "epoch": 1.0076028212878996,
+    "step": 11000
+  },
+  {
+    "loss": 0.3921360015869141,
+    "grad_norm": 3.2312216758728027,
+    "learning_rate": 1.4691772688719254e-05,
+    "epoch": 1.0167628469359715,
+    "step": 11100
+  },
+  {
+    "loss": 0.38237007141113283,
+    "grad_norm": 1.7288286685943604,
+    "learning_rate": 1.4623918575063614e-05,
+    "epoch": 1.0259228725840432,
+    "step": 11200
+  },
+  {
+    "loss": 0.39687156677246094,
+    "grad_norm": 5.1841020584106445,
+    "learning_rate": 1.4556064461407975e-05,
+    "epoch": 1.035082898232115,
+    "step": 11300
+  },
+  {
+    "loss": 0.3822335433959961,
+    "grad_norm": 2.037236213684082,
+    "learning_rate": 1.4488210347752335e-05,
+    "epoch": 1.044242923880187,
+    "step": 11400
+  },
+  {
+    "loss": 0.3736506652832031,
+    "grad_norm": 1.8042811155319214,
+    "learning_rate": 1.4420356234096693e-05,
+    "epoch": 1.0534029495282586,
+    "step": 11500
+  },
+  {
+    "loss": 0.38331382751464843,
+    "grad_norm": 2.6784238815307617,
+    "learning_rate": 1.4352502120441052e-05,
+    "epoch": 1.0625629751763306,
+    "step": 11600
+  },
+  {
+    "loss": 0.3830514907836914,
+    "grad_norm": 2.302187919616699,
+    "learning_rate": 1.4284648006785413e-05,
+    "epoch": 1.0717230008244023,
+    "step": 11700
+  },
+  {
+    "loss": 0.3901280975341797,
+    "grad_norm": 5.4791083335876465,
+    "learning_rate": 1.4216793893129773e-05,
+    "epoch": 1.080883026472474,
+    "step": 11800
+  },
+  {
+    "loss": 0.37561363220214844,
+    "grad_norm": 1.7444020509719849,
+    "learning_rate": 1.414893977947413e-05,
+    "epoch": 1.090043052120546,
+    "step": 11900
+  },
+  {
+    "loss": 0.3836818695068359,
+    "grad_norm": 2.1684961318969727,
+    "learning_rate": 1.4081085665818492e-05,
+    "epoch": 1.0992030777686177,
+    "step": 12000
+  },
+  {
+    "loss": 0.36469547271728514,
+    "grad_norm": 3.505390167236328,
+    "learning_rate": 1.4013231552162851e-05,
+    "epoch": 1.1083631034166896,
+    "step": 12100
+  },
+  {
+    "loss": 0.38160125732421873,
+    "grad_norm": 5.188485622406006,
+    "learning_rate": 1.3945377438507211e-05,
+    "epoch": 1.1175231290647614,
+    "step": 12200
+  },
+  {
+    "loss": 0.3930240249633789,
+    "grad_norm": 3.5906667709350586,
+    "learning_rate": 1.3877523324851569e-05,
+    "epoch": 1.126683154712833,
+    "step": 12300
+  },
+  {
+    "loss": 0.3853080368041992,
+    "grad_norm": 1.105125069618225,
+    "learning_rate": 1.380966921119593e-05,
+    "epoch": 1.135843180360905,
+    "step": 12400
+  },
+  {
+    "loss": 0.40333038330078125,
+    "grad_norm": 3.958789348602295,
+    "learning_rate": 1.374181509754029e-05,
+    "epoch": 1.1450032060089768,
+    "step": 12500
+  },
+  {
+    "eval_loss": 0.5134364366531372,
+    "eval_micro_f1": 0.6364311807318432,
+    "eval_macro_f1": 0.584305588732779,
+    "eval_macro_average_precision": 0.5972062831180531,
+    "eval_adventure_precision": 0.5100742311770944,
+    "eval_adventure_recall": 0.4795613160518445,
+    "eval_adventure_f1": 0.4943473792394656,
+    "eval_adventure_average_precision": 0.4910512524727024,
+    "eval_war_precision": 0.47368421052631576,
+    "eval_war_recall": 0.7058823529411765,
+    "eval_war_f1": 0.5669291338582677,
+    "eval_war_average_precision": 0.5796321757332905,
+    "eval_documentary_precision": 0.8586723768736617,
+    "eval_documentary_recall": 0.8361632409889782,
+    "eval_documentary_f1": 0.8472683368548144,
+    "eval_documentary_average_precision": 0.9221895051043988,
+    "eval_science_fiction_precision": 0.6491978609625668,
+    "eval_science_fiction_recall": 0.7001153402537486,
+    "eval_science_fiction_f1": 0.6736958934517203,
+    "eval_science_fiction_average_precision": 0.6995110189827178,
+    "eval_thriller_precision": 0.4218440838939454,
+    "eval_thriller_recall": 0.6330166270783848,
+    "eval_thriller_f1": 0.5062930420327714,
+    "eval_thriller_average_precision": 0.4845537639371577,
+    "eval_family_precision": 0.449952335557674,
+    "eval_family_recall": 0.5533411488862837,
+    "eval_family_f1": 0.49631966351209256,
+    "eval_family_average_precision": 0.4888887121417419,
+    "eval_romance_precision": 0.5101134681795757,
+    "eval_romance_recall": 0.5898459783228751,
+    "eval_romance_f1": 0.5470899470899471,
+    "eval_romance_average_precision": 0.5406540718683023,
+    "eval_fantasy_precision": 0.4334398296059638,
+    "eval_fantasy_recall": 0.5012315270935961,
+    "eval_fantasy_f1": 0.4648772130211308,
+    "eval_fantasy_average_precision": 0.4391298456435788,
+    "eval_drama_precision": 0.630537686612453,
+    "eval_drama_recall": 0.8360154489861603,
+    "eval_drama_f1": 0.7188818930325884,
+    "eval_drama_average_precision": 0.7654084509044818,
+    "eval_action_precision": 0.6034897713598074,
+    "eval_action_recall": 0.5862068965517241,
+    "eval_action_f1": 0.5947227986955232,
+    "eval_action_average_precision": 0.6440702945170457,
+    "eval_music_precision": 0.7365163572060124,
+    "eval_music_recall": 0.7095400340715503,
+    "eval_music_f1": 0.7227765726681128,
+    "eval_music_average_precision": 0.7685443174661467,
+    "eval_western_precision": 0.7734553775743707,
+    "eval_western_recall": 0.8125,
+    "eval_western_f1": 0.7924970691676436,
+    "eval_western_average_precision": 0.8145746262482836,
+    "eval_animation_precision": 0.6672212978369384,
+    "eval_animation_recall": 0.6217054263565891,
+    "eval_animation_f1": 0.6436597110754414,
+    "eval_animation_average_precision": 0.6924075357381786,
+    "eval_mystery_precision": 0.3267429760665973,
+    "eval_mystery_recall": 0.473604826546003,
+    "eval_mystery_f1": 0.3866995073891626,
+    "eval_mystery_average_precision": 0.3185964390177644,
+    "eval_tv_movie_precision": 0.3456998313659359,
+    "eval_tv_movie_recall": 0.3168469860896445,
+    "eval_tv_movie_f1": 0.33064516129032256,
+    "eval_tv_movie_average_precision": 0.28438963930852545,
+    "eval_horror_precision": 0.6681222707423581,
+    "eval_horror_recall": 0.7504598405885959,
+    "eval_horror_f1": 0.7069015304649148,
+    "eval_horror_average_precision": 0.7622181870613917,
+    "eval_comedy_precision": 0.6165764879488441,
+    "eval_comedy_recall": 0.6520156046814044,
+    "eval_comedy_f1": 0.633801036531412,
+    "eval_comedy_average_precision": 0.6907843908120371,
+    "eval_crime_precision": 0.45813106796116504,
+    "eval_crime_recall": 0.648068669527897,
+    "eval_crime_f1": 0.5367934589406328,
+    "eval_crime_average_precision": 0.5311299523841913,
+    "eval_history_precision": 0.41025641025641024,
+    "eval_history_recall": 0.46886446886446886,
+    "eval_history_f1": 0.4376068376068376,
+    "eval_history_average_precision": 0.42918519990107346,
+    "eval_runtime": 32.5149,
+    "eval_samples_per_second": 526.559,
+    "eval_steps_per_second": 16.485,
+    "epoch": 1.1450032060089768,
+    "step": 12500
+  },
+  {
+    "loss": 0.39177349090576175,
+    "grad_norm": 3.1655073165893555,
+    "learning_rate": 1.3673960983884649e-05,
+    "epoch": 1.1541632316570487,
+    "step": 12600
+  },
+  {
+    "loss": 0.39373428344726563,
+    "grad_norm": 2.296426296234131,
+    "learning_rate": 1.3606106870229007e-05,
+    "epoch": 1.1633232573051204,
+    "step": 12700
+  },
+  {
+    "loss": 0.39942848205566406,
+    "grad_norm": 4.655697822570801,
+    "learning_rate": 1.3538252756573368e-05,
+    "epoch": 1.1724832829531922,
+    "step": 12800
+  },
+  {
+    "loss": 0.39428836822509766,
+    "grad_norm": 3.9431915283203125,
+    "learning_rate": 1.3470398642917728e-05,
+    "epoch": 1.181643308601264,
+    "step": 12900
+  },
+  {
+    "loss": 0.3969345855712891,
+    "grad_norm": 4.470774173736572,
+    "learning_rate": 1.3402544529262087e-05,
+    "epoch": 1.1908033342493358,
+    "step": 13000
+  },
+  {
+    "loss": 0.38323795318603515,
+    "grad_norm": 5.371913433074951,
+    "learning_rate": 1.3334690415606449e-05,
+    "epoch": 1.1999633598974078,
+    "step": 13100
+  },
+  {
+    "loss": 0.3966784286499023,
+    "grad_norm": 3.9036567211151123,
+    "learning_rate": 1.3266836301950808e-05,
+    "epoch": 1.2091233855454795,
+    "step": 13200
+  },
+  {
+    "loss": 0.3740963363647461,
+    "grad_norm": 2.46191143989563,
+    "learning_rate": 1.3198982188295166e-05,
+    "epoch": 1.2182834111935514,
+    "step": 13300
+  },
+  {
+    "loss": 0.3885065460205078,
+    "grad_norm": 3.698840618133545,
+    "learning_rate": 1.3131128074639525e-05,
+    "epoch": 1.2274434368416232,
+    "step": 13400
+  },
+  {
+    "loss": 0.37084739685058593,
+    "grad_norm": 4.844378471374512,
+    "learning_rate": 1.3063273960983887e-05,
+    "epoch": 1.2366034624896949,
+    "step": 13500
+  },
+  {
+    "loss": 0.4039140319824219,
+    "grad_norm": 2.6480047702789307,
+    "learning_rate": 1.2995419847328246e-05,
+    "epoch": 1.2457634881377668,
+    "step": 13600
+  },
+  {
+    "loss": 0.3781502914428711,
+    "grad_norm": 3.6564888954162598,
+    "learning_rate": 1.2927565733672604e-05,
+    "epoch": 1.2549235137858386,
+    "step": 13700
+  },
+  {
+    "loss": 0.39709690093994143,
+    "grad_norm": 2.7505011558532715,
+    "learning_rate": 1.2859711620016964e-05,
+    "epoch": 1.2640835394339105,
+    "step": 13800
+  },
+  {
+    "loss": 0.39000308990478516,
+    "grad_norm": 6.447498321533203,
+    "learning_rate": 1.2791857506361325e-05,
+    "epoch": 1.2732435650819822,
+    "step": 13900
+  },
+  {
+    "loss": 0.37296123504638673,
+    "grad_norm": 4.594226837158203,
+    "learning_rate": 1.2724003392705684e-05,
+    "epoch": 1.2824035907300542,
+    "step": 14000
+  },
+  {
+    "loss": 0.37676013946533204,
+    "grad_norm": 2.7384729385375977,
+    "learning_rate": 1.2656149279050042e-05,
+    "epoch": 1.291563616378126,
+    "step": 14100
+  },
+  {
+    "loss": 0.4032810974121094,
+    "grad_norm": 2.7210850715637207,
+    "learning_rate": 1.2588295165394403e-05,
+    "epoch": 1.3007236420261976,
+    "step": 14200
+  },
+  {
+    "loss": 0.3668729019165039,
+    "grad_norm": 4.0668792724609375,
+    "learning_rate": 1.2520441051738763e-05,
+    "epoch": 1.3098836676742696,
+    "step": 14300
+  },
+  {
+    "loss": 0.37543216705322263,
+    "grad_norm": 6.687715530395508,
+    "learning_rate": 1.2452586938083123e-05,
+    "epoch": 1.3190436933223413,
+    "step": 14400
+  },
+  {
+    "loss": 0.39099338531494143,
+    "grad_norm": 3.0933725833892822,
+    "learning_rate": 1.238473282442748e-05,
+    "epoch": 1.3282037189704132,
+    "step": 14500
+  },
+  {
+    "loss": 0.3520219039916992,
+    "grad_norm": 2.4083266258239746,
+    "learning_rate": 1.2316878710771842e-05,
+    "epoch": 1.337363744618485,
+    "step": 14600
+  },
+  {
+    "loss": 0.3789388275146484,
+    "grad_norm": 5.080205917358398,
+    "learning_rate": 1.2249024597116201e-05,
+    "epoch": 1.3465237702665567,
+    "step": 14700
+  },
+  {
+    "loss": 0.3771961212158203,
+    "grad_norm": 2.3956689834594727,
+    "learning_rate": 1.218117048346056e-05,
+    "epoch": 1.3556837959146286,
+    "step": 14800
+  },
+  {
+    "loss": 0.3823435974121094,
+    "grad_norm": 2.267326593399048,
+    "learning_rate": 1.2113316369804919e-05,
+    "epoch": 1.3648438215627003,
+    "step": 14900
+  },
+  {
+    "loss": 0.38486209869384763,
+    "grad_norm": 4.241081714630127,
+    "learning_rate": 1.204546225614928e-05,
+    "epoch": 1.3740038472107723,
+    "step": 15000
+  },
+  {
+    "eval_loss": 0.5093690752983093,
+    "eval_micro_f1": 0.638817837221486,
+    "eval_macro_f1": 0.5859646344653633,
+    "eval_macro_average_precision": 0.6004324870409972,
+    "eval_adventure_precision": 0.44638602065131056,
+    "eval_adventure_recall": 0.5603190428713859,
+    "eval_adventure_f1": 0.4969053934571176,
+    "eval_adventure_average_precision": 0.4950544699315632,
+    "eval_war_precision": 0.49609375,
+    "eval_war_recall": 0.711484593837535,
+    "eval_war_f1": 0.5845799769850403,
+    "eval_war_average_precision": 0.6066593044482935,
+    "eval_documentary_precision": 0.8543106037849204,
+    "eval_documentary_recall": 0.8471849865951743,
+    "eval_documentary_f1": 0.8507328746634759,
+    "eval_documentary_average_precision": 0.9227577305995412,
+    "eval_science_fiction_precision": 0.6897347174163783,
+    "eval_science_fiction_recall": 0.6897347174163783,
+    "eval_science_fiction_f1": 0.6897347174163783,
+    "eval_science_fiction_average_precision": 0.719503596171387,
+    "eval_thriller_precision": 0.45716745587602237,
+    "eval_thriller_recall": 0.6306413301662708,
+    "eval_thriller_f1": 0.5300723733466434,
+    "eval_thriller_average_precision": 0.49752513689064565,
+    "eval_family_precision": 0.4289297658862876,
+    "eval_family_recall": 0.6014067995310668,
+    "eval_family_f1": 0.5007320644216691,
+    "eval_family_average_precision": 0.4987824291925107,
+    "eval_romance_precision": 0.4983132530120482,
+    "eval_romance_recall": 0.5898459783228751,
+    "eval_romance_f1": 0.5402298850574713,
+    "eval_romance_average_precision": 0.544594055510066,
+    "eval_fantasy_precision": 0.4224318658280922,
+    "eval_fantasy_recall": 0.4963054187192118,
+    "eval_fantasy_f1": 0.4563986409966025,
+    "eval_fantasy_average_precision": 0.42719576498435946,
+    "eval_drama_precision": 0.6549907821964709,
+    "eval_drama_recall": 0.8004505954296749,
+    "eval_drama_f1": 0.72045191193511,
+    "eval_drama_average_precision": 0.7725496832765125,
+    "eval_action_precision": 0.6012408347433729,
+    "eval_action_recall": 0.6230274693161894,
+    "eval_action_f1": 0.6119402985074627,
+    "eval_action_average_precision": 0.660021169135398,
+    "eval_music_precision": 0.7001607717041801,
+    "eval_music_recall": 0.74190800681431,
+    "eval_music_f1": 0.7204301075268817,
+    "eval_music_average_precision": 0.7548921317681861,
+    "eval_western_precision": 0.6823529411764706,
+    "eval_western_recall": 0.8365384615384616,
+    "eval_western_f1": 0.7516198704103672,
+    "eval_western_average_precision": 0.7988730179859787,
+    "eval_animation_precision": 0.6244541484716157,
+    "eval_animation_recall": 0.6651162790697674,
+    "eval_animation_f1": 0.6441441441441441,
+    "eval_animation_average_precision": 0.6956169717319225,
+    "eval_mystery_precision": 0.29770318021201414,
+    "eval_mystery_recall": 0.5082956259426847,
+    "eval_mystery_f1": 0.3754874651810585,
+    "eval_mystery_average_precision": 0.3071143748085845,
+    "eval_tv_movie_precision": 0.34782608695652173,
+    "eval_tv_movie_recall": 0.321483771251932,
+    "eval_tv_movie_f1": 0.334136546184739,
+    "eval_tv_movie_average_precision": 0.29117137569212204,
+    "eval_horror_precision": 0.6934046345811051,
+    "eval_horror_recall": 0.7155119558553035,
+    "eval_horror_f1": 0.7042848521424261,
+    "eval_horror_average_precision": 0.7672899428287753,
+    "eval_comedy_precision": 0.6037179777828157,
+    "eval_comedy_recall": 0.6925877763328999,
+    "eval_comedy_f1": 0.6451065891472868,
+    "eval_comedy_average_precision": 0.701063503273497,
+    "eval_crime_precision": 0.5046329294369208,
+    "eval_crime_recall": 0.607725321888412,
+    "eval_crime_f1": 0.5514018691588785,
+    "eval_crime_average_precision": 0.5558493888504913,
+    "eval_history_precision": 0.3848439821693908,
+    "eval_history_recall": 0.47435897435897434,
+    "eval_history_f1": 0.4249384741591468,
+    "eval_history_average_precision": 0.3917032066991126,
+    "eval_runtime": 32.7254,
+    "eval_samples_per_second": 523.171,
+    "eval_steps_per_second": 16.379,
+    "epoch": 1.3740038472107723,
+    "step": 15000
+  },
+  {
+    "loss": 0.3629148483276367,
+    "grad_norm": 4.93577241897583,
+    "learning_rate": 1.197760814249364e-05,
+    "epoch": 1.383163872858844,
+    "step": 15100
+  },
+  {
+    "loss": 0.380396728515625,
+    "grad_norm": 4.669470310211182,
+    "learning_rate": 1.1909754028837999e-05,
+    "epoch": 1.3923238985069157,
+    "step": 15200
+  },
+  {
+    "loss": 0.3675016784667969,
+    "grad_norm": 4.729485034942627,
+    "learning_rate": 1.184189991518236e-05,
+    "epoch": 1.4014839241549877,
+    "step": 15300
+  },
+  {
+    "loss": 0.37614753723144534,
+    "grad_norm": 3.618764877319336,
+    "learning_rate": 1.177404580152672e-05,
+    "epoch": 1.4106439498030594,
+    "step": 15400
+  },
+  {
+    "loss": 0.3814806747436523,
+    "grad_norm": 2.805992841720581,
+    "learning_rate": 1.1706191687871078e-05,
+    "epoch": 1.4198039754511314,
+    "step": 15500
+  },
+  {
+    "loss": 0.39727306365966797,
+    "grad_norm": 4.970992088317871,
+    "learning_rate": 1.1638337574215437e-05,
+    "epoch": 1.428964001099203,
+    "step": 15600
+  },
+  {
+    "loss": 0.37315475463867187,
+    "grad_norm": 2.9332950115203857,
+    "learning_rate": 1.1570483460559798e-05,
+    "epoch": 1.4381240267472748,
+    "step": 15700
+  },
+  {
+    "loss": 0.37781455993652346,
+    "grad_norm": 2.348129987716675,
+    "learning_rate": 1.1502629346904158e-05,
+    "epoch": 1.4472840523953467,
+    "step": 15800
+  },
+  {
+    "loss": 0.3833423614501953,
+    "grad_norm": 6.438969612121582,
+    "learning_rate": 1.1434775233248516e-05,
+    "epoch": 1.4564440780434185,
+    "step": 15900
+  },
+  {
+    "loss": 0.3720600128173828,
+    "grad_norm": 3.1460182666778564,
+    "learning_rate": 1.1366921119592875e-05,
+    "epoch": 1.4656041036914904,
+    "step": 16000
+  },
+  {
+    "loss": 0.3693674468994141,
+    "grad_norm": 6.310157775878906,
+    "learning_rate": 1.1299067005937236e-05,
+    "epoch": 1.4747641293395621,
+    "step": 16100
+  },
+  {
+    "loss": 0.3683233642578125,
+    "grad_norm": 4.214432716369629,
+    "learning_rate": 1.1231212892281596e-05,
+    "epoch": 1.4839241549876339,
+    "step": 16200
+  },
+  {
+    "loss": 0.38255279541015624,
+    "grad_norm": 4.5447258949279785,
+    "learning_rate": 1.1163358778625954e-05,
+    "epoch": 1.4930841806357058,
+    "step": 16300
+  },
+  {
+    "loss": 0.38301177978515627,
+    "grad_norm": 2.3455517292022705,
+    "learning_rate": 1.1095504664970315e-05,
+    "epoch": 1.5022442062837777,
+    "step": 16400
+  },
+  {
+    "loss": 0.3833987426757812,
+    "grad_norm": 2.526364803314209,
+    "learning_rate": 1.1027650551314675e-05,
+    "epoch": 1.5114042319318495,
+    "step": 16500
+  },
+  {
+    "loss": 0.3808197784423828,
+    "grad_norm": 2.051180124282837,
+    "learning_rate": 1.0959796437659034e-05,
+    "epoch": 1.5205642575799212,
+    "step": 16600
+  },
+  {
+    "loss": 0.3740158462524414,
+    "grad_norm": 1.8626638650894165,
+    "learning_rate": 1.0891942324003392e-05,
+    "epoch": 1.529724283227993,
+    "step": 16700
+  },
+  {
+    "loss": 0.3573587799072266,
+    "grad_norm": 3.632030487060547,
+    "learning_rate": 1.0824088210347753e-05,
+    "epoch": 1.5388843088760649,
+    "step": 16800
+  },
+  {
+    "loss": 0.364915771484375,
+    "grad_norm": 2.925083637237549,
+    "learning_rate": 1.0756234096692113e-05,
+    "epoch": 1.5480443345241368,
+    "step": 16900
+  },
+  {
+    "loss": 0.3667446517944336,
+    "grad_norm": 3.127439498901367,
+    "learning_rate": 1.0688379983036472e-05,
+    "epoch": 1.5572043601722085,
+    "step": 17000
+  },
+  {
+    "loss": 0.37480018615722654,
+    "grad_norm": 5.0937676429748535,
+    "learning_rate": 1.0620525869380832e-05,
+    "epoch": 1.5663643858202803,
+    "step": 17100
+  },
+  {
+    "loss": 0.3714009857177734,
+    "grad_norm": 3.4222700595855713,
+    "learning_rate": 1.0552671755725193e-05,
+    "epoch": 1.575524411468352,
+    "step": 17200
+  },
+  {
+    "loss": 0.40313636779785156,
+    "grad_norm": 6.043320655822754,
+    "learning_rate": 1.0484817642069551e-05,
+    "epoch": 1.584684437116424,
+    "step": 17300
+  },
+  {
+    "loss": 0.38596702575683595,
+    "grad_norm": 4.03977108001709,
+    "learning_rate": 1.041696352841391e-05,
+    "epoch": 1.5938444627644959,
+    "step": 17400
+  },
+  {
+    "loss": 0.38715763092041017,
+    "grad_norm": 2.5157992839813232,
+    "learning_rate": 1.0349109414758272e-05,
+    "epoch": 1.6030044884125676,
+    "step": 17500
+  },
+  {
+    "eval_loss": 0.5072469711303711,
+    "eval_micro_f1": 0.6421138160567518,
+    "eval_macro_f1": 0.5910019791564572,
+    "eval_macro_average_precision": 0.607671477820799,
+    "eval_adventure_precision": 0.5015197568389058,
+    "eval_adventure_recall": 0.4935194416749751,
+    "eval_adventure_f1": 0.49748743718592964,
+    "eval_adventure_average_precision": 0.4970571895223082,
+    "eval_war_precision": 0.5401459854014599,
+    "eval_war_recall": 0.6218487394957983,
+    "eval_war_f1": 0.578125,
+    "eval_war_average_precision": 0.6018970773379752,
+    "eval_documentary_precision": 0.8531698564593302,
+    "eval_documentary_recall": 0.8498659517426274,
+    "eval_documentary_f1": 0.8515146992986121,
+    "eval_documentary_average_precision": 0.9243994602042566,
+    "eval_science_fiction_precision": 0.6565874730021598,
+    "eval_science_fiction_recall": 0.7012687427912342,
+    "eval_science_fiction_f1": 0.6781929726715002,
+    "eval_science_fiction_average_precision": 0.716638370296085,
+    "eval_thriller_precision": 0.45454545454545453,
+    "eval_thriller_recall": 0.6294536817102138,
+    "eval_thriller_f1": 0.5278884462151394,
+    "eval_thriller_average_precision": 0.5029860180860318,
+    "eval_family_precision": 0.4793388429752066,
+    "eval_family_recall": 0.5439624853458382,
+    "eval_family_f1": 0.5096101043382757,
+    "eval_family_average_precision": 0.5046012901357837,
+    "eval_romance_precision": 0.4842249657064472,
+    "eval_romance_recall": 0.6041072447233314,
+    "eval_romance_f1": 0.5375634517766498,
+    "eval_romance_average_precision": 0.5377995780161307,
+    "eval_fantasy_precision": 0.4344086021505376,
+    "eval_fantasy_recall": 0.4975369458128079,
+    "eval_fantasy_f1": 0.46383467278989665,
+    "eval_fantasy_average_precision": 0.43673490990772296,
+    "eval_drama_precision": 0.6531708595387841,
+    "eval_drama_recall": 0.8022207917605407,
+    "eval_drama_f1": 0.7200635562617362,
+    "eval_drama_average_precision": 0.7729298143812922,
+    "eval_action_precision": 0.5793568464730291,
+    "eval_action_recall": 0.6528345996493279,
+    "eval_action_f1": 0.613904918933773,
+    "eval_action_average_precision": 0.6528176197548452,
+    "eval_music_precision": 0.7252747252747253,
+    "eval_music_recall": 0.7308347529812607,
+    "eval_music_f1": 0.7280441238862961,
+    "eval_music_average_precision": 0.7745910762284379,
+    "eval_western_precision": 0.8058252427184466,
+    "eval_western_recall": 0.7980769230769231,
+    "eval_western_f1": 0.8019323671497585,
+    "eval_western_average_precision": 0.8589974795562318,
+    "eval_animation_precision": 0.6603325415676959,
+    "eval_animation_recall": 0.6465116279069767,
+    "eval_animation_f1": 0.6533490011750881,
+    "eval_animation_average_precision": 0.7108949660911867,
+    "eval_mystery_precision": 0.32893401015228424,
+    "eval_mystery_recall": 0.48868778280542985,
+    "eval_mystery_f1": 0.3932038834951456,
+    "eval_mystery_average_precision": 0.3261100737998879,
+    "eval_tv_movie_precision": 0.4146919431279621,
+    "eval_tv_movie_recall": 0.2704791344667697,
+    "eval_tv_movie_f1": 0.3274087932647334,
+    "eval_tv_movie_average_precision": 0.2937929116490614,
+    "eval_horror_precision": 0.7265122265122265,
+    "eval_horror_recall": 0.6922133660331086,
+    "eval_horror_f1": 0.7089481946624804,
+    "eval_horror_average_precision": 0.7713302373372684,
+    "eval_comedy_precision": 0.6156413924654268,
+    "eval_comedy_recall": 0.6715214564369311,
+    "eval_comedy_f1": 0.6423684537877845,
+    "eval_comedy_average_precision": 0.7031499367991966,
+    "eval_crime_precision": 0.4824675324675325,
+    "eval_crime_recall": 0.6377682403433477,
+    "eval_crime_f1": 0.5493530499075786,
+    "eval_crime_average_precision": 0.5554983970543379,
+    "eval_history_precision": 0.3731527093596059,
+    "eval_history_recall": 0.554945054945055,
+    "eval_history_f1": 0.44624447717231225,
+    "eval_history_average_precision": 0.403531672437142,
+    "eval_runtime": 32.4266,
+    "eval_samples_per_second": 527.993,
+    "eval_steps_per_second": 16.53,
+    "epoch": 1.6030044884125676,
+    "step": 17500
+  },
+  {
+    "loss": 0.36385643005371093,
+    "grad_norm": 5.116182327270508,
+    "learning_rate": 1.0281255301102631e-05,
+    "epoch": 1.6121645140606393,
+    "step": 17600
+  },
+  {
+    "loss": 0.3706721496582031,
+    "grad_norm": 2.7676780223846436,
+    "learning_rate": 1.0213401187446989e-05,
+    "epoch": 1.621324539708711,
+    "step": 17700
+  },
+  {
+    "loss": 0.38024253845214845,
+    "grad_norm": 4.01671838760376,
+    "learning_rate": 1.0145547073791349e-05,
+    "epoch": 1.630484565356783,
+    "step": 17800
+  },
+  {
+    "loss": 0.37872886657714844,
+    "grad_norm": 4.997121810913086,
+    "learning_rate": 1.007769296013571e-05,
+    "epoch": 1.639644591004855,
+    "step": 17900
+  },
+  {
+    "loss": 0.3767222213745117,
+    "grad_norm": 5.578676700592041,
+    "learning_rate": 1.000983884648007e-05,
+    "epoch": 1.6488046166529267,
+    "step": 18000
+  },
+  {
+    "loss": 0.38406532287597656,
+    "grad_norm": 2.8785643577575684,
+    "learning_rate": 9.941984732824427e-06,
+    "epoch": 1.6579646423009984,
+    "step": 18100
+  },
+  {
+    "loss": 0.3581878280639648,
+    "grad_norm": 3.9654312133789062,
+    "learning_rate": 9.874130619168789e-06,
+    "epoch": 1.66712466794907,
+    "step": 18200
+  },
+  {
+    "loss": 0.3799950790405273,
+    "grad_norm": 2.5078601837158203,
+    "learning_rate": 9.806276505513146e-06,
+    "epoch": 1.676284693597142,
+    "step": 18300
+  },
+  {
+    "loss": 0.3688124847412109,
+    "grad_norm": 1.6535406112670898,
+    "learning_rate": 9.738422391857508e-06,
+    "epoch": 1.685444719245214,
+    "step": 18400
+  },
+  {
+    "loss": 0.3882549285888672,
+    "grad_norm": 4.82255744934082,
+    "learning_rate": 9.670568278201867e-06,
+    "epoch": 1.6946047448932857,
+    "step": 18500
+  },
+  {
+    "loss": 0.34521099090576174,
+    "grad_norm": 2.8644328117370605,
+    "learning_rate": 9.602714164546227e-06,
+    "epoch": 1.7037647705413574,
+    "step": 18600
+  },
+  {
+    "loss": 0.3737356185913086,
+    "grad_norm": 4.264715671539307,
+    "learning_rate": 9.534860050890586e-06,
+    "epoch": 1.7129247961894292,
+    "step": 18700
+  },
+  {
+    "loss": 0.3561748504638672,
+    "grad_norm": 2.793358564376831,
+    "learning_rate": 9.467005937234946e-06,
+    "epoch": 1.7220848218375011,
+    "step": 18800
+  },
+  {
+    "loss": 0.3778993225097656,
+    "grad_norm": 3.294649362564087,
+    "learning_rate": 9.399151823579305e-06,
+    "epoch": 1.731244847485573,
+    "step": 18900
+  },
+  {
+    "loss": 0.36820205688476565,
+    "grad_norm": 3.2284486293792725,
+    "learning_rate": 9.331297709923665e-06,
+    "epoch": 1.7404048731336448,
+    "step": 19000
+  },
+  {
+    "loss": 0.3631442642211914,
+    "grad_norm": 4.119770526885986,
+    "learning_rate": 9.263443596268024e-06,
+    "epoch": 1.7495648987817165,
+    "step": 19100
+  },
+  {
+    "loss": 0.3840439224243164,
+    "grad_norm": 4.901469707489014,
+    "learning_rate": 9.195589482612384e-06,
+    "epoch": 1.7587249244297884,
+    "step": 19200
+  },
+  {
+    "loss": 0.3682986831665039,
+    "grad_norm": 5.604640483856201,
+    "learning_rate": 9.127735368956743e-06,
+    "epoch": 1.7678849500778602,
+    "step": 19300
+  },
+  {
+    "loss": 0.36259437561035157,
+    "grad_norm": 3.2641050815582275,
+    "learning_rate": 9.059881255301103e-06,
+    "epoch": 1.7770449757259321,
+    "step": 19400
+  },
+  {
+    "loss": 0.36751575469970704,
+    "grad_norm": 2.2371761798858643,
+    "learning_rate": 8.992027141645463e-06,
+    "epoch": 1.7862050013740038,
+    "step": 19500
+  },
+  {
+    "loss": 0.3536653900146484,
+    "grad_norm": 4.615731716156006,
+    "learning_rate": 8.924173027989824e-06,
+    "epoch": 1.7953650270220756,
+    "step": 19600
+  },
+  {
+    "loss": 0.3543513107299805,
+    "grad_norm": 2.537761926651001,
+    "learning_rate": 8.856318914334182e-06,
+    "epoch": 1.8045250526701475,
+    "step": 19700
+  },
+  {
+    "loss": 0.3645624160766602,
+    "grad_norm": 2.5044496059417725,
+    "learning_rate": 8.788464800678543e-06,
+    "epoch": 1.8136850783182195,
+    "step": 19800
+  },
+  {
+    "loss": 0.37791358947753906,
+    "grad_norm": 4.1695942878723145,
+    "learning_rate": 8.7206106870229e-06,
+    "epoch": 1.8228451039662912,
+    "step": 19900
+  },
+  {
+    "loss": 0.3641274642944336,
+    "grad_norm": 3.6063458919525146,
+    "learning_rate": 8.652756573367262e-06,
+    "epoch": 1.832005129614363,
+    "step": 20000
+  },
+  {
+    "eval_loss": 0.5056765675544739,
+    "eval_micro_f1": 0.6433789388967993,
+    "eval_macro_f1": 0.5947537800011007,
+    "eval_macro_average_precision": 0.6102135517159107,
+    "eval_adventure_precision": 0.489322191272052,
+    "eval_adventure_recall": 0.5254237288135594,
+    "eval_adventure_f1": 0.5067307692307692,
+    "eval_adventure_average_precision": 0.49142738772219896,
+    "eval_war_precision": 0.5218340611353712,
+    "eval_war_recall": 0.6694677871148459,
+    "eval_war_f1": 0.5865030674846625,
+    "eval_war_average_precision": 0.6061134958816866,
+    "eval_documentary_precision": 0.8641898220418358,
+    "eval_documentary_recall": 0.8245457253500149,
+    "eval_documentary_f1": 0.8439024390243902,
+    "eval_documentary_average_precision": 0.9229940568082512,
+    "eval_science_fiction_precision": 0.6802259887005649,
+    "eval_science_fiction_recall": 0.6943483275663207,
+    "eval_science_fiction_f1": 0.6872146118721462,
+    "eval_science_fiction_average_precision": 0.7201363854608027,
+    "eval_thriller_precision": 0.44552058111380144,
+    "eval_thriller_recall": 0.6555819477434679,
+    "eval_thriller_f1": 0.5305141758769822,
+    "eval_thriller_average_precision": 0.5048990513971989,
+    "eval_family_precision": 0.45112781954887216,
+    "eval_family_recall": 0.5627198124267292,
+    "eval_family_f1": 0.5007824726134585,
+    "eval_family_average_precision": 0.4985956928665393,
+    "eval_romance_precision": 0.5073746312684366,
+    "eval_romance_recall": 0.5887050770108385,
+    "eval_romance_f1": 0.545022445207288,
+    "eval_romance_average_precision": 0.535793017342779,
+    "eval_fantasy_precision": 0.4646074646074646,
+    "eval_fantasy_recall": 0.4445812807881773,
+    "eval_fantasy_f1": 0.4543738200125865,
+    "eval_fantasy_average_precision": 0.4271478077860863,
+    "eval_drama_precision": 0.6406463642013673,
+    "eval_drama_recall": 0.8294174444802059,
+    "eval_drama_f1": 0.7229118451504313,
+    "eval_drama_average_precision": 0.7752369595406161,
+    "eval_action_precision": 0.5564278704612365,
+    "eval_action_recall": 0.6627703097603741,
+    "eval_action_f1": 0.6049613230194718,
+    "eval_action_average_precision": 0.6613483664681996,
+    "eval_music_precision": 0.7196339434276207,
+    "eval_music_recall": 0.7367972742759795,
+    "eval_music_f1": 0.7281144781144782,
+    "eval_music_average_precision": 0.7769401991718127,
+    "eval_western_precision": 0.8358974358974359,
+    "eval_western_recall": 0.7836538461538461,
+    "eval_western_f1": 0.8089330024813896,
+    "eval_western_average_precision": 0.8624790429105934,
+    "eval_animation_precision": 0.6956140350877194,
+    "eval_animation_recall": 0.6147286821705427,
+    "eval_animation_f1": 0.6526748971193416,
+    "eval_animation_average_precision": 0.71174579955502,
+    "eval_mystery_precision": 0.31503150315031503,
+    "eval_mystery_recall": 0.5279034690799397,
+    "eval_mystery_f1": 0.3945885005636979,
+    "eval_mystery_average_precision": 0.334288859788383,
+    "eval_tv_movie_precision": 0.3405909797822706,
+    "eval_tv_movie_recall": 0.3384853168469861,
+    "eval_tv_movie_f1": 0.3395348837209302,
+    "eval_tv_movie_average_precision": 0.2942154820654252,
+    "eval_horror_precision": 0.7325655790147153,
+    "eval_horror_recall": 0.7020232985898222,
+    "eval_horror_f1": 0.7169693174702567,
+    "eval_horror_average_precision": 0.7747479915483589,
+    "eval_comedy_precision": 0.6144382544103992,
+    "eval_comedy_recall": 0.6884265279583875,
+    "eval_comedy_f1": 0.6493315344045136,
+    "eval_comedy_average_precision": 0.7013095044999477,
+    "eval_crime_precision": 0.5192582025677603,
+    "eval_crime_recall": 0.6248927038626609,
+    "eval_crime_f1": 0.5671990650564862,
+    "eval_crime_average_precision": 0.5719419756315273,
+    "eval_history_precision": 0.3858560794044665,
+    "eval_history_recall": 0.5695970695970696,
+    "eval_history_f1": 0.46005917159763315,
+    "eval_history_average_precision": 0.42269640615687953,
+    "eval_runtime": 32.6155,
+    "eval_samples_per_second": 524.935,
+    "eval_steps_per_second": 16.434,
+    "epoch": 1.832005129614363,
+    "step": 20000
+  },
+  {
+    "loss": 0.377313232421875,
+    "grad_norm": 2.5423591136932373,
+    "learning_rate": 8.58490245971162e-06,
+    "epoch": 1.8411651552624346,
+    "step": 20100
+  },
+  {
+    "loss": 0.35184967041015625,
+    "grad_norm": 3.655784845352173,
+    "learning_rate": 8.517048346055981e-06,
+    "epoch": 1.8503251809105066,
+    "step": 20200
+  },
+  {
+    "loss": 0.3501978302001953,
+    "grad_norm": 3.1637444496154785,
+    "learning_rate": 8.449194232400339e-06,
+    "epoch": 1.8594852065585785,
+    "step": 20300
+  },
+  {
+    "loss": 0.36354072570800783,
+    "grad_norm": 3.4168035984039307,
+    "learning_rate": 8.3813401187447e-06,
+    "epoch": 1.8686452322066502,
+    "step": 20400
+  },
+  {
+    "loss": 0.3529798126220703,
+    "grad_norm": 2.0041728019714355,
+    "learning_rate": 8.313486005089058e-06,
+    "epoch": 1.877805257854722,
+    "step": 20500
+  },
+  {
+    "loss": 0.3683808517456055,
+    "grad_norm": 3.0928030014038086,
+    "learning_rate": 8.24563189143342e-06,
+    "epoch": 1.8869652835027937,
+    "step": 20600
+  },
+  {
+    "loss": 0.37189201354980467,
+    "grad_norm": 3.890460729598999,
+    "learning_rate": 8.177777777777779e-06,
+    "epoch": 1.8961253091508656,
+    "step": 20700
+  },
+  {
+    "loss": 0.40081134796142576,
+    "grad_norm": 5.598155975341797,
+    "learning_rate": 8.109923664122138e-06,
+    "epoch": 1.9052853347989376,
+    "step": 20800
+  },
+  {
+    "loss": 0.3704483413696289,
+    "grad_norm": 3.036229133605957,
+    "learning_rate": 8.042069550466498e-06,
+    "epoch": 1.9144453604470093,
+    "step": 20900
+  },
+  {
+    "loss": 0.35813762664794924,
+    "grad_norm": 4.0429534912109375,
+    "learning_rate": 7.974215436810857e-06,
+    "epoch": 1.923605386095081,
+    "step": 21000
+  },
+  {
+    "loss": 0.37092315673828125,
+    "grad_norm": 2.943250894546509,
+    "learning_rate": 7.906361323155217e-06,
+    "epoch": 1.9327654117431528,
+    "step": 21100
+  },
+  {
+    "loss": 0.35334182739257813,
+    "grad_norm": 7.290036678314209,
+    "learning_rate": 7.838507209499576e-06,
+    "epoch": 1.9419254373912247,
+    "step": 21200
+  },
+  {
+    "loss": 0.3714654541015625,
+    "grad_norm": 6.418674945831299,
+    "learning_rate": 7.770653095843936e-06,
+    "epoch": 1.9510854630392966,
+    "step": 21300
+  },
+  {
+    "loss": 0.3523976135253906,
+    "grad_norm": 5.72517728805542,
+    "learning_rate": 7.702798982188296e-06,
+    "epoch": 1.9602454886873684,
+    "step": 21400
+  },
+  {
+    "loss": 0.36252124786376955,
+    "grad_norm": 3.80106258392334,
+    "learning_rate": 7.634944868532655e-06,
+    "epoch": 1.96940551433544,
+    "step": 21500
+  },
+  {
+    "loss": 0.3588743209838867,
+    "grad_norm": 3.9848883152008057,
+    "learning_rate": 7.567090754877015e-06,
+    "epoch": 1.9785655399835118,
+    "step": 21600
+  },
+  {
+    "loss": 0.352087516784668,
+    "grad_norm": 4.226454734802246,
+    "learning_rate": 7.499236641221375e-06,
+    "epoch": 1.9877255656315838,
+    "step": 21700
+  },
+  {
+    "loss": 0.35986572265625,
+    "grad_norm": 7.402682781219482,
+    "learning_rate": 7.4313825275657345e-06,
+    "epoch": 1.9968855912796557,
+    "step": 21800
+  },
+  {
+    "loss": 0.33479190826416017,
+    "grad_norm": 3.245675563812256,
+    "learning_rate": 7.363528413910094e-06,
+    "epoch": 2.0060456169277274,
+    "step": 21900
+  },
+  {
+    "loss": 0.3206696701049805,
+    "grad_norm": 3.4704360961914062,
+    "learning_rate": 7.295674300254454e-06,
+    "epoch": 2.015205642575799,
+    "step": 22000
+  },
+  {
+    "loss": 0.31656415939331056,
+    "grad_norm": 4.021510124206543,
+    "learning_rate": 7.227820186598813e-06,
+    "epoch": 2.024365668223871,
+    "step": 22100
+  },
+  {
+    "loss": 0.301695499420166,
+    "grad_norm": 2.4514904022216797,
+    "learning_rate": 7.159966072943173e-06,
+    "epoch": 2.033525693871943,
+    "step": 22200
+  },
+  {
+    "loss": 0.2955013084411621,
+    "grad_norm": 6.850189685821533,
+    "learning_rate": 7.092111959287532e-06,
+    "epoch": 2.0426857195200148,
+    "step": 22300
+  },
+  {
+    "loss": 0.2870414352416992,
+    "grad_norm": 2.4453258514404297,
+    "learning_rate": 7.024257845631892e-06,
+    "epoch": 2.0518457451680865,
+    "step": 22400
+  },
+  {
+    "loss": 0.3091920280456543,
+    "grad_norm": 4.184562683105469,
+    "learning_rate": 6.956403731976251e-06,
+    "epoch": 2.061005770816158,
+    "step": 22500
+  },
+  {
+    "eval_loss": 0.5278269648551941,
+    "eval_micro_f1": 0.6440445534748358,
+    "eval_macro_f1": 0.5938901813524804,
+    "eval_macro_average_precision": 0.6089265407673556,
+    "eval_adventure_precision": 0.48375768217734855,
+    "eval_adventure_recall": 0.5493519441674976,
+    "eval_adventure_f1": 0.5144724556489262,
+    "eval_adventure_average_precision": 0.5018240081100434,
+    "eval_war_precision": 0.5010309278350515,
+    "eval_war_recall": 0.680672268907563,
+    "eval_war_f1": 0.5771971496437055,
+    "eval_war_average_precision": 0.588887844254868,
+    "eval_documentary_precision": 0.841812865497076,
+    "eval_documentary_recall": 0.8576109621686029,
+    "eval_documentary_f1": 0.8496384831046185,
+    "eval_documentary_average_precision": 0.9253305515931319,
+    "eval_science_fiction_precision": 0.7082818294190358,
+    "eval_science_fiction_recall": 0.6608996539792388,
+    "eval_science_fiction_f1": 0.6837708830548926,
+    "eval_science_fiction_average_precision": 0.7168818992684988,
+    "eval_thriller_precision": 0.4500202347227843,
+    "eval_thriller_recall": 0.6603325415676959,
+    "eval_thriller_f1": 0.5352587244283995,
+    "eval_thriller_average_precision": 0.5052368203112196,
+    "eval_family_precision": 0.43962585034013607,
+    "eval_family_recall": 0.6060961313012896,
+    "eval_family_f1": 0.5096106456382454,
+    "eval_family_average_precision": 0.4999298329112908,
+    "eval_romance_precision": 0.47739602169981915,
+    "eval_romance_recall": 0.6023958927552767,
+    "eval_romance_f1": 0.5326607818411098,
+    "eval_romance_average_precision": 0.5364317887531471,
+    "eval_fantasy_precision": 0.422,
+    "eval_fantasy_recall": 0.5197044334975369,
+    "eval_fantasy_f1": 0.46578366445916114,
+    "eval_fantasy_average_precision": 0.4407466184311339,
+    "eval_drama_precision": 0.6417798828368441,
+    "eval_drama_recall": 0.8286128097843579,
+    "eval_drama_f1": 0.7233265435133807,
+    "eval_drama_average_precision": 0.7751611938541229,
+    "eval_action_precision": 0.5671342685370742,
+    "eval_action_recall": 0.6616014026884862,
+    "eval_action_f1": 0.6107364445643377,
+    "eval_action_average_precision": 0.6704505222706919,
+    "eval_music_precision": 0.7288280581693756,
+    "eval_music_recall": 0.7257240204429302,
+    "eval_music_f1": 0.7272727272727273,
+    "eval_music_average_precision": 0.7714405989771953,
+    "eval_western_precision": 0.8363171355498721,
+    "eval_western_recall": 0.7860576923076923,
+    "eval_western_f1": 0.8104089219330854,
+    "eval_western_average_precision": 0.853651761432431,
+    "eval_animation_precision": 0.6605868358445678,
+    "eval_animation_recall": 0.6457364341085271,
+    "eval_animation_f1": 0.6530772246177969,
+    "eval_animation_average_precision": 0.7113493273960988,
+    "eval_mystery_precision": 0.3221674876847291,
+    "eval_mystery_recall": 0.49321266968325794,
+    "eval_mystery_f1": 0.38974970202622167,
+    "eval_mystery_average_precision": 0.32864188626332086,
+    "eval_tv_movie_precision": 0.36496350364963503,
+    "eval_tv_movie_recall": 0.3091190108191654,
+    "eval_tv_movie_f1": 0.33472803347280333,
+    "eval_tv_movie_average_precision": 0.28799349773152183,
+    "eval_horror_precision": 0.6919104991394148,
+    "eval_horror_recall": 0.7394236664622931,
+    "eval_horror_f1": 0.7148784825133373,
+    "eval_horror_average_precision": 0.7815916897976795,
+    "eval_comedy_precision": 0.587807486631016,
+    "eval_comedy_recall": 0.7146944083224968,
+    "eval_comedy_f1": 0.6450704225352113,
+    "eval_comedy_average_precision": 0.6965934137463172,
+    "eval_crime_precision": 0.48878923766816146,
+    "eval_crime_recall": 0.6549356223175966,
+    "eval_crime_f1": 0.5597945707997065,
+    "eval_crime_average_precision": 0.5581937690550759,
+    "eval_history_precision": 0.4460694698354662,
+    "eval_history_recall": 0.4468864468864469,
+    "eval_history_f1": 0.4464775846294602,
+    "eval_history_average_precision": 0.4192672504219683,
+    "eval_runtime": 32.7701,
+    "eval_samples_per_second": 522.459,
+    "eval_steps_per_second": 16.356,
+    "epoch": 2.061005770816158,
+    "step": 22500
+  },
+  {
+    "loss": 0.3076039695739746,
+    "grad_norm": 2.1842329502105713,
+    "learning_rate": 6.888549618320612e-06,
+    "epoch": 2.07016579646423,
+    "step": 22600
+  },
+  {
+    "loss": 0.30343610763549805,
+    "grad_norm": 2.0807924270629883,
+    "learning_rate": 6.82069550466497e-06,
+    "epoch": 2.079325822112302,
+    "step": 22700
+  },
+  {
+    "loss": 0.3240660095214844,
+    "grad_norm": 3.678210496902466,
+    "learning_rate": 6.752841391009331e-06,
+    "epoch": 2.088485847760374,
+    "step": 22800
+  },
+  {
+    "loss": 0.30974220275878905,
+    "grad_norm": 2.0552916526794434,
+    "learning_rate": 6.68498727735369e-06,
+    "epoch": 2.0976458734084455,
+    "step": 22900
+  },
+  {
+    "loss": 0.30405593872070313,
+    "grad_norm": 3.834207534790039,
+    "learning_rate": 6.61713316369805e-06,
+    "epoch": 2.1068058990565173,
+    "step": 23000
+  },
+  {
+    "loss": 0.3342055511474609,
+    "grad_norm": 2.386583089828491,
+    "learning_rate": 6.549279050042409e-06,
+    "epoch": 2.115965924704589,
+    "step": 23100
+  },
+  {
+    "loss": 0.31647624969482424,
+    "grad_norm": 3.4072415828704834,
+    "learning_rate": 6.481424936386769e-06,
+    "epoch": 2.125125950352661,
+    "step": 23200
+  },
+  {
+    "loss": 0.2921462059020996,
+    "grad_norm": 7.892617225646973,
+    "learning_rate": 6.4135708227311285e-06,
+    "epoch": 2.134285976000733,
+    "step": 23300
+  },
+  {
+    "loss": 0.29394092559814455,
+    "grad_norm": 4.455049514770508,
+    "learning_rate": 6.345716709075488e-06,
+    "epoch": 2.1434460016488046,
+    "step": 23400
+  },
+  {
+    "loss": 0.3086248397827148,
+    "grad_norm": 2.5054218769073486,
+    "learning_rate": 6.277862595419848e-06,
+    "epoch": 2.1526060272968763,
+    "step": 23500
+  },
+  {
+    "loss": 0.2899528694152832,
+    "grad_norm": 3.219377279281616,
+    "learning_rate": 6.210008481764207e-06,
+    "epoch": 2.161766052944948,
+    "step": 23600
+  },
+  {
+    "loss": 0.2995788764953613,
+    "grad_norm": 2.756404399871826,
+    "learning_rate": 6.1421543681085675e-06,
+    "epoch": 2.1709260785930202,
+    "step": 23700
+  },
+  {
+    "loss": 0.30665143966674807,
+    "grad_norm": 2.7949960231781006,
+    "learning_rate": 6.074300254452927e-06,
+    "epoch": 2.180086104241092,
+    "step": 23800
+  },
+  {
+    "loss": 0.281491756439209,
+    "grad_norm": 4.0960693359375,
+    "learning_rate": 6.0064461407972866e-06,
+    "epoch": 2.1892461298891637,
+    "step": 23900
+  },
+  {
+    "loss": 0.3115535736083984,
+    "grad_norm": 4.610953330993652,
+    "learning_rate": 5.938592027141646e-06,
+    "epoch": 2.1984061555372354,
+    "step": 24000
+  },
+  {
+    "loss": 0.29593908309936523,
+    "grad_norm": 1.3524514436721802,
+    "learning_rate": 5.870737913486006e-06,
+    "epoch": 2.207566181185307,
+    "step": 24100
+  },
+  {
+    "loss": 0.300469913482666,
+    "grad_norm": 3.233405113220215,
+    "learning_rate": 5.802883799830365e-06,
+    "epoch": 2.2167262068333793,
+    "step": 24200
+  },
+  {
+    "loss": 0.3031316375732422,
+    "grad_norm": 6.638515949249268,
+    "learning_rate": 5.735029686174725e-06,
+    "epoch": 2.225886232481451,
+    "step": 24300
+  },
+  {
+    "loss": 0.30436120986938475,
+    "grad_norm": 5.264627933502197,
+    "learning_rate": 5.667175572519084e-06,
+    "epoch": 2.2350462581295227,
+    "step": 24400
+  },
+  {
+    "loss": 0.2904255485534668,
+    "grad_norm": 4.065890789031982,
+    "learning_rate": 5.599321458863444e-06,
+    "epoch": 2.2442062837775945,
+    "step": 24500
+  },
+  {
+    "loss": 0.2820624351501465,
+    "grad_norm": 2.8229143619537354,
+    "learning_rate": 5.531467345207804e-06,
+    "epoch": 2.253366309425666,
+    "step": 24600
+  },
+  {
+    "loss": 0.3074073791503906,
+    "grad_norm": 3.0834085941314697,
+    "learning_rate": 5.463613231552163e-06,
+    "epoch": 2.2625263350737383,
+    "step": 24700
+  },
+  {
+    "loss": 0.2894577980041504,
+    "grad_norm": 3.761162281036377,
+    "learning_rate": 5.395759117896523e-06,
+    "epoch": 2.27168636072181,
+    "step": 24800
+  },
+  {
+    "loss": 0.3024043273925781,
+    "grad_norm": 3.1030287742614746,
+    "learning_rate": 5.327905004240883e-06,
+    "epoch": 2.280846386369882,
+    "step": 24900
+  },
+  {
+    "loss": 0.30183738708496094,
+    "grad_norm": 4.119147300720215,
+    "learning_rate": 5.260050890585242e-06,
+    "epoch": 2.2900064120179535,
+    "step": 25000
+  },
+  {
+    "eval_loss": 0.5450499653816223,
+    "eval_micro_f1": 0.6416575058018811,
+    "eval_macro_f1": 0.5936471521337509,
+    "eval_macro_average_precision": 0.6075328422820009,
+    "eval_adventure_precision": 0.4732888146911519,
+    "eval_adventure_recall": 0.5653040877367896,
+    "eval_adventure_f1": 0.5152203543843707,
+    "eval_adventure_average_precision": 0.5011300547885217,
+    "eval_war_precision": 0.5333333333333333,
+    "eval_war_recall": 0.6498599439775911,
+    "eval_war_f1": 0.5858585858585859,
+    "eval_war_average_precision": 0.5880947240636206,
+    "eval_documentary_precision": 0.8724202626641651,
+    "eval_documentary_recall": 0.8310991957104558,
+    "eval_documentary_f1": 0.851258581235698,
+    "eval_documentary_average_precision": 0.9238041331482887,
+    "eval_science_fiction_precision": 0.7066666666666667,
+    "eval_science_fiction_recall": 0.6724336793540946,
+    "eval_science_fiction_f1": 0.6891252955082743,
+    "eval_science_fiction_average_precision": 0.717725043419718,
+    "eval_thriller_precision": 0.4692134831460674,
+    "eval_thriller_recall": 0.6199524940617577,
+    "eval_thriller_f1": 0.5341519570222564,
+    "eval_thriller_average_precision": 0.505980298676712,
+    "eval_family_precision": 0.44990723562152135,
+    "eval_family_recall": 0.5685814771395076,
+    "eval_family_f1": 0.5023303987571207,
+    "eval_family_average_precision": 0.4945190429424674,
+    "eval_romance_precision": 0.4675268817204301,
+    "eval_romance_recall": 0.6200798630918426,
+    "eval_romance_f1": 0.5331044629720452,
+    "eval_romance_average_precision": 0.5286505732715359,
+    "eval_fantasy_precision": 0.3968938740293356,
+    "eval_fantasy_recall": 0.5665024630541872,
+    "eval_fantasy_f1": 0.4667681380010147,
+    "eval_fantasy_average_precision": 0.43970106233968403,
+    "eval_drama_precision": 0.6278792218641843,
+    "eval_drama_recall": 0.846636626971355,
+    "eval_drama_f1": 0.7210306311245117,
+    "eval_drama_average_precision": 0.7708631916754609,
+    "eval_action_precision": 0.577928870292887,
+    "eval_action_recall": 0.6458211572180012,
+    "eval_action_f1": 0.6099917195694176,
+    "eval_action_average_precision": 0.657986842214002,
+    "eval_music_precision": 0.7677543186180422,
+    "eval_music_recall": 0.6814310051107325,
+    "eval_music_f1": 0.7220216606498195,
+    "eval_music_average_precision": 0.7724998282993228,
+    "eval_western_precision": 0.8503937007874016,
+    "eval_western_recall": 0.7788461538461539,
+    "eval_western_f1": 0.8130489335006273,
+    "eval_western_average_precision": 0.8529322877255964,
+    "eval_animation_precision": 0.6133333333333333,
+    "eval_animation_recall": 0.6775193798449612,
+    "eval_animation_f1": 0.6438305709023942,
+    "eval_animation_average_precision": 0.7102771611571888,
+    "eval_mystery_precision": 0.3133086876155268,
+    "eval_mystery_recall": 0.5113122171945701,
+    "eval_mystery_f1": 0.38853868194842406,
+    "eval_mystery_average_precision": 0.3345538162219177,
+    "eval_tv_movie_precision": 0.34105960264900664,
+    "eval_tv_movie_recall": 0.31839258114374036,
+    "eval_tv_movie_f1": 0.3293365307753797,
+    "eval_tv_movie_average_precision": 0.28449165783188723,
+    "eval_horror_precision": 0.7239679605668515,
+    "eval_horror_recall": 0.7204169221336604,
+    "eval_horror_f1": 0.7221880762138906,
+    "eval_horror_average_precision": 0.7840109283135294,
+    "eval_comedy_precision": 0.5944333996023857,
+    "eval_comedy_recall": 0.6998699609882965,
+    "eval_comedy_f1": 0.6428571428571429,
+    "eval_comedy_average_precision": 0.6996935972756038,
+    "eval_crime_precision": 0.5143066764490095,
+    "eval_crime_recall": 0.6017167381974249,
+    "eval_crime_f1": 0.5545886075949367,
+    "eval_crime_average_precision": 0.5609513926039661,
+    "eval_history_precision": 0.39752407152682256,
+    "eval_history_recall": 0.5293040293040293,
+    "eval_history_f1": 0.4540455616653574,
+    "eval_history_average_precision": 0.415258367388994,
+    "eval_runtime": 32.8515,
+    "eval_samples_per_second": 521.163,
+    "eval_steps_per_second": 16.316,
+    "epoch": 2.2900064120179535,
+    "step": 25000
+  },
+  {
+    "loss": 0.3177200889587402,
+    "grad_norm": 2.703429937362671,
+    "learning_rate": 5.192196776929602e-06,
+    "epoch": 2.2991664376660257,
+    "step": 25100
+  },
+  {
+    "loss": 0.3062176322937012,
+    "grad_norm": 3.066398859024048,
+    "learning_rate": 5.1243426632739614e-06,
+    "epoch": 2.3083264633140974,
+    "step": 25200
+  },
+  {
+    "loss": 0.2900258255004883,
+    "grad_norm": 2.9009716510772705,
+    "learning_rate": 5.056488549618321e-06,
+    "epoch": 2.317486488962169,
+    "step": 25300
+  },
+  {
+    "loss": 0.29272821426391604,
+    "grad_norm": 3.4856698513031006,
+    "learning_rate": 4.9886344359626805e-06,
+    "epoch": 2.326646514610241,
+    "step": 25400
+  },
+  {
+    "loss": 0.3044768905639648,
+    "grad_norm": 2.9596409797668457,
+    "learning_rate": 4.920780322307041e-06,
+    "epoch": 2.3358065402583126,
+    "step": 25500
+  },
+  {
+    "loss": 0.2947875213623047,
+    "grad_norm": 2.681183338165283,
+    "learning_rate": 4.8529262086514005e-06,
+    "epoch": 2.3449665659063843,
+    "step": 25600
+  },
+  {
+    "loss": 0.29832773208618163,
+    "grad_norm": 4.252709865570068,
+    "learning_rate": 4.78507209499576e-06,
+    "epoch": 2.3541265915544565,
+    "step": 25700
+  },
+  {
+    "loss": 0.3061918640136719,
+    "grad_norm": 6.428965091705322,
+    "learning_rate": 4.7172179813401195e-06,
+    "epoch": 2.363286617202528,
+    "step": 25800
+  },
+  {
+    "loss": 0.30354167938232424,
+    "grad_norm": 3.146225929260254,
+    "learning_rate": 4.649363867684479e-06,
+    "epoch": 2.3724466428506,
+    "step": 25900
+  },
+  {
+    "loss": 0.3128352928161621,
+    "grad_norm": 3.4398980140686035,
+    "learning_rate": 4.581509754028839e-06,
+    "epoch": 2.3816066684986716,
+    "step": 26000
+  },
+  {
+    "loss": 0.3065734100341797,
+    "grad_norm": 5.370256423950195,
+    "learning_rate": 4.513655640373198e-06,
+    "epoch": 2.390766694146744,
+    "step": 26100
+  },
+  {
+    "loss": 0.29846113204956054,
+    "grad_norm": 2.5796267986297607,
+    "learning_rate": 4.445801526717558e-06,
+    "epoch": 2.3999267197948155,
+    "step": 26200
+  },
+  {
+    "loss": 0.30211668014526366,
+    "grad_norm": 6.557032585144043,
+    "learning_rate": 4.377947413061917e-06,
+    "epoch": 2.4090867454428873,
+    "step": 26300
+  },
+  {
+    "loss": 0.2999807548522949,
+    "grad_norm": 6.787644863128662,
+    "learning_rate": 4.310093299406277e-06,
+    "epoch": 2.418246771090959,
+    "step": 26400
+  },
+  {
+    "loss": 0.2905836486816406,
+    "grad_norm": 4.473412036895752,
+    "learning_rate": 4.242239185750636e-06,
+    "epoch": 2.4274067967390307,
+    "step": 26500
+  },
+  {
+    "loss": 0.30427787780761717,
+    "grad_norm": 5.0218329429626465,
+    "learning_rate": 4.174385072094997e-06,
+    "epoch": 2.436566822387103,
+    "step": 26600
+  },
+  {
+    "loss": 0.3063621711730957,
+    "grad_norm": 4.876375198364258,
+    "learning_rate": 4.106530958439356e-06,
+    "epoch": 2.4457268480351746,
+    "step": 26700
+  },
+  {
+    "loss": 0.30785905838012695,
+    "grad_norm": 3.240797758102417,
+    "learning_rate": 4.038676844783716e-06,
+    "epoch": 2.4548868736832463,
+    "step": 26800
+  },
+  {
+    "loss": 0.2900327491760254,
+    "grad_norm": 2.9395241737365723,
+    "learning_rate": 3.970822731128075e-06,
+    "epoch": 2.464046899331318,
+    "step": 26900
+  },
+  {
+    "loss": 0.28875097274780276,
+    "grad_norm": 2.7686924934387207,
+    "learning_rate": 3.902968617472435e-06,
+    "epoch": 2.4732069249793898,
+    "step": 27000
+  },
+  {
+    "loss": 0.30565723419189456,
+    "grad_norm": 3.6716060638427734,
+    "learning_rate": 3.835114503816794e-06,
+    "epoch": 2.482366950627462,
+    "step": 27100
+  },
+  {
+    "loss": 0.28782106399536134,
+    "grad_norm": 3.3300652503967285,
+    "learning_rate": 3.7672603901611535e-06,
+    "epoch": 2.4915269762755337,
+    "step": 27200
+  },
+  {
+    "loss": 0.28068151473999026,
+    "grad_norm": 2.427067995071411,
+    "learning_rate": 3.6994062765055135e-06,
+    "epoch": 2.5006870019236054,
+    "step": 27300
+  },
+  {
+    "loss": 0.3073969078063965,
+    "grad_norm": 3.202629804611206,
+    "learning_rate": 3.631552162849873e-06,
+    "epoch": 2.509847027571677,
+    "step": 27400
+  },
+  {
+    "loss": 0.2958904075622559,
+    "grad_norm": 3.069736957550049,
+    "learning_rate": 3.5636980491942326e-06,
+    "epoch": 2.519007053219749,
+    "step": 27500
+  },
+  {
+    "eval_loss": 0.5424230694770813,
+    "eval_micro_f1": 0.6427995925875253,
+    "eval_macro_f1": 0.5919044840435098,
+    "eval_macro_average_precision": 0.6045094870503713,
+    "eval_adventure_precision": 0.46513470681458,
+    "eval_adventure_recall": 0.5852442671984048,
+    "eval_adventure_f1": 0.5183222958057395,
+    "eval_adventure_average_precision": 0.4909033025022206,
+    "eval_war_precision": 0.5224215246636771,
+    "eval_war_recall": 0.6526610644257703,
+    "eval_war_f1": 0.5803237858032378,
+    "eval_war_average_precision": 0.590153768165513,
+    "eval_documentary_precision": 0.8630388260470804,
+    "eval_documentary_recall": 0.840929401251117,
+    "eval_documentary_f1": 0.851840675920338,
+    "eval_documentary_average_precision": 0.9243749413000603,
+    "eval_science_fiction_precision": 0.681766704416761,
+    "eval_science_fiction_recall": 0.6943483275663207,
+    "eval_science_fiction_f1": 0.688,
+    "eval_science_fiction_average_precision": 0.7198694575912141,
+    "eval_thriller_precision": 0.46130696474634564,
+    "eval_thriller_recall": 0.6371733966745843,
+    "eval_thriller_f1": 0.5351620947630923,
+    "eval_thriller_average_precision": 0.5070524415135128,
+    "eval_family_precision": 0.46131528046421666,
+    "eval_family_recall": 0.5592028135990621,
+    "eval_family_f1": 0.505564387917329,
+    "eval_family_average_precision": 0.4915261926251077,
+    "eval_romance_precision": 0.4544731610337972,
+    "eval_romance_recall": 0.6520250998288648,
+    "eval_romance_f1": 0.5356138706654171,
+    "eval_romance_average_precision": 0.530788069045798,
+    "eval_fantasy_precision": 0.4186991869918699,
+    "eval_fantasy_recall": 0.5073891625615764,
+    "eval_fantasy_f1": 0.45879732739420936,
+    "eval_fantasy_average_precision": 0.4295978188562659,
+    "eval_drama_precision": 0.6387080928404765,
+    "eval_drama_recall": 0.836981010621178,
+    "eval_drama_f1": 0.7245246221355436,
+    "eval_drama_average_precision": 0.7704892681253079,
+    "eval_action_precision": 0.572627163083377,
+    "eval_action_recall": 0.6382232612507306,
+    "eval_action_f1": 0.603648424543947,
+    "eval_action_average_precision": 0.6552186730778551,
+    "eval_music_precision": 0.7446043165467626,
+    "eval_music_recall": 0.7052810902896082,
+    "eval_music_f1": 0.7244094488188977,
+    "eval_music_average_precision": 0.7684518192820458,
+    "eval_western_precision": 0.7803203661327232,
+    "eval_western_recall": 0.8197115384615384,
+    "eval_western_f1": 0.7995310668229777,
+    "eval_western_average_precision": 0.8417492517212648,
+    "eval_animation_precision": 0.6374045801526718,
+    "eval_animation_recall": 0.6472868217054264,
+    "eval_animation_f1": 0.6423076923076924,
+    "eval_animation_average_precision": 0.7058583316585473,
+    "eval_mystery_precision": 0.31976744186046513,
+    "eval_mystery_recall": 0.497737556561086,
+    "eval_mystery_f1": 0.3893805309734513,
+    "eval_mystery_average_precision": 0.32999119255844,
+    "eval_tv_movie_precision": 0.3715953307392996,
+    "eval_tv_movie_recall": 0.29520865533230295,
+    "eval_tv_movie_f1": 0.3290267011197244,
+    "eval_tv_movie_average_precision": 0.2858234187650283,
+    "eval_horror_precision": 0.6764227642276422,
+    "eval_horror_recall": 0.7651747394236664,
+    "eval_horror_f1": 0.7180667433831991,
+    "eval_horror_average_precision": 0.7809037692651981,
+    "eval_comedy_precision": 0.6045618789521229,
+    "eval_comedy_recall": 0.6962288686605982,
+    "eval_comedy_f1": 0.6471654780611629,
+    "eval_comedy_average_precision": 0.7006831037099045,
+    "eval_crime_precision": 0.4731977818853974,
+    "eval_crime_recall": 0.6592274678111588,
+    "eval_crime_f1": 0.5509325681492109,
+    "eval_crime_average_precision": 0.5537148611258431,
+    "eval_history_precision": 0.3897364771151179,
+    "eval_history_recall": 0.5146520146520146,
+    "eval_history_f1": 0.4435674822415154,
+    "eval_history_average_precision": 0.4085305730679264,
+    "eval_runtime": 34.1622,
+    "eval_samples_per_second": 501.167,
+    "eval_steps_per_second": 15.69,
+    "epoch": 2.519007053219749,
+    "step": 27500
+  },
+  {
+    "train_runtime": 3679.1414,
+    "train_samples_per_second": 142.428,
+    "train_steps_per_second": 8.902,
+    "total_flos": 4.147302219616728e+16,
+    "train_loss": 0.4241124046325684,
+    "epoch": 2.519007053219749,
+    "step": 27500
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "per_label_thresholds": {
+    "Adventure": 0.7,
+    "War": 0.8,
+    "Documentary": 0.75,
+    "Science Fiction": 0.8,
+    "Thriller": 0.85,
+    "Family": 0.85,
+    "Romance": 0.7,
+    "Fantasy": 0.8,
+    "Drama": 0.4,
+    "Action": 0.7,
+    "Music": 0.85,
+    "Western": 0.9,
+    "Animation": 0.9,
+    "Mystery": 0.85,
+    "TV Movie": 0.8,
+    "Horror": 0.9,
+    "Comedy": 0.55,
+    "Crime": 0.8,
+    "History": 0.85
+  },
+  "validation_micro_f1": 0.6483352556708958,
+  "validation_macro_f1": 0.5961727518301053
+}
