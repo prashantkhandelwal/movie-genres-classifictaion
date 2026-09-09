@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn.functional as F
-from datasets import DatasetDict, concatenate_datasets, load_dataset
+from datasets import DatasetDict, load_dataset
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
@@ -22,7 +22,7 @@ from metrics import (
     make_multilabel_compute_metrics,
     multilabel_f1,
 )
-from model_input import MAX_LENGTH, build_inference_text, build_training_text
+from model_input import MAX_LENGTH, build_model_text
 
 
 MODEL_NAME = "google-bert/bert-base-uncased"
@@ -39,7 +39,6 @@ MAX_POS_WEIGHT = 10.0
 USE_POS_WEIGHTS = True
 OVERSAMPLE_RATIO = 0.0
 OVERSAMPLE_POWER = 0.5
-OVERVIEW_ONLY_AUGMENTATION_RATIO = 1
 RANDOM_SEED = 42
 
 CLASS_LABELS = [
@@ -91,18 +90,8 @@ def archive_run_summary(run_dir: Path, summary: dict) -> None:
     shutil.copy2(run_dir / "run_summary.json", OUTPUT_DIR / "latest_run.json")
 
 
-def encode_batch(examples, tokenizer, *, include_metadata):
-    if include_metadata:
-        texts = [
-            build_training_text(title, overview, keywords)
-            for title, overview, keywords in zip(
-                examples["title"],
-                examples["overview"],
-                examples["keywords"],
-            )
-        ]
-    else:
-        texts = [build_inference_text(overview) for overview in examples["overview"]]
+def encode_batch(examples, tokenizer):
+    texts = [build_model_text(overview) for overview in examples["overview"]]
     encoded = tokenizer(
         texts,
         max_length=MAX_LENGTH,
@@ -383,19 +372,6 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
     )
 
     full_dataset = load_dataset("csv", data_files=str(DATASET_PATH), split="train")
-    missing_training_keywords = sum(
-        example["split"] == "train"
-        and (
-            not isinstance(example["keywords"], str)
-            or not example["keywords"].strip()
-        )
-        for example in full_dataset
-    )
-    if missing_training_keywords:
-        raise ValueError(
-            f"Training split contains {missing_training_keywords} rows "
-            "with missing keywords"
-        )
     dataset = DatasetDict(
         {
             split: full_dataset.filter(
@@ -405,40 +381,13 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
             for split in ["train", "validation", "test"]
         }
     )
-    raw_train_dataset = dataset["train"]
-    dataset["train"] = raw_train_dataset.map(
+    dataset = dataset.map(
         encode_batch,
         batched=True,
-        fn_kwargs={"tokenizer": tokenizer, "include_metadata": True},
+        fn_kwargs={"tokenizer": tokenizer},
         remove_columns=dataset["train"].column_names,
         num_proc=2,
     )
-    overview_only_count = round(
-        len(raw_train_dataset) * OVERVIEW_ONLY_AUGMENTATION_RATIO
-    )
-    if overview_only_count:
-        overview_only_train = (
-            raw_train_dataset.shuffle(seed=RANDOM_SEED)
-            .select(range(overview_only_count))
-            .map(
-                encode_batch,
-                batched=True,
-                fn_kwargs={"tokenizer": tokenizer, "include_metadata": False},
-                remove_columns=raw_train_dataset.column_names,
-                num_proc=2,
-            )
-        )
-        dataset["train"] = concatenate_datasets(
-            [dataset["train"], overview_only_train]
-        ).shuffle(seed=RANDOM_SEED)
-    for split in ["validation", "test"]:
-        dataset[split] = dataset[split].map(
-            encode_batch,
-            batched=True,
-            fn_kwargs={"tokenizer": tokenizer, "include_metadata": False},
-            remove_columns=dataset[split].column_names,
-            num_proc=2,
-        )
     pos_weights = calculate_pos_weights(dataset["train"])
     original_train_size = len(dataset["train"])
     dataset["train"] = oversample_minority_examples(dataset["train"])
@@ -534,13 +483,10 @@ def train_run(run_id: str, started_at: datetime, run_dir: Path) -> None:
             "use_pos_weights": USE_POS_WEIGHTS,
             "oversample_ratio": OVERSAMPLE_RATIO,
             "oversample_power": OVERSAMPLE_POWER,
-            "overview_only_augmentation_ratio": OVERVIEW_ONLY_AUGMENTATION_RATIO,
             "random_seed": RANDOM_SEED,
         },
         "training_arguments": training_args.to_dict(),
         "dataset_sizes": {
-            "train_source": len(raw_train_dataset),
-            "train_overview_only_augmentation": overview_only_count,
             "train_before_oversampling": original_train_size,
             "train_after_oversampling": len(dataset["train"]),
             "validation": len(dataset["validation"]),

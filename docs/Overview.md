@@ -2,7 +2,7 @@ Updated todo list
 
 ## Overview
 
-`train.py` fine-tunes BERT to predict **multiple genres** from each movie’s combined title and overview. Because one movie can belong to several genres, this is **multi-label classification**, not ordinary single-label classification.
+`train.py` fine-tunes BERT to predict **multiple genres** from each movie's plot overview. Because one movie can belong to several genres, this is **multi-label classification**, not ordinary single-label classification.
 
 ## Imports
 
@@ -68,7 +68,7 @@ Updated todo list
   Defines preprocessing for a batch of dataset rows.
 
 - `encoded = tokenizer(...)`  
-  Converts each `title_overview` string into model inputs such as `input_ids` and `attention_mask`.
+  Converts each overview string into model inputs such as `input_ids` and `attention_mask`.
 
 - `max_length=MAX_LENGTH`  
   Sets the maximum sequence length to 256 tokens.

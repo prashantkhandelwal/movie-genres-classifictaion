@@ -9,9 +9,7 @@ INPUT_FILE = DATA_DIR / "moviedb.movies.csv"
 OUTPUT_FILE = DATA_DIR / "cleaned_movies.csv"
 GENRES_FILE = DATA_DIR / "genres.csv"
 OUTPUT_COLUMNS = [
-    "title",
     "overview",
-    "keywords",
     "genre_ids",
     "genre_names",
     "group_id",
@@ -39,10 +37,6 @@ def normalized_text(column: str) -> pl.Expr:
     )
 
 
-def normalized_title(column: str) -> pl.Expr:
-    return normalized_text(column).str.strip_chars('"').str.strip_chars()
-
-
 def stable_group_id(text: str) -> int:
     digest = hashlib.blake2b(text.encode("utf-8"), digest_size=8).digest()
     return int.from_bytes(digest, byteorder="big")
@@ -60,16 +54,11 @@ def clean_movies(
         genre_reference.select("genre_name", "genre_id").iter_rows()
     )
     raw = pl.read_csv(input_file, infer_schema_length=10_000)
-    title = normalized_title("title")
-    if "original_title" in raw.columns:
-        title = pl.coalesce(title, normalized_title("original_title"))
 
     normalized = (
         raw.select(
-            title.alias("title"),
             normalized_text("overview").alias("overview"),
             normalized_text("genres_name").alias("genre_names"),
-            normalized_text("keywords").alias("keywords"),
         )
         .with_columns(
             pl.when(
@@ -79,7 +68,7 @@ def clean_movies(
             .then(None)
             .otherwise(pl.col(column))
             .alias(column)
-            for column in ["title", "overview", "genre_names", "keywords"]
+            for column in ["overview", "genre_names"]
         )
         .with_columns(
             pl.col("overview").str.to_lowercase().alias("overview_key"),
@@ -87,10 +76,8 @@ def clean_movies(
     )
 
     valid_text = normalized.filter(
-        pl.col("title").is_not_null()
-        & pl.col("overview").is_not_null()
+        pl.col("overview").is_not_null()
         & pl.col("genre_names").is_not_null()
-        & pl.col("keywords").is_not_null()
         & ~pl.col("overview_key").is_in(PLACEHOLDER_PLOTS)
         & ~pl.col("overview_key").str.starts_with("no overview")
         & ~pl.col("overview_key").str.starts_with(".....")
@@ -100,13 +87,7 @@ def clean_movies(
 
     exploded = (
         valid_text.with_columns(
-            pl.col("title").str.to_lowercase().alias("title_key"),
             pl.col("genre_names").str.split(",").alias("genre_name"),
-            pl.col("keywords")
-            .str.split(",")
-            .list.eval(pl.element().str.strip_chars())
-            .list.filter(pl.element() != "")
-            .alias("keyword_names"),
         )
         .explode("genre_name", empty_as_null=True)
         .with_columns(pl.col("genre_name").str.strip_chars())
@@ -116,16 +97,10 @@ def clean_movies(
         raise ValueError(f"Unknown genres in dataset: {sorted(unknown_genres)}")
 
     cleaned = (
-        exploded.group_by("title_key", "overview_key")
+        exploded.group_by("overview_key")
         .agg(
-            pl.col("title").first(),
             pl.col("overview").first(),
             pl.col("genre_name").unique().sort().alias("genre_names_list"),
-            pl.col("keyword_names")
-            .explode()
-            .unique()
-            .sort()
-            .alias("keywords_list"),
         )
         .filter(
             pl.col("genre_names_list").list.len().is_between(1, MAX_GENRES)
@@ -145,14 +120,13 @@ def clean_movies(
             .then(pl.lit("validation"))
             .otherwise(pl.lit("train"))
             .alias("split"),
-            pl.col("keywords_list").list.join(",").alias("keywords"),
             pl.col("genre_names_list").list.join(",").alias("genre_names"),
             pl.col("genre_ids_list")
             .list.eval(pl.element().cast(pl.String))
             .list.join(",")
             .alias("genre_ids"),
         )
-        .sort("title_key", "overview_key")
+        .sort("overview_key")
         .select(OUTPUT_COLUMNS)
     )
 

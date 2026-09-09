@@ -5,7 +5,7 @@ from pathlib import Path
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
-from model_input import MAX_LENGTH, build_inference_text
+from model_input import MAX_LENGTH, build_model_text
 
 
 MODEL_PATH = Path(__file__).with_name("outputs") / "bert-movie-genres"
@@ -40,7 +40,7 @@ def predict_genres(
 	model.to(device)
 	model.eval()
 
-	text = build_inference_text(overview)
+	text = build_model_text(overview)
 	inputs = tokenizer(
 		text,
 		return_tensors="pt",

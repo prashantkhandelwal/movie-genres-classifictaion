@@ -8,19 +8,15 @@ labels = df.with_columns(pl.col("genre_names").str.split(",").alias("label")).ex
 overview_lower = pl.col("overview").str.to_lowercase()
 
 assert df.columns == [
-    "title",
     "overview",
-    "keywords",
     "genre_ids",
     "genre_names",
     "group_id",
     "split",
 ]
-assert df.select(pl.struct("title", "overview").n_unique()).item() == df.height
+assert df["overview"].n_unique() == df.height
 assert df.group_by("group_id").agg(pl.col("split").n_unique().alias("splits"))["splits"].max() == 1
 assert df["split"].null_count() == 0
-assert df["keywords"].null_count() == 0
-assert not df.select(pl.col("title").str.contains(r'^"+|"+$').any()).item()
 assert set(df["split"].unique()) == {"train", "validation", "test"}
 assert int(df.select(overview_lower.str.starts_with("no overview").sum()).item()) == 0
 assert int(df.select(overview_lower.str.starts_with("coming soon").sum()).item()) == 0
@@ -39,7 +35,7 @@ max_gap = wide.select(
 print("rows", df.height)
 print("file_mb", round(path.stat().st_size / 1024**2, 2))
 print("splits", df.group_by("split").len().sort("split").to_dicts())
-print("duplicate_title_overviews", df.height - df.select(pl.struct("title", "overview").n_unique()).item())
+print("duplicate_overviews", df.height - df["overview"].n_unique())
 print("cross_split_groups", 0)
 print("labels", labels["label"].n_unique())
 print("max_genres", df.select(pl.col("genre_names").str.split(",").list.len().max()).item())

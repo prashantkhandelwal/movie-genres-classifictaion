@@ -1,6 +1,6 @@
 # Movie Genre Classification with BERT
 
-This model predicts one or more movie genres from a movie's title and overview. It is a multi-label text-classification model built by fine-tuning `google-bert/bert-base-uncased` with Hugging Face Transformers.
+This model predicts one or more movie genres from a movie's plot overview. It is a multi-label text-classification model built by fine-tuning `google-bert/bert-base-uncased` with Hugging Face Transformers.
 
 For each input movie, the model produces an independent score for every genre. A movie can therefore be classified as both `Action` and `Science Fiction`, for example.
 
@@ -26,7 +26,7 @@ The model predicts the following genres:
 
 ## Input Format
 
-Provide movie title, keyword, and overview text. The cleaned dataset stores these fields separately, and the training pipeline combines them into one labeled sequence. Inputs are lowercased by the uncased BERT tokenizer and truncated to 256 tokens during training and inference.
+Provide a movie plot overview. Inputs are lowercased by the uncased BERT tokenizer and truncated to 256 tokens during training and inference.
 
 ## Usage
 
@@ -48,8 +48,6 @@ model = AutoModelForSequenceClassification.from_pretrained(model_id)
 model.eval()
 
 movie_text = (
-	"Title: Example Movie "
-	"Keywords: alien,space travel,earth "
 	"Overview: A crew travels through deep space to stop an alien threat "
 	"from destroying Earth."
 )
@@ -125,7 +123,7 @@ Final evaluation scores are not included because they were not recorded as part 
 
 ## Limitations and Biases
 
-- Predictions depend on the quality, language, completeness, and style of the movie title and overview.
+- Predictions depend on the quality, language, completeness, and style of the movie overview.
 - The model was trained on movie metadata and may reproduce genre-labeling patterns or omissions in that data.
 - Rare genres may receive less reliable predictions than common genres; inspect macro F1 and per-genre results.
 - Genre-specific thresholds can drift when the training data distribution changes and should be retuned after training.
@@ -135,7 +133,7 @@ Final evaluation scores are not included because they were not recorded as part 
 
 ## Dataset and Provenance
 
-The training pipeline uses the project's `cleaned_movies.csv`. Its model input combines the title and overview, while genres remain comma-separated multi-label targets. The cleaner normalizes whitespace, removes missing, placeholder, and undersized overviews, merges duplicate title/overview records, rejects records with more than six genres, and assigns leakage-resistant train, validation, and test splits by overview hash. The repository includes database queries that extract movie metadata and genres, but the exact upstream dataset version and license are not recorded in the training script. Users should verify the source data's terms of use before redistributing or deploying the model.
+The training pipeline uses the project's `cleaned_movies.csv`. Its model input contains only the overview, while genres remain comma-separated multi-label targets. The cleaner normalizes whitespace, removes missing, placeholder, and undersized overviews, merges duplicate overview records, rejects records with more than six genres, and assigns leakage-resistant train, validation, and test splits by overview hash. The repository includes database queries that extract movie metadata and genres, but the exact upstream dataset version and license are not recorded in the training script. Users should verify the source data's terms of use before redistributing or deploying the model.
 
 ## Files
 

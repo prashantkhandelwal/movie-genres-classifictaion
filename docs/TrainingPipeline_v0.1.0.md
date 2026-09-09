@@ -8,7 +8,7 @@
 ## 1. Purpose and Scope
 
 The training pipeline fine-tunes `google-bert/bert-base-uncased` to infer one or
-more genres from a movie's title and overview. It is a **multi-label text
+more genres from a movie's plot overview. It is a **multi-label text
 classification** system: every movie may have several correct genres, and each
 of the 19 genres is modeled as an independent binary decision.
 
@@ -194,23 +194,21 @@ exact global batching behavior.
 It writes `data/cleaned_movies.csv` with exactly these columns:
 
 ```text
-title,overview,keywords,genre_ids,genre_names,group_id,split
+overview,genre_ids,genre_names,group_id,split
 ```
 
-Training reads `title`, `overview`, `keywords`, `genre_names`, and `split`. It
-removes all original columns after encoding, so `genre_ids` and `group_id` are
-not consumed directly by the model pipeline.
+Training reads `overview`, `genre_names`, and `split`. It removes all original
+columns after encoding, so `genre_ids` and `group_id` are not consumed directly
+by the model pipeline.
 
 ### 5.2 Text normalization and rejection
 
-The cleaner casts title, original title, overview, genre names, and keywords to
-strings, collapses repeated whitespace, and trims surrounding whitespace.
-Surrounding double quotation marks are also removed from titles. Empty and
-placeholder-like values such as `null`, `none`, `nan`, and `n/a` become missing.
+The cleaner casts overview and genre names to strings, collapses repeated
+whitespace, and trims surrounding whitespace. Empty and placeholder-like values
+such as `null`, `none`, `nan`, and `n/a` become missing.
 
-The title falls back to `original_title` if `title` is unavailable. A row is
-rejected if title, overview, genres, or keywords remain missing. It is also
-rejected when:
+A row is rejected if its overview or genres are missing. It is also rejected
+when:
 
 - The lowercase overview exactly matches a known placeholder.
 - The overview starts with `no overview` or `.....`.
@@ -222,19 +220,19 @@ genre stops preprocessing with a `ValueError`.
 
 ### 5.3 Deduplication and label consolidation
 
-Rows are grouped by lowercase title and lowercase overview. Each group keeps the
-first normalized title and overview and merges its unique genre names and
-keywords. Groups with zero genres or more than six genres are removed.
+Rows are grouped by lowercase overview. Each group keeps the first normalized
+overview and merges its unique genre names. Groups with zero genres or more than
+six genres are removed. Because the overview is the complete model input, this
+also prevents identical model inputs from crossing dataset splits.
 
-During training, the separate text fields are combined exactly as:
+During training and inference, model text is formatted exactly as:
 
 ```text
-Title: <normalized title> Keywords: <normalized keywords> Overview: <normalized overview>
+Overview: <normalized overview>
 ```
 
-This explicit prefixing gives the encoder a stable boundary between title and
-overview, although BERT receives the result as one sequence rather than as a
-pair of separately segmented input strings.
+The same formatter is used for training, validation, held-out testing, and
+production inference.
 
 ### 5.4 Stable split assignment
 
@@ -352,8 +350,8 @@ two worker processes.
 
 ### 8.2 Text tokenization
 
-`encode_batch()` receives batches of examples, combines their `title`,
-`keywords`, and `overview` fields, and tokenizes the resulting texts with:
+`encode_batch()` receives batches of examples, formats their `overview` fields,
+and tokenizes the resulting texts with:
 
 ```python
 tokenizer(model_texts, max_length=256, truncation=True)
@@ -365,9 +363,8 @@ For BERT, the resulting example normally includes:
 - `attention_mask`: 1 for real tokens and 0 for batch padding.
 - `token_type_ids`: segment IDs when supplied by the tokenizer.
 
-Inputs longer than 256 tokens are cut off. Since the title comes first, it is
-normally preserved while the tail of a long overview is removed. Inputs shorter
-than 256 are not expanded during the map operation; padding happens per batch.
+Inputs longer than 256 tokens are cut off at the tail. Inputs shorter than 256
+are not expanded during the map operation; padding happens per batch.
 
 Uncased BERT normalizes case through its tokenizer. `MAX_LENGTH` counts subword
 tokens and special tokens, not characters, words, or bytes.
@@ -1030,7 +1027,7 @@ After training:
 ## 25. Summary
 
 Version 0.1.0 trains an unfrozen BERT Base encoder and 19-output classification
-head on 256-token movie title/overview sequences. The default addresses imbalance
+head on 256-token movie-overview sequences. The default addresses imbalance
 with capped positive BCE weights while leaving minority oversampling disabled for
 a clean weighted-only experiment. Model selection uses threshold-independent
 validation macro average precision; final thresholds are persisted from the
