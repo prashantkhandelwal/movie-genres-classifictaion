@@ -4,6 +4,47 @@ This model predicts one or more movie genres from a movie's plot overview. It is
 
 For each input movie, the model produces an independent score for every genre. A movie can therefore be classified as both `Action` and `Science Fiction`, for example.
 
+## Quick Start
+
+The project requires Python 3.12 or newer. Install the locked project dependencies with [`uv`](https://docs.astral.sh/uv/):
+
+```bash
+uv sync
+```
+
+The repository includes a trained model under `outputs/bert-movie-genres`. Predict genres from a plot overview with:
+
+```bash
+uv run python test.py "A crew travels through deep space to stop an alien threat from destroying Earth."
+```
+
+The command uses CUDA when available and applies the validation-tuned threshold for each genre from `outputs/bert-movie-genres/thresholds.json`. To replace those thresholds with one value:
+
+```bash
+uv run python test.py --threshold 0.5 "A crew travels through deep space to stop an alien threat."
+```
+
+Omit the overview to enter it interactively.
+
+## Project Workflow
+
+Prepare the dataset, train the model, and run inference:
+
+```bash
+uv run python data.py
+uv run python validation.py
+uv run python train.py
+uv run python test.py "A detective investigates a series of unexplained disappearances."
+```
+
+`data.py` reads `data/moviedb.movies.csv` and `data/genres.csv`, then writes the cleaned and split dataset to `data/cleaned_movies.csv`. `validation.py` checks its schema, split isolation, labels, and basic quality constraints. Training requires a CUDA-capable device because FP16 is enabled in `train.py`.
+
+Run the focused test suite with:
+
+```bash
+uv run python -m unittest discover -s tests
+```
+
 ## Model Details
 
 - **Model type:** BERT base uncased with a sequence-classification head
@@ -28,53 +69,31 @@ The model predicts the following genres:
 
 Provide a movie plot overview. Inputs are lowercased by the uncased BERT tokenizer and truncated to 256 tokens during training and inference.
 
-## Usage
+## Standalone Usage
 
-Install the required packages:
+The published model can be used in another project without cloning this repository:
 
 ```bash
 pip install torch transformers
 ```
 
-Run inference with the model repository:
-
 ```python
-import torch
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import pipeline
 
-model_id = "prashantkhandelwal/movie-genres-classification"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForSequenceClassification.from_pretrained(model_id)
-model.eval()
-
-movie_text = (
-	"Overview: A crew travels through deep space to stop an alien threat "
-	"from destroying Earth."
-)
-inputs = tokenizer(
-	movie_text,
-	max_length=256,
-	truncation=True,
-	return_tensors="pt",
+classifier = pipeline(
+	"text-classification",
+	model="prashantkhandelwal/movie-genres-classification",
+	top_k=None,
+	function_to_apply="sigmoid",
 )
 
-with torch.no_grad():
-	probabilities = torch.sigmoid(model(**inputs).logits)[0]
-
-threshold = 0.5
-predictions = [
-	{
-		"genre": model.config.id2label[index],
-		"probability": round(float(probability), 4),
-	}
-	for index, probability in enumerate(probabilities)
-	if probability >= threshold
-]
-
-print(predictions)
+overview = "A crew travels through deep space to stop an alien threat."
+scores = classifier(f"Overview: {overview}", truncation=True, max_length=256)
+genres = [result for result in scores if result["score"] >= 0.5]
+print(genres)
 ```
 
-The threshold is a decision rule, not a calibrated probability guarantee. Applications may choose a threshold using a validation set and their preferred precision/recall tradeoff.
+The standalone example uses a fixed `0.5` threshold. The local `test.py` command uses tuned per-genre thresholds when available. A threshold is a decision rule, not a calibrated probability guarantee; applications should choose thresholds using validation data and their preferred precision/recall tradeoff.
 
 ## Training
 
@@ -118,8 +137,49 @@ The training script computes:
 
 - **Micro F1:** pools true positives, false positives, and false negatives across all genres before calculating F1.
 - **Macro F1:** calculates F1 independently for each genre and averages the results.
+- **Macro average precision:** averages threshold-independent average precision across genres.
+- **Per-genre metrics:** records precision, recall, F1, average precision, support, and tuned thresholds for each label.
 
-Final evaluation scores are not included because they were not recorded as part of this model artifact. Run the evaluation cell in the accompanying training notebook or evaluate on a held-out dataset before relying on the model for a production workflow.
+The latest held-out scores are stored in `outputs/bert-movie-genres/test_metrics.json`. Run-specific results are archived under `outputs/bert-movie-genres/runs/<run-id>/`; use the comparison tool to evaluate changes between completed runs rather than relying on training loss alone.
+
+## Utilities
+
+Compare the two latest completed training runs:
+
+```bash
+uv run python comparison/compare_runs.py
+```
+
+Profile the raw source dataset or validate the cleaned dataset:
+
+```bash
+uv run python movie_dataset_profile.py
+uv run python validation.py
+```
+
+Upload the latest model files to a Hugging Face model repository after setting `HF_REPO_ID` and `HF_TOKEN` in `.env`:
+
+```bash
+uv run python hf/hf_upload.py
+```
+
+See [`comparison/README.md`](comparison/README.md) for run selection and [`release/README.md`](release/README.md) for the automated GitHub Actions release workflow.
+
+## Repository Layout
+
+```text
+data.py                  Clean and split the source dataset
+train.py                 Train, evaluate, tune thresholds, and archive a run
+test.py                  Run local inference
+metrics.py               Multi-label metrics and threshold tuning
+model_input.py           Shared inference and training input format
+validation.py            Validate the cleaned dataset
+comparison/              Compare completed training runs
+release/                 Build automated model releases
+outputs/bert-movie-genres/
+						 Latest model artifacts and run history
+tests/                   Focused unit tests
+```
 
 ## Limitations and Biases
 
@@ -137,16 +197,17 @@ The training pipeline uses the project's `cleaned_movies.csv`. Its model input c
 
 ## Files
 
-The repository should contain the model weights and tokenizer files together:
+The inference model directory contains the model weights and tokenizer files together:
 
 - `model.safetensors`
 - `config.json`
 - `tokenizer.json`
 - `tokenizer_config.json`
-- `training_args.bin` (optional training metadata)
+- `thresholds.json` (validation-tuned per-genre decision thresholds)
+- `test_metrics.json` (held-out evaluation metrics)
 
 Checkpoint optimizer and random-state files are not required for inference.
 
 ## License
 
-No model or dataset license is specified in the training project. Review the licenses of the base model and source movie metadata before using or redistributing this model.
+The repository code is licensed under the terms in [`LICENSE`](LICENSE). The model and source dataset may have separate terms; review the licenses of the base model and source movie metadata before using or redistributing them.
