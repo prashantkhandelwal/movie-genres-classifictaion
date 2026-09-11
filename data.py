@@ -1,7 +1,9 @@
 import hashlib
 from pathlib import Path
 
+import numpy as np
 import polars as pl
+from iterstrat.ml_stratifiers import MultilabelStratifiedShuffleSplit
 
 
 DATA_DIR = Path(__file__).parent / "data"
@@ -26,6 +28,43 @@ PLACEHOLDER_PLOTS = [
 MIN_PLOT_CHARACTERS = 50
 MIN_PLOT_WORDS = 8
 MAX_GENRES = 6
+RANDOM_SEED = 42
+
+
+def iterative_multilabel_splits(
+    label_matrix: np.ndarray,
+    random_seed: int = RANDOM_SEED,
+) -> np.ndarray:
+    if label_matrix.ndim != 2 or label_matrix.shape[0] < 10:
+        raise ValueError("label_matrix must contain at least 10 rows")
+
+    row_features = np.zeros((label_matrix.shape[0], 1), dtype=np.int8)
+    train_splitter = MultilabelStratifiedShuffleSplit(
+        n_splits=1,
+        test_size=0.2,
+        random_state=random_seed,
+    )
+    train_indices, held_out_indices = next(
+        train_splitter.split(row_features, label_matrix)
+    )
+
+    held_out_labels = label_matrix[held_out_indices]
+    validation_test_splitter = MultilabelStratifiedShuffleSplit(
+        n_splits=1,
+        test_size=0.5,
+        random_state=random_seed,
+    )
+    validation_relative, test_relative = next(
+        validation_test_splitter.split(
+            row_features[held_out_indices], held_out_labels
+        )
+    )
+
+    splits = np.empty(label_matrix.shape[0], dtype=object)
+    splits[train_indices] = "train"
+    splits[held_out_indices[validation_relative]] = "validation"
+    splits[held_out_indices[test_relative]] = "test"
+    return splits
 
 
 def normalized_text(column: str) -> pl.Expr:
@@ -40,6 +79,20 @@ def normalized_text(column: str) -> pl.Expr:
 def stable_group_id(text: str) -> int:
     digest = hashlib.blake2b(text.encode("utf-8"), digest_size=8).digest()
     return int.from_bytes(digest, byteorder="big")
+
+
+def assign_splits(frame: pl.DataFrame, genre_to_id: dict[str, int]) -> pl.DataFrame:
+    genre_names = list(genre_to_id)
+    label_matrix = np.asarray(
+        [
+            [int(genre_name in row_genres) for genre_name in genre_names]
+            for row_genres in frame["genre_names_list"].to_list()
+        ],
+        dtype=np.int8,
+    )
+    return frame.with_columns(
+        pl.Series("split", iterative_multilabel_splits(label_matrix))
+    )
 
 
 def clean_movies(
@@ -114,12 +167,6 @@ def clean_movies(
             .alias("genre_ids_list"),
         )
         .with_columns(
-            pl.when(pl.col("group_id") % 10 == 0)
-            .then(pl.lit("test"))
-            .when(pl.col("group_id") % 10 == 1)
-            .then(pl.lit("validation"))
-            .otherwise(pl.lit("train"))
-            .alias("split"),
             pl.col("genre_names_list").list.join(",").alias("genre_names"),
             pl.col("genre_ids_list")
             .list.eval(pl.element().cast(pl.String))
@@ -127,6 +174,7 @@ def clean_movies(
             .alias("genre_ids"),
         )
         .sort("overview_key")
+        .pipe(assign_splits, genre_to_id)
         .select(OUTPUT_COLUMNS)
     )
 

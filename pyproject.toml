@@ -15,6 +15,7 @@ dependencies = [
     "python-dotenv>=1.1.0",
     "matplotlib>=3.11.1",
     "pymongo>=4.0.0",
+    "iterative-stratification>=0.1.9",
 ]
 
 [tool.uv.sources]

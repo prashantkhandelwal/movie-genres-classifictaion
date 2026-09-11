@@ -100,7 +100,7 @@ The standalone example uses a fixed `0.5` threshold. The local `test.py` command
 The model was fine-tuned with the following configuration:
 
 - Dataset split: 80% training, 10% validation, and 10% held-out testing
-- Split assignment: stable overview hash, keeping duplicate overview groups together
+- Split assignment: deterministic iterative multi-label stratification, preserving per-genre prevalence
 - Epochs: `3`
 - Learning rate: `2e-5`
 - Training batch size per device: `16`
@@ -193,7 +193,7 @@ tests/                   Focused unit tests
 
 ## Dataset and Provenance
 
-The training pipeline uses the project's `cleaned_movies.csv`. Its model input contains only the overview, while genres remain comma-separated multi-label targets. The cleaner normalizes whitespace, removes missing, placeholder, and undersized overviews, merges duplicate overview records, rejects records with more than six genres, and assigns leakage-resistant train, validation, and test splits by overview hash. The repository includes database queries that extract movie metadata and genres, but the exact upstream dataset version and license are not recorded in the training script. Users should verify the source data's terms of use before redistributing or deploying the model.
+The training pipeline uses the project's `cleaned_movies.csv`. Its model input contains only the overview, while genres remain comma-separated multi-label targets. The cleaner normalizes whitespace, removes missing, placeholder, and undersized overviews, merges duplicate overview records, rejects records with more than six genres, and uses seeded iterative multi-label stratification for leakage-resistant train, validation, and test splits with similar genre prevalence. The repository includes database queries that extract movie metadata and genres, but the exact upstream dataset version and license are not recorded in the training script. Users should verify the source data's terms of use before redistributing or deploying the model.
 
 ## Files
 
